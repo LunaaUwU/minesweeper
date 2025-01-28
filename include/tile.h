@@ -25,6 +25,8 @@ private:
     bool m_isFlagged = false;
     int m_value = 0; // 0, 1, 2, 3, 4, 5, 6, 7, 8 are numbers, -1 is bomb, 9 is unknown and 10 is flag
 
+    bool m_canPress = true;
+
     sf::RectangleShape m_tile;
 
     sf::Texture m_tileUnkwnownTexture;
