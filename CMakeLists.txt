@@ -14,23 +14,11 @@ FetchContent_MakeAvailable(SFML)
 
 set(PROJECT_HEADERS 
     include/game.h
-    include/world.h
-    include/player.h
-    include/harpoon.h
-    include/ball.h
-    include/pooler.h
-    include/passive.h
 )
 
 set(PROJECT_SOURCES 
     src/main.cpp
     src/game.cpp
-    src/world.cpp
-    src/player.cpp
-    src/harpoon.cpp
-    src/ball.cpp
-    src/pooler.cpp
-    src/passive.cpp
 )
 
 set(PROJECT_FILES 
