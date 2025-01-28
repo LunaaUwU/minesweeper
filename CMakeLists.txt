@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
-project(Pang LANGUAGES CXX)
+project(minesweeper LANGUAGES CXX)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 option(BUILD_SHARED_LIBS "Build shared libraries" OFF)
@@ -30,17 +30,17 @@ include_directories(${PROJECT_NAME} PRIVATE include)
 
 add_executable(${PROJECT_NAME} ${PROJECT_FILES})
 
-target_link_libraries(Pang PRIVATE sfml-graphics)
-target_compile_features(Pang PRIVATE cxx_std_17)
+target_link_libraries(minesweeper PRIVATE sfml-graphics)
+target_compile_features(minesweeper PRIVATE cxx_std_17)
 
 if(WIN32)
     add_custom_command(
-        TARGET Pang
+        TARGET minesweeper
         COMMENT "Copy OpenAL DLL"
-        PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy ${SFML_SOURCE_DIR}/extlibs/bin/$<IF:$<EQUAL:${CMAKE_SIZEOF_VOID_P},8>,x64,x86>/openal32.dll $<TARGET_FILE_DIR:Pang>
+        PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy ${SFML_SOURCE_DIR}/extlibs/bin/$<IF:$<EQUAL:${CMAKE_SIZEOF_VOID_P},8>,x64,x86>/openal32.dll $<TARGET_FILE_DIR:minesweeper>
         VERBATIM)
 endif()
 
-install(TARGETS Pang)
+install(TARGETS minesweeper)
 
 set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT ${PROJECT_NAME})
