@@ -1,6 +1,8 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 
+#include "tile.h" // Cambiar por Board.h cuando esté listo
+
 
 class Game
 {
@@ -15,5 +17,8 @@ public:
     void restart();
 
 private:
+    Tile* tile = new Tile();
+
+
 
 };
