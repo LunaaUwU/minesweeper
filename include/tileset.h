@@ -1,10 +1,9 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 
-#include "tile.h"
+#include <Tile.h>
 
-
-class Game
+class Tileset
 {
 public:
 
@@ -12,12 +11,15 @@ public:
 
     void render(sf::RenderWindow& window);
 
-    void init();
+    void init(int numberToInstantiate);
 
     void restart();
 
+    void activate();
+
+
 private:
-    Tile* tile = new Tile();
+    std::vector<Tile*> m_tileArray;
 
 
 

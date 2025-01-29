@@ -15,12 +15,14 @@ FetchContent_MakeAvailable(SFML)
 set(PROJECT_HEADERS 
     include/game.h
     include/tile.h
+    include/tileset.h
 )
 
 set(PROJECT_SOURCES 
     src/main.cpp
     src/game.cpp
     src/tile.cpp
+    src/tileset.cpp
 )
 
 set(PROJECT_FILES 
