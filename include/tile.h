@@ -13,11 +13,17 @@ public:
 
     void restart();
 
+    void activate(int posX, int posY);
+
     void changeTile(int value);
+
+    void setValue(int value) { m_value = value; }
 
     void openTile();
 
     void flagTile();
+
+    bool getActive() const { return m_active; }
 
 private:
 
@@ -26,6 +32,8 @@ private:
     int m_value = 0; // 0, 1, 2, 3, 4, 5, 6, 7, 8 are numbers, -1 is bomb, 9 is unknown and 10 is flag
 
     bool m_canClick = true;
+
+    bool m_active = false;
 
     sf::RectangleShape m_tile;
 

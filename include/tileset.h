@@ -13,14 +13,15 @@ public:
 
     void init(int numberToInstantiate);
 
-    void restart();
+    void activate(int posX, int posY);
 
-    void activate();
+    void restart();
 
 
 private:
+
     std::vector<Tile*> m_tileArray;
 
-
+    int m_allInstantiatedTiles = 0;
 
 };

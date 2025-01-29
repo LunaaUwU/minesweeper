@@ -1,3 +1,4 @@
+#include <iostream>
 #include <tileset.h>
 
 void Tileset::update(sf::Int32 deltaMS)
@@ -17,10 +18,37 @@ void Tileset::init(int numberToInstantiate)
 	{
 		m_tileArray.push_back(new Tile());
 	}
+
+	m_allInstantiatedTiles = numberToInstantiate;
+}
+
+void Tileset::activate(int posX, int posY)
+{
+	std::cout << "Attempting to spawn a tile in pos (" << posX << "," << posY << ")...\n";
+	int i = 0;
+
+	for (const Tile* tile : m_tileArray)
+	{
+		if (!tile->getActive())
+		{
+			std::cout << "Inactive tile found\n";
+			m_tileArray[i]->activate(posX, posY);
+			return;
+		}
+		i++;
+	}
+
+	int j = 0;
+
+	std::cout << "Inactive tile not found...\n";
+	std::cout << "Instantiating new tile...";
+
+	m_tileArray.push_back(new Tile());
+	m_allInstantiatedTiles++;
+	m_tileArray[m_allInstantiatedTiles - 1]->activate(posX, posY);
 }
 
 void Tileset::restart()
 {
 
 }
-

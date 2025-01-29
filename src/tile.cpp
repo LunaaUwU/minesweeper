@@ -20,7 +20,8 @@ void Tile::update(sf::Int32 deltaMS)
 
 void Tile::render(sf::RenderWindow& window)
 {
-	window.draw(m_tile);
+    if (m_active)
+		window.draw(m_tile);
 }
 
 void Tile::init()
@@ -28,7 +29,6 @@ void Tile::init()
     m_tile.setSize(sf::Vector2f(32.f, 32.f));
     m_tileUnkwnownTexture.loadFromFile("../sprites/Tiles/TileUnknown.png");
     m_tile.setTexture(&m_tileUnkwnownTexture);
-    m_tile.setPosition(sf::Vector2f(974.f, 524.f));
 
     m_tile0Texture.loadFromFile("../sprites/Tiles/Tile0.png");
     m_tile1Texture.loadFromFile("../sprites/Tiles/Tile1.png");
@@ -47,6 +47,12 @@ void Tile::init()
 void Tile::restart()
 {
 
+}
+
+void Tile::activate(int posX, int posY)
+{
+    m_tile.setPosition(posX, posY);
+    m_active = true;
 }
 
 void Tile::changeTile(int value)
