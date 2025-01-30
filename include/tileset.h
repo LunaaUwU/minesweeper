@@ -13,6 +13,8 @@ public:
 
     void init(int numberToInstantiate);
 
+    void instantiate(int rows, int columns);
+
     void activate(int posX, int posY);
 
     void restart();
@@ -20,7 +22,9 @@ public:
 
 private:
 
-    std::vector<Tile*> m_tileArray;
+    std::vector<Tile*> m_tileSet;
+
+    std::vector<std::vector<Tile*>> m_tileArray;
 
     int m_allInstantiatedTiles = 0;
 
