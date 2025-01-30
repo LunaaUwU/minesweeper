@@ -3,12 +3,18 @@
 
 void Tileset::update(sf::Int32 deltaMS)
 {
-
+	for (Tile* tile : m_tileArray)
+	{
+		tile->update(deltaMS);
+	}
 }
 
 void Tileset::render(sf::RenderWindow& window)
 {
-	
+	for (Tile* tile : m_tileArray)
+	{
+		tile->render(window);
+	}
 }
 
 void Tileset::init(int numberToInstantiate)
@@ -17,6 +23,11 @@ void Tileset::init(int numberToInstantiate)
 	for (int i = 0; i < numberToInstantiate; i++)
 	{
 		m_tileArray.push_back(new Tile());
+	}
+
+	for (Tile* tile : m_tileArray)
+	{
+		tile->init();
 	}
 
 	m_allInstantiatedTiles = numberToInstantiate;
@@ -50,5 +61,8 @@ void Tileset::activate(int posX, int posY)
 
 void Tileset::restart()
 {
-
+	for (Tile* tile : m_tileArray)
+	{
+		tile->restart();
+	}
 }

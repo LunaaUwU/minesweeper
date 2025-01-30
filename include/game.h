@@ -1,7 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 
-#include "tile.h"
+#include "tileset.h"
 
 
 class Game
@@ -17,7 +17,7 @@ public:
     void restart();
 
 private:
-    Tile* tile = new Tile();
+    Tileset* tileset = new Tileset();
 
 
 

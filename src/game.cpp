@@ -3,7 +3,7 @@
 
 void Game::update(const sf::Int32 deltaMS)
 {
-    tile->update(deltaMS);
+    tileset->update(deltaMS);
 }
 
 void Game::render(sf::RenderWindow& window)
@@ -11,7 +11,7 @@ void Game::render(sf::RenderWindow& window)
     
     window.clear();
 
-    tile->render(window);
+    tileset->render(window);
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
     {
@@ -23,10 +23,15 @@ void Game::render(sf::RenderWindow& window)
 
 void Game::init()
 {
-    tile->init();
+    tileset->init(4);
+
+    tileset->activate(928, 508);
+    tileset->activate(960, 508);
+    tileset->activate(928, 540);
+    tileset->activate(960, 540);
 }
 
 void Game::restart()
 {
-    tile->restart();
+    tileset->restart();
 }
