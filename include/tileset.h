@@ -11,9 +11,9 @@ public:
 
     void render(sf::RenderWindow& window);
 
-    void init(int numberToInstantiate);
+    void init(int rows, int columns);
 
-    void instantiate(int rows, int columns);
+    void instantiate();
 
     void activate(int posX, int posY);
 
@@ -21,8 +21,6 @@ public:
 
 
 private:
-
-    std::vector<Tile*> m_tileSet;
 
     std::vector<std::vector<Tile*>> m_tileArray;
 

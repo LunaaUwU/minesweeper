@@ -23,7 +23,7 @@ void Game::render(sf::RenderWindow& window)
 
 void Game::init()
 {
-    tileset->init(4);
+    tileset->init(2, 2);
 
     tileset->activate(928, 508);
     tileset->activate(960, 508);
