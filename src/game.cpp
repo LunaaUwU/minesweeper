@@ -23,7 +23,7 @@ void Game::render(sf::RenderWindow& window)
 
 void Game::init()
 {
-    m_rows = 2;
+    m_rows = 16;
     m_columns = 2;
 
     m_tileset->init(m_rows, m_columns);
@@ -31,31 +31,44 @@ void Game::init()
     // 1920/2 = 960
 	if (m_rows % 2 == 0)
 	{
-        // 960-32 = 928
-        m_spawnPosX = 928 - m_rows * 32;
+        // 960 = 960
+        m_firstSpawnPosX = 960 - m_rows * 32;
 	}
     else
     {
-        // 960-16 = 944
-        m_spawnPosX = 944 - m_rows * 32;
+        // 960+16 = 976
+        m_firstSpawnPosX = 976 - m_rows * 32; // probablemente se mueva por el *32
     }
 
     // 1080/2 = 540
     if (m_columns % 2 == 0)
     {
-	    // 540-32 = 508
-        m_spawnPosY = 508 - m_columns * 32;
+	    // 540 = 540
+        m_firstSpawnPosY = 540 - m_columns * 32;
     }
     else
     {
-        // 540-16 = 524
-        m_spawnPosY = 524 - m_columns * 32;
+        // 540+16 = 556
+        m_firstSpawnPosY = 556 - m_columns * 32;
     }
+
+    m_spawnPosX = m_firstSpawnPosX;
+    m_spawnPosY = m_firstSpawnPosY;
     
     for (int i = 0; i < m_rows * m_columns; i++)
     {
         m_tileset->activate(m_spawnPosX, m_spawnPosY);
-        m_spawnPosX += 32; // terminar esto tambien
+        if (m_columnNumber + 1 == m_columns)
+        {
+            m_spawnPosX = m_firstSpawnPosX;
+            m_spawnPosY += 32;
+            m_columnNumber = -1;
+        }
+        else
+        {
+            m_spawnPosX += 32;
+        }
+        m_columnNumber++;
     }
     
     m_tileset->activate(960, 508);

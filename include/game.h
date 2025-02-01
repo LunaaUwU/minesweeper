@@ -23,12 +23,12 @@ private:
     int m_rows = 0;
     int m_columns = 0;
 
-    int m_firstSpawnPosX = 0; // terminar esto
+    int m_firstSpawnPosX = 0;
     int m_firstSpawnPosY = 0;
 
     int m_spawnPosX = 0;
     int m_spawnPosY = 0;
 
-    int m_rowNumber = 0;
+    int m_columnNumber = 0;
 
 };
