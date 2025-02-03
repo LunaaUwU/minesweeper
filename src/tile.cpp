@@ -124,10 +124,6 @@ void Tile::openTile()
 {
     this->changeTile(m_value);
     m_isOpened = true;
-    if (m_value == -1)
-    {
-        m_gameOver = true;
-    }
 }
 
 void Tile::flagTile()

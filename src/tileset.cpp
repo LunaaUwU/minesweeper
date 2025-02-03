@@ -1,6 +1,8 @@
 #include <iostream>
 #include <tileset.h>
 
+#include <random>
+
 void Tileset::update(sf::Int32 deltaMS)
 {
 	for (const std::vector<Tile*> &row : m_tileArray)
@@ -14,7 +16,14 @@ void Tileset::update(sf::Int32 deltaMS)
 	if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) || sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) && !m_tileArray[m_selectedTileX][m_selectedTileY]->getIsFlagged() && m_canClick && !sf::Keyboard::isKeyPressed(sf::Keyboard::X))
 	{
 		m_tileArray[m_selectedTileX][m_selectedTileY]->openTile();
+		if (m_isFirstTile)
+		{
+			fillBombs();
+			// TODO set tile values
+			m_isFirstTile = false;
+		}
 		m_canClick = false;
+		// If tile is 0, open the ones around, and if its bomb, then bobm
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::X) && !m_tileArray[m_selectedTileX][m_selectedTileY]->getIsOpen() && m_canClick && !sf::Keyboard::isKeyPressed(sf::Keyboard::Z) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 	{
@@ -108,12 +117,14 @@ void Tileset::render(sf::RenderWindow& window)
 	}
 }
 
-void Tileset::init(int rows, int columns)
+void Tileset::init(int rows, int columns, int numberOfBombs)
 {
 	m_tileArray.resize(rows, std::vector<Tile*>(columns, nullptr)); // Resize the matrix to make it of size (rows, columns)
 
 	m_rows = rows;
 	m_columns = columns;
+	m_numberOfBombs = numberOfBombs;
+	m_bombsLeft = numberOfBombs;
 
 	for (int i = 0; i < rows; ++i) {
 		for (int j = 0; j < columns; ++j) {
@@ -157,6 +168,35 @@ void Tileset::restart()
 		for (Tile* tile : row)
 		{
 			tile->restart();
+		}
+	}
+}
+
+
+void Tileset::fillBombs()
+{
+	std::random_device rd;
+	std::mt19937 gen(rd());
+	std::uniform_int_distribution<int> distribX(0, m_rows - 1);
+	std::uniform_int_distribution<int> distribY(0, m_columns - 1);
+	int randomX = 0;
+	int randomY = 0;
+	while (m_bombsLeft > 0)
+	{
+		randomX = distribX(gen);
+		randomY = distribY(gen);
+
+		std::cout << "Random X between (0," << m_columns << ") = " << randomX << "\n";
+		std::cout << "Random Y between (0," << m_rows << ") = " << randomY << "\n";
+		if (m_tileArray[randomX][randomY]->getValue() != -1)
+		{
+			m_tileArray[randomX][randomY]->setValue(-1);
+			m_bombsLeft--;
+			std::cout << m_bombsLeft << " bombs left...\n";
+		}
+		else
+		{
+			std::cout << "Repeat tile... Trying again\n";
 		}
 	}
 }

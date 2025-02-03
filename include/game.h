@@ -25,6 +25,8 @@ private:
     int m_rows = 0;
     int m_columns = 0;
 
+    int m_numberOfBombs = 0;
+
     int m_firstSpawnPosX = 0;
     int m_firstSpawnPosY = 0;
 

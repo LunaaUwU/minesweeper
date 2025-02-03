@@ -17,8 +17,6 @@ public:
 
     void changeTile(int value);
 
-    void setValue(int value) { m_value = value; }
-
     void openTile();
 
     void flagTile();
@@ -31,15 +29,15 @@ public:
 
     bool getIsFlagged() const { return m_isFlagged; }
 
-    bool m_gameOver = false;
+    int getValue() const { return m_value; }
+
+    void setValue(int value) { m_value = value; }
 
 private:
 
     bool m_isOpened = false;
     bool m_isFlagged = false;
     int m_value = 0; // 0, 1, 2, 3, 4, 5, 6, 7, 8 are numbers, -1 is bomb, 9 is unknown and 10 is flag
-
-    bool m_canClick = true;
 
     bool m_active = false;
 

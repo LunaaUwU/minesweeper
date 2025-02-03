@@ -11,13 +11,15 @@ public:
 
     void render(sf::RenderWindow& window);
 
-    void init(int rows, int columns);
+    void init(int rows, int columns, int numberOfBombs);
 
     void instantiate();
 
     void activate(int posX, int posY);
 
     void restart();
+
+    void fillBombs();
 
     std::vector<std::vector<Tile*>> getTileArray() { return m_tileArray; }
 
@@ -30,6 +32,11 @@ private:
 
     int m_rows = 0;
     int m_columns = 0;
+
+    int m_numberOfBombs = 0;
+    int m_bombsLeft = 0;
+
+    bool m_isFirstTile = true;
 
     bool m_canClick = true;
     bool m_canClickHorizontal = true;

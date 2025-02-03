@@ -4,17 +4,6 @@
 void Game::update(const sf::Int32 deltaMS)
 {
     m_tileset->update(deltaMS);
-
-    for (int i = 0; i < m_tileset->getTileArray().size(); i++)
-    {
-        for (int j = 0; j < m_tileset->getTileArray()[i].size(); j++)
-        {
-	        if (m_tileset->getTileArray()[i][j]->m_gameOver)
-	        {
-                m_gameOver = true;
-	        }
-        }
-    }
 }
 
 void Game::render(sf::RenderWindow& window)
@@ -37,7 +26,9 @@ void Game::init()
     m_rows = 5;
     m_columns = 10;
 
-    m_tileset->init(m_rows, m_columns);
+    m_numberOfBombs = 10;
+
+    m_tileset->init(m_rows, m_columns, m_numberOfBombs);
 
     m_firstSpawnPosX = 960 - (m_columns * 16);
 
