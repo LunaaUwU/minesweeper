@@ -31,6 +31,7 @@ private:
     int m_rows = 0;
     int m_columns = 0;
 
+    bool m_canClick = true;
     bool m_canClickHorizontal = true;
     bool m_canClickVertical = true;
 

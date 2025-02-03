@@ -1,26 +1,8 @@
 #include <tile.h>
 
-#include <random>
-
 void Tile::update(sf::Int32 deltaMS)
 {
-    if (m_isSelected)
-    {
-        if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) || sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) && !m_isFlagged && m_canClick && !sf::Keyboard::isKeyPressed(sf::Keyboard::X))
-        {
-            this->openTile();
-            m_canClick = false;
-        }
-        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::X) && !m_isOpened && m_canClick && !sf::Keyboard::isKeyPressed(sf::Keyboard::Z) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-        {
-            this->flagTile();
-            m_canClick = false;
-        }
-    }
-    if (!sf::Keyboard::isKeyPressed(sf::Keyboard::X) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Z) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
-    {
-        m_canClick = true;
-    }
+    
 }
 
 void Tile::render(sf::RenderWindow& window)
@@ -56,13 +38,6 @@ void Tile::init()
     m_select.setSize(sf::Vector2f(32.f, 32.f));
     m_selectTexture.loadFromFile("../sprites/Tiles/Select.png");
     m_select.setTexture(&m_selectTexture);
-
-    std::random_device rd;  // Seed generator
-    std::mt19937 gen(rd()); // Mersenne Twister PRNG
-    std::uniform_int_distribution<int> dist(0, 1); // Generate 0 or 1
-
-    int random_number = dist(gen) - 1;
-    m_value = random_number;
 
 }
 

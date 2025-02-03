@@ -27,6 +27,9 @@ public:
 
     bool getActive() const { return m_active; }
 
+    bool getIsOpen() const { return m_isOpened; }
+
+    bool getIsFlagged() const { return m_isFlagged; }
 
     bool m_gameOver = false;
 
