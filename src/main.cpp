@@ -3,7 +3,7 @@
 
 int main()
 {
-    auto window = sf::RenderWindow{ { 1920u, 1080u }, "Pang"};
+    auto window = sf::RenderWindow{ { 1920u, 1080u }, "Minesweeper"};
     window.setFramerateLimit(144);
     sf::Clock deltaClock;
     sf::Time elapsed;
