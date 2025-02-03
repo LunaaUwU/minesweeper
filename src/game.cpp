@@ -50,6 +50,8 @@ void Game::init()
         }
         m_columnNumber++;
     }
+
+    m_tileset->getTileArray()[0][0]->select();
 }
 
 void Game::restart()

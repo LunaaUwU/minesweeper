@@ -23,6 +23,8 @@ public:
 
     void flagTile();
 
+    void select();
+
     bool getActive() const { return m_active; }
 
 private:
@@ -34,6 +36,8 @@ private:
     bool m_canClick = true;
 
     bool m_active = false;
+
+    bool m_isSelected = false;
 
     sf::RectangleShape m_tile;
 
@@ -49,6 +53,10 @@ private:
     sf::Texture m_tile8Texture;
     sf::Texture m_tileFlagTexture;
     sf::Texture m_tileMineTexture;
+
+    sf::RectangleShape m_select;
+
+    sf::Texture m_selectTexture;
 
 
 };

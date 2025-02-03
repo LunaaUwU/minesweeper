@@ -19,6 +19,8 @@ public:
 
     void restart();
 
+    std::vector<std::vector<Tile*>> getTileArray() { return m_tileArray; }
+
 
 private:
 

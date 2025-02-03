@@ -22,6 +22,12 @@ void Tile::render(sf::RenderWindow& window)
 {
     if (m_active)
 		window.draw(m_tile);
+
+    if (m_isSelected)
+    {
+        m_select.setPosition(m_tile.getPosition().x, m_tile.getPosition().y);
+        window.draw(m_select);
+    }
 }
 
 void Tile::init()
@@ -41,6 +47,10 @@ void Tile::init()
     m_tile8Texture.loadFromFile("../sprites/Tiles/Tile8.png");
     m_tileFlagTexture.loadFromFile("../sprites/Tiles/TileFlag.png");
     m_tileMineTexture.loadFromFile("../sprites/Tiles/TileMine.png");
+
+    m_select.setSize(sf::Vector2f(32.f, 32.f));
+    m_selectTexture.loadFromFile("../sprites/Tiles/Select.png");
+    m_select.setTexture(&m_selectTexture);
 
 }
 
@@ -141,4 +151,9 @@ void Tile::flagTile()
     }
     m_isFlagged = !m_isFlagged;
     
+}
+
+void Tile::select()
+{
+    m_isSelected = true;
 }
