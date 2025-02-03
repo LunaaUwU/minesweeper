@@ -21,6 +21,8 @@ public:
 
     void fillBombs();
 
+    bool checkAdjacentInts(int firstInt, int secondInt);
+
     std::vector<std::vector<Tile*>> getTileArray() { return m_tileArray; }
 
 
