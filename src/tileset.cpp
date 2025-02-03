@@ -3,7 +3,7 @@
 
 void Tileset::update(sf::Int32 deltaMS)
 {
-	for (std::vector<Tile*> row : m_tileArray)
+	for (const std::vector<Tile*> &row : m_tileArray)
 	{
 		for (Tile* tile : row)
 		{
@@ -14,7 +14,7 @@ void Tileset::update(sf::Int32 deltaMS)
 
 void Tileset::render(sf::RenderWindow& window)
 {
-	for (std::vector<Tile*> row : m_tileArray)
+	for (const std::vector<Tile*> &row : m_tileArray)
 	{
 		for (Tile* tile : row)
 		{
@@ -46,7 +46,7 @@ void Tileset::activate(int posX, int posY)
 {
 	std::cout << "Attempting to spawn a tile in pos (" << posX << "," << posY << ")...\n";
 
-	for (std::vector<Tile*> row : m_tileArray)
+	for (const std::vector<Tile*> &row : m_tileArray)
 	{
 		for (Tile* tile : row)
 		{
@@ -64,7 +64,7 @@ void Tileset::activate(int posX, int posY)
 
 void Tileset::restart()
 {
-	for (std::vector<Tile*> row : m_tileArray)
+	for (const std::vector<Tile*> &row : m_tileArray)
 	{
 		for (Tile* tile : row)
 		{

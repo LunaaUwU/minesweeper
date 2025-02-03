@@ -2,15 +2,18 @@
 
 void Tile::update(sf::Int32 deltaMS)
 {
-    if((sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) || sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) && !m_isFlagged && m_canClick && !sf::Keyboard::isKeyPressed(sf::Keyboard::X))
+    if (m_isSelected)
     {
-        this->openTile();
-        m_canClick = false;
-    }
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::X) && !m_isOpened && m_canClick && !sf::Keyboard::isKeyPressed(sf::Keyboard::Z) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-    {
-        this->flagTile();
-        m_canClick = false;
+        if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) || sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) && !m_isFlagged && m_canClick && !sf::Keyboard::isKeyPressed(sf::Keyboard::X))
+        {
+            this->openTile();
+            m_canClick = false;
+        }
+        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::X) && !m_isOpened && m_canClick && !sf::Keyboard::isKeyPressed(sf::Keyboard::Z) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+        {
+            this->flagTile();
+            m_canClick = false;
+        }
     }
     if (!sf::Keyboard::isKeyPressed(sf::Keyboard::X) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Z) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
     {
