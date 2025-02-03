@@ -27,6 +27,9 @@ public:
 
     bool getActive() const { return m_active; }
 
+
+    bool m_gameOver = false;
+
 private:
 
     bool m_isOpened = false;

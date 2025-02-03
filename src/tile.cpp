@@ -1,5 +1,7 @@
 #include <tile.h>
 
+#include <random>
+
 void Tile::update(sf::Int32 deltaMS)
 {
     if (m_isSelected)
@@ -54,6 +56,13 @@ void Tile::init()
     m_select.setSize(sf::Vector2f(32.f, 32.f));
     m_selectTexture.loadFromFile("../sprites/Tiles/Select.png");
     m_select.setTexture(&m_selectTexture);
+
+    std::random_device rd;  // Seed generator
+    std::mt19937 gen(rd()); // Mersenne Twister PRNG
+    std::uniform_int_distribution<int> dist(0, 1); // Generate 0 or 1
+
+    int random_number = dist(gen) - 1;
+    m_value = random_number;
 
 }
 
@@ -140,6 +149,10 @@ void Tile::openTile()
 {
     this->changeTile(m_value);
     m_isOpened = true;
+    if (m_value == -1)
+    {
+        m_gameOver = true;
+    }
 }
 
 void Tile::flagTile()
@@ -158,5 +171,5 @@ void Tile::flagTile()
 
 void Tile::select()
 {
-    m_isSelected = true;
+    m_isSelected = !m_isSelected;
 }

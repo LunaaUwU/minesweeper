@@ -20,6 +20,8 @@ private:
 
     Tileset* m_tileset = new Tileset();
 
+    bool m_gameOver = false;
+
     int m_rows = 0;
     int m_columns = 0;
 

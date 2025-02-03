@@ -28,4 +28,13 @@ private:
 
     int m_allInstantiatedTiles = 0;
 
+    int m_rows = 0;
+    int m_columns = 0;
+
+    bool m_canClickHorizontal = true;
+    bool m_canClickVertical = true;
+
+    int m_selectedTileX = 0;
+    int m_selectedTileY = 0;
+
 };
