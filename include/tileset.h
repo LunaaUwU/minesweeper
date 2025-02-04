@@ -25,7 +25,7 @@ public:
 
     void checkEmptyTiles();
 
-    void openEmptyTiles(sf::Vector2i emptyTileToOpenPos);
+    void openEmptyTiles();
 
     std::vector<std::vector<Tile*>> getTileArray() { return m_tileArray; }
 

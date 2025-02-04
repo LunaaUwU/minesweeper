@@ -26,7 +26,10 @@ void Tileset::update(sf::Int32 deltaMS)
 		checkEmptyTiles();
 		while (m_hasNoEmptyTiles == false)
 		{
-			openEmptyTiles(m_emptyTileToOpenPos);
+			if (m_hasNoEmptyTiles == false)
+			{
+				openEmptyTiles();
+			}
 			checkEmptyTiles();
 		}
 		m_canClick = false;
@@ -427,105 +430,98 @@ void Tileset::checkEmptyTiles()
 	{
 		for (int j = 0; j < m_tileArray[i].size(); j++)
 		{
-			if (m_tileArray[i][j]->getValue() == 0 && !m_tileArray[i][j]->getHasOpenedAround())
+			if (m_tileArray[i][j]->getValue() == 0 && !m_tileArray[i][j]->getHasOpenedAround() && m_tileArray[i][j]->getIsOpen())
 			{
 				m_hasNoEmptyTiles = false;
 				std::cout << "Empty file not opened found\n";
 				m_emptyTileToOpenPos.x = i;
 				m_emptyTileToOpenPos.y = j;
+				return;
 			}
 		}
 	}
+	m_hasNoEmptyTiles = true;
 }
 
-void Tileset::openEmptyTiles(sf::Vector2i emptyTileToOpenPos)
+void Tileset::openEmptyTiles()
 {
+	std::cout << "Opening tiles around...\n";
 	m_tileArray[m_emptyTileToOpenPos.x][m_emptyTileToOpenPos.y]->setHasOpenedAround(true);
-	std::cout << "Opening tiles around...\n"; //TODO no va :(
-	for (int i = 0; i < m_tileArray.size(); i++)
+	if (m_emptyTileToOpenPos.x == 0) // Up row
 	{
-		for (int j = 0; j < m_tileArray[i].size(); j++)
+		if (m_emptyTileToOpenPos.y == 0) // Left column
 		{
-			if (m_tileArray[i][j]->getValue() == 0 && !m_tileArray[i][j]->getHasOpenedAround())
-			{
-				m_tileArray[i][j]->setHasOpenedAround(true);
-				if (i == 0) // Up row
-				{
-					if (j == 0) // Left column
-					{
-						m_tileArray[i][j+1]->openTile();
-						m_tileArray[i+1][j+1]->openTile();
-						m_tileArray[i+1][j]->openTile();
-					}
-					else if (j == m_columns - 1) // Right column
-					{
-						m_tileArray[i][j-1]->openTile();
-						m_tileArray[i+1][j-1]->openTile();
-						m_tileArray[i+1][j]->openTile();
-					}
-					else
-					{
-						m_tileArray[i][j-1]->openTile();
-						m_tileArray[i+1][j-1]->openTile();
-						m_tileArray[i+1][j]->openTile();
-						m_tileArray[i+1][j+1]->openTile();
-						m_tileArray[i][j+1]->openTile();
-					}
-				}
-				else if (i == m_rows - 1) // Down row
-				{
-					if (j == 0) // Left column
-					{
-						m_tileArray[i-1][j]->openTile();
-						m_tileArray[i-1][j+1]->openTile();
-						m_tileArray[i][j+1]->openTile();
-					}
-					else if (j == m_columns - 1) // Right columns
-					{
-						m_tileArray[i][j-1]->openTile();
-						m_tileArray[i-1][j-1]->openTile();
-						m_tileArray[i-1][j]->openTile();
-					}
-					else
-					{
-						m_tileArray[i][j-1]->openTile();
-						m_tileArray[i-1][j-1]->openTile();
-						m_tileArray[i-1][j]->openTile();
-						m_tileArray[i-1][j+1]->openTile();
-						m_tileArray[i][j+1]->openTile();
-					}
-				}
-				else
-				{
-					if (j == 0) // Left column, no corners
-					{
-						m_tileArray[i-1][j]->openTile();
-						m_tileArray[i-1][j+1]->openTile();
-						m_tileArray[i][j+1]->openTile();
-						m_tileArray[i+1][j+1]->openTile();
-						m_tileArray[i+1][j]->openTile();
-					}
-					else if (j == m_columns - 1) // Right column, no corners
-					{
-						m_tileArray[i-1][j]->openTile();
-						m_tileArray[i-1][j-1]->openTile();
-						m_tileArray[i][j-1]->openTile();
-						m_tileArray[i+1][j-1]->openTile();
-						m_tileArray[i+1][j]->openTile();
-					}
-					else // Everything inside
-					{
-						m_tileArray[i-1][j-1]->openTile();
-						m_tileArray[i-1][j]->openTile();
-						m_tileArray[i-1][j+1]->openTile();
-						m_tileArray[i][j+1]->openTile();
-						m_tileArray[i+1][j+1]->openTile();
-						m_tileArray[i+1][j]->openTile();
-						m_tileArray[i+1][j-1]->openTile();
-						m_tileArray[i][j-1]->openTile();
-					}
-				}
-			}
+			m_tileArray[m_emptyTileToOpenPos.x][m_emptyTileToOpenPos.y + 1]->openTile();
+			m_tileArray[m_emptyTileToOpenPos.x + 1][m_emptyTileToOpenPos.y + 1]->openTile();
+			m_tileArray[m_emptyTileToOpenPos.x + 1][m_emptyTileToOpenPos.y]->openTile();
+		}
+		else if (m_emptyTileToOpenPos.y == m_columns - 1) // Right column
+		{
+			m_tileArray[m_emptyTileToOpenPos.x][m_emptyTileToOpenPos.y - 1]->openTile();
+			m_tileArray[m_emptyTileToOpenPos.x + 1][m_emptyTileToOpenPos.y - 1]->openTile();
+			m_tileArray[m_emptyTileToOpenPos.x + 1][m_emptyTileToOpenPos.y]->openTile();
+		}
+		else
+		{
+			m_tileArray[m_emptyTileToOpenPos.x][m_emptyTileToOpenPos.y - 1]->openTile();
+			m_tileArray[m_emptyTileToOpenPos.x + 1][m_emptyTileToOpenPos.y - 1]->openTile();
+			m_tileArray[m_emptyTileToOpenPos.x + 1][m_emptyTileToOpenPos.y]->openTile();
+			m_tileArray[m_emptyTileToOpenPos.x + 1][m_emptyTileToOpenPos.y + 1]->openTile();
+			m_tileArray[m_emptyTileToOpenPos.x][m_emptyTileToOpenPos.y + 1]->openTile();
 		}
 	}
+	else if (m_emptyTileToOpenPos.x == m_rows - 1) // Down row
+	{
+		if (m_emptyTileToOpenPos.y == 0) // Left column
+		{
+			m_tileArray[m_emptyTileToOpenPos.x - 1][m_emptyTileToOpenPos.y]->openTile();
+			m_tileArray[m_emptyTileToOpenPos.x - 1][m_emptyTileToOpenPos.y + 1]->openTile();
+			m_tileArray[m_emptyTileToOpenPos.x][m_emptyTileToOpenPos.y + 1]->openTile();
+		}
+		else if (m_emptyTileToOpenPos.y == m_columns - 1) // Right columns
+		{
+			m_tileArray[m_emptyTileToOpenPos.x][m_emptyTileToOpenPos.y - 1]->openTile();
+			m_tileArray[m_emptyTileToOpenPos.x - 1][m_emptyTileToOpenPos.y - 1]->openTile();
+			m_tileArray[m_emptyTileToOpenPos.x - 1][m_emptyTileToOpenPos.y]->openTile();
+		}
+		else
+		{
+			m_tileArray[m_emptyTileToOpenPos.x][m_emptyTileToOpenPos.y - 1]->openTile();
+			m_tileArray[m_emptyTileToOpenPos.x - 1][m_emptyTileToOpenPos.y - 1]->openTile();
+			m_tileArray[m_emptyTileToOpenPos.x - 1][m_emptyTileToOpenPos.y]->openTile();
+			m_tileArray[m_emptyTileToOpenPos.x - 1][m_emptyTileToOpenPos.y + 1]->openTile();
+			m_tileArray[m_emptyTileToOpenPos.x][m_emptyTileToOpenPos.y + 1]->openTile();
+		}
+	}
+	else
+	{
+		if (m_emptyTileToOpenPos.y == 0) // Left column, no corners
+		{
+			m_tileArray[m_emptyTileToOpenPos.x - 1][m_emptyTileToOpenPos.y]->openTile();
+			m_tileArray[m_emptyTileToOpenPos.x - 1][m_emptyTileToOpenPos.y + 1]->openTile();
+			m_tileArray[m_emptyTileToOpenPos.x][m_emptyTileToOpenPos.y + 1]->openTile();
+			m_tileArray[m_emptyTileToOpenPos.x + 1][m_emptyTileToOpenPos.y + 1]->openTile();
+			m_tileArray[m_emptyTileToOpenPos.x + 1][m_emptyTileToOpenPos.y]->openTile();
+		}
+		else if (m_emptyTileToOpenPos.y == m_columns - 1) // Right column, no corners
+		{
+			m_tileArray[m_emptyTileToOpenPos.x - 1][m_emptyTileToOpenPos.y]->openTile();
+			m_tileArray[m_emptyTileToOpenPos.x - 1][m_emptyTileToOpenPos.y - 1]->openTile();
+			m_tileArray[m_emptyTileToOpenPos.x][m_emptyTileToOpenPos.y - 1]->openTile();
+			m_tileArray[m_emptyTileToOpenPos.x + 1][m_emptyTileToOpenPos.y - 1]->openTile();
+			m_tileArray[m_emptyTileToOpenPos.x + 1][m_emptyTileToOpenPos.y]->openTile();
+		}
+		else // Everything inside
+		{
+			m_tileArray[m_emptyTileToOpenPos.x - 1][m_emptyTileToOpenPos.y - 1]->openTile();
+			m_tileArray[m_emptyTileToOpenPos.x - 1][m_emptyTileToOpenPos.y]->openTile();
+			m_tileArray[m_emptyTileToOpenPos.x - 1][m_emptyTileToOpenPos.y + 1]->openTile();
+			m_tileArray[m_emptyTileToOpenPos.x][m_emptyTileToOpenPos.y + 1]->openTile();
+			m_tileArray[m_emptyTileToOpenPos.x + 1][m_emptyTileToOpenPos.y + 1]->openTile();
+			m_tileArray[m_emptyTileToOpenPos.x + 1][m_emptyTileToOpenPos.y]->openTile();
+			m_tileArray[m_emptyTileToOpenPos.x + 1][m_emptyTileToOpenPos.y - 1]->openTile();
+			m_tileArray[m_emptyTileToOpenPos.x][m_emptyTileToOpenPos.y - 1]->openTile();
+		}
+	}
+	m_tileArray[m_emptyTileToOpenPos.x][m_emptyTileToOpenPos.y]->setHasOpenedAround(true);
 }
