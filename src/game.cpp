@@ -26,7 +26,7 @@ void Game::init()
     m_rows = 5;
     m_columns = 10;
 
-    m_numberOfBombs = 1;
+    m_numberOfBombs = 35;
 
     m_tileset->init(m_rows, m_columns, m_numberOfBombs);
 

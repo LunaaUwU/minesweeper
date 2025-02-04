@@ -177,8 +177,8 @@ void Tileset::fillBombs()
 {
 	std::random_device rd;
 	std::mt19937 gen(rd());
-	std::uniform_int_distribution<int> distribX(0, m_columns - 1);
-	std::uniform_int_distribution<int> distribY(0, m_rows - 1);
+	std::uniform_int_distribution<int> distribX(0, m_rows - 1);
+	std::uniform_int_distribution<int> distribY(0, m_columns - 1);
 	int randomX = 0;
 	int randomY = 0;
 	while (m_bombsLeft > 0)
@@ -187,20 +187,19 @@ void Tileset::fillBombs()
 		randomY = distribY(gen);
 
 		std::cout << "Selected tile is: (" << m_selectedTileX << "," << m_selectedTileY << ")\n";
-		std::cout << "Random X between (0," << m_columns - 1 << ") = " << randomX << "\n";
-		std::cout << "Random Y between (0," << m_rows - 1 << ") = " << randomY << "\n";
-		if (m_tileArray[randomY][randomX]->getValue() == -1)
+		std::cout << "Random X between (0," << m_rows - 1 << ") = " << randomX << "\n";
+		std::cout << "Random Y between (0," << m_columns - 1 << ") = " << randomY << "\n";
+		if (m_tileArray[randomX][randomY]->getValue() == -1)
 		{
 			std::cout << "Repeat tile... Trying again\n";
 		}
-		else if (false)
+		else if ((randomY == m_selectedTileY - 1 || randomY == m_selectedTileY || randomY == m_selectedTileY + 1) && randomX == m_selectedTileX)
 		{
-			std::cout << "Adjacent tile... Trying again\n"; //!checkAdjacentInts(randomX, m_selectedTileX) && randomY == m_selectedTileY
-															// check these
+			std::cout << "Adjacent tile... Trying again\n";
 		}
 		else
 		{
-			m_tileArray[randomY][randomX]->setValue(-1);
+			m_tileArray[randomX][randomY]->setValue(-1);
 			m_bombsLeft--;
 			std::cout << m_bombsLeft << " bombs left...\n";
 		}
