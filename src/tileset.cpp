@@ -193,7 +193,7 @@ void Tileset::fillBombs()
 		{
 			std::cout << "Repeat tile... Trying again\n";
 		}
-		else if ((randomY == m_selectedTileY - 1 || randomY == m_selectedTileY || randomY == m_selectedTileY + 1) && randomX == m_selectedTileX)
+		else if (((randomY == m_selectedTileY - 1 || randomY == m_selectedTileY || randomY == m_selectedTileY + 1) && randomX == m_selectedTileX) || ((randomY == m_selectedTileY - 1 || randomY == m_selectedTileY || randomY == m_selectedTileY + 1) && randomX == m_selectedTileX + 1) || ((randomY == m_selectedTileY - 1 || randomY == m_selectedTileY || randomY == m_selectedTileY + 1) && randomX == m_selectedTileX - 1))
 		{
 			std::cout << "Adjacent tile... Trying again\n";
 		}
