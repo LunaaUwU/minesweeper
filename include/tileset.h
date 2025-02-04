@@ -52,6 +52,6 @@ private:
     int m_selectedTileX = 0;
     int m_selectedTileY = 0;
 
-    sf::Vector2i m_emptyTileToOpenPos;
+    sf::Vector2i m_tileToOpenPos;
 
 };

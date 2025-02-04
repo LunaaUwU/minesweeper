@@ -434,8 +434,8 @@ void Tileset::checkEmptyTiles()
 			{
 				m_hasNoEmptyTiles = false;
 				std::cout << "Empty file not opened found\n";
-				m_emptyTileToOpenPos.x = i;
-				m_emptyTileToOpenPos.y = j;
+				m_tileToOpenPos.x = i;
+				m_tileToOpenPos.y = j;
 				return;
 			}
 		}
@@ -446,82 +446,243 @@ void Tileset::checkEmptyTiles()
 void Tileset::openEmptyTiles()
 {
 	std::cout << "Opening tiles around...\n";
-	m_tileArray[m_emptyTileToOpenPos.x][m_emptyTileToOpenPos.y]->setHasOpenedAround(true);
-	if (m_emptyTileToOpenPos.x == 0) // Up row
+	Tile* tileToOpen;
+	m_tileArray[m_tileToOpenPos.x][m_tileToOpenPos.y]->setHasOpenedAround(true);
+	if (m_tileToOpenPos.x == 0) // Up row
 	{
-		if (m_emptyTileToOpenPos.y == 0) // Left column
+		if (m_tileToOpenPos.y == 0) // Left column
 		{
-			m_tileArray[m_emptyTileToOpenPos.x][m_emptyTileToOpenPos.y + 1]->openTile();
-			m_tileArray[m_emptyTileToOpenPos.x + 1][m_emptyTileToOpenPos.y + 1]->openTile();
-			m_tileArray[m_emptyTileToOpenPos.x + 1][m_emptyTileToOpenPos.y]->openTile();
+			tileToOpen = m_tileArray[m_tileToOpenPos.x][m_tileToOpenPos.y + 1];
+			if (!tileToOpen->getIsOpen())
+			{
+				tileToOpen->openTile();
+			}
+			tileToOpen = m_tileArray[m_tileToOpenPos.x + 1][m_tileToOpenPos.y + 1];
+			if (!tileToOpen->getIsOpen())
+			{
+				tileToOpen->openTile();
+			}
+			tileToOpen = m_tileArray[m_tileToOpenPos.x + 1][m_tileToOpenPos.y];
+			if (!tileToOpen->getIsOpen())
+			{
+				tileToOpen->openTile();
+			}
 		}
-		else if (m_emptyTileToOpenPos.y == m_columns - 1) // Right column
+		else if (m_tileToOpenPos.y == m_columns - 1) // Right column
 		{
-			m_tileArray[m_emptyTileToOpenPos.x][m_emptyTileToOpenPos.y - 1]->openTile();
-			m_tileArray[m_emptyTileToOpenPos.x + 1][m_emptyTileToOpenPos.y - 1]->openTile();
-			m_tileArray[m_emptyTileToOpenPos.x + 1][m_emptyTileToOpenPos.y]->openTile();
+			tileToOpen = m_tileArray[m_tileToOpenPos.x][m_tileToOpenPos.y - 1];
+			if (!tileToOpen->getIsOpen())
+			{
+				tileToOpen->openTile();
+			}
+			tileToOpen = m_tileArray[m_tileToOpenPos.x + 1][m_tileToOpenPos.y - 1];
+			if (!tileToOpen->getIsOpen())
+			{
+				tileToOpen->openTile();
+			}
+			tileToOpen = m_tileArray[m_tileToOpenPos.x + 1][m_tileToOpenPos.y];
+			if (!tileToOpen->getIsOpen())
+			{
+				tileToOpen->openTile();
+			}
 		}
 		else
 		{
-			m_tileArray[m_emptyTileToOpenPos.x][m_emptyTileToOpenPos.y - 1]->openTile();
-			m_tileArray[m_emptyTileToOpenPos.x + 1][m_emptyTileToOpenPos.y - 1]->openTile();
-			m_tileArray[m_emptyTileToOpenPos.x + 1][m_emptyTileToOpenPos.y]->openTile();
-			m_tileArray[m_emptyTileToOpenPos.x + 1][m_emptyTileToOpenPos.y + 1]->openTile();
-			m_tileArray[m_emptyTileToOpenPos.x][m_emptyTileToOpenPos.y + 1]->openTile();
+			tileToOpen = m_tileArray[m_tileToOpenPos.x][m_tileToOpenPos.y - 1];
+			if (!tileToOpen->getIsOpen())
+			{
+				tileToOpen->openTile();
+			}
+			tileToOpen = m_tileArray[m_tileToOpenPos.x + 1][m_tileToOpenPos.y - 1];
+			if (!tileToOpen->getIsOpen())
+			{
+				tileToOpen->openTile();
+			}
+			tileToOpen = m_tileArray[m_tileToOpenPos.x + 1][m_tileToOpenPos.y];
+			if (!tileToOpen->getIsOpen())
+			{
+				tileToOpen->openTile();
+			}
+			tileToOpen = m_tileArray[m_tileToOpenPos.x + 1][m_tileToOpenPos.y + 1];
+			if (!tileToOpen->getIsOpen())
+			{
+				tileToOpen->openTile();
+			}
+			tileToOpen = m_tileArray[m_tileToOpenPos.x][m_tileToOpenPos.y + 1];
+			if (!tileToOpen->getIsOpen())
+			{
+				tileToOpen->openTile();
+			}
 		}
 	}
-	else if (m_emptyTileToOpenPos.x == m_rows - 1) // Down row
+	else if (m_tileToOpenPos.x == m_rows - 1) // Down row
 	{
-		if (m_emptyTileToOpenPos.y == 0) // Left column
+		if (m_tileToOpenPos.y == 0) // Left column
 		{
-			m_tileArray[m_emptyTileToOpenPos.x - 1][m_emptyTileToOpenPos.y]->openTile();
-			m_tileArray[m_emptyTileToOpenPos.x - 1][m_emptyTileToOpenPos.y + 1]->openTile();
-			m_tileArray[m_emptyTileToOpenPos.x][m_emptyTileToOpenPos.y + 1]->openTile();
+			tileToOpen = m_tileArray[m_tileToOpenPos.x - 1][m_tileToOpenPos.y];
+			if (!tileToOpen->getIsOpen())
+			{
+				tileToOpen->openTile();
+			}
+			tileToOpen = m_tileArray[m_tileToOpenPos.x - 1][m_tileToOpenPos.y + 1];
+			if (!tileToOpen->getIsOpen())
+			{
+				tileToOpen->openTile();
+			}
+			tileToOpen = m_tileArray[m_tileToOpenPos.x][m_tileToOpenPos.y + 1];
+			if (!tileToOpen->getIsOpen())
+			{
+				tileToOpen->openTile();
+			}
 		}
-		else if (m_emptyTileToOpenPos.y == m_columns - 1) // Right columns
+		else if (m_tileToOpenPos.y == m_columns - 1) // Right columns
 		{
-			m_tileArray[m_emptyTileToOpenPos.x][m_emptyTileToOpenPos.y - 1]->openTile();
-			m_tileArray[m_emptyTileToOpenPos.x - 1][m_emptyTileToOpenPos.y - 1]->openTile();
-			m_tileArray[m_emptyTileToOpenPos.x - 1][m_emptyTileToOpenPos.y]->openTile();
+			tileToOpen = m_tileArray[m_tileToOpenPos.x][m_tileToOpenPos.y - 1];
+			if (!tileToOpen->getIsOpen())
+			{
+				tileToOpen->openTile();
+			}
+			tileToOpen = m_tileArray[m_tileToOpenPos.x - 1][m_tileToOpenPos.y - 1];
+			if (!tileToOpen->getIsOpen())
+			{
+				tileToOpen->openTile();
+			}
+			tileToOpen = m_tileArray[m_tileToOpenPos.x - 1][m_tileToOpenPos.y];
+			if (!tileToOpen->getIsOpen())
+			{
+				tileToOpen->openTile();
+			}
 		}
 		else
 		{
-			m_tileArray[m_emptyTileToOpenPos.x][m_emptyTileToOpenPos.y - 1]->openTile();
-			m_tileArray[m_emptyTileToOpenPos.x - 1][m_emptyTileToOpenPos.y - 1]->openTile();
-			m_tileArray[m_emptyTileToOpenPos.x - 1][m_emptyTileToOpenPos.y]->openTile();
-			m_tileArray[m_emptyTileToOpenPos.x - 1][m_emptyTileToOpenPos.y + 1]->openTile();
-			m_tileArray[m_emptyTileToOpenPos.x][m_emptyTileToOpenPos.y + 1]->openTile();
+			tileToOpen = m_tileArray[m_tileToOpenPos.x][m_tileToOpenPos.y - 1];
+			if (!tileToOpen->getIsOpen())
+			{
+				tileToOpen->openTile();
+			}
+			tileToOpen = m_tileArray[m_tileToOpenPos.x - 1][m_tileToOpenPos.y - 1];
+			if (!tileToOpen->getIsOpen())
+			{
+				tileToOpen->openTile();
+			}
+			tileToOpen = m_tileArray[m_tileToOpenPos.x - 1][m_tileToOpenPos.y];
+			if (!tileToOpen->getIsOpen())
+			{
+				tileToOpen->openTile();
+			}
+			tileToOpen = m_tileArray[m_tileToOpenPos.x - 1][m_tileToOpenPos.y + 1];
+			if (!tileToOpen->getIsOpen())
+			{
+				tileToOpen->openTile();
+			}
+			tileToOpen = m_tileArray[m_tileToOpenPos.x][m_tileToOpenPos.y + 1];
+			if (!tileToOpen->getIsOpen())
+			{
+				tileToOpen->openTile();
+			}
 		}
 	}
 	else
 	{
-		if (m_emptyTileToOpenPos.y == 0) // Left column, no corners
+		if (m_tileToOpenPos.y == 0) // Left column, no corners
 		{
-			m_tileArray[m_emptyTileToOpenPos.x - 1][m_emptyTileToOpenPos.y]->openTile();
-			m_tileArray[m_emptyTileToOpenPos.x - 1][m_emptyTileToOpenPos.y + 1]->openTile();
-			m_tileArray[m_emptyTileToOpenPos.x][m_emptyTileToOpenPos.y + 1]->openTile();
-			m_tileArray[m_emptyTileToOpenPos.x + 1][m_emptyTileToOpenPos.y + 1]->openTile();
-			m_tileArray[m_emptyTileToOpenPos.x + 1][m_emptyTileToOpenPos.y]->openTile();
+			tileToOpen = m_tileArray[m_tileToOpenPos.x - 1][m_tileToOpenPos.y];
+			if (!tileToOpen->getIsOpen())
+			{
+				tileToOpen->openTile();
+			}
+			tileToOpen = m_tileArray[m_tileToOpenPos.x - 1][m_tileToOpenPos.y + 1];
+			if (!tileToOpen->getIsOpen())
+			{
+				tileToOpen->openTile();
+			}
+			tileToOpen = m_tileArray[m_tileToOpenPos.x][m_tileToOpenPos.y + 1];
+			if (!tileToOpen->getIsOpen())
+			{
+				tileToOpen->openTile();
+			}
+			tileToOpen = m_tileArray[m_tileToOpenPos.x + 1][m_tileToOpenPos.y + 1];
+			if (!tileToOpen->getIsOpen())
+			{
+				tileToOpen->openTile();
+			}
+			tileToOpen = m_tileArray[m_tileToOpenPos.x + 1][m_tileToOpenPos.y];
+			if (!tileToOpen->getIsOpen())
+			{
+				tileToOpen->openTile();
+			}
 		}
-		else if (m_emptyTileToOpenPos.y == m_columns - 1) // Right column, no corners
+		else if (m_tileToOpenPos.y == m_columns - 1) // Right column, no corners
 		{
-			m_tileArray[m_emptyTileToOpenPos.x - 1][m_emptyTileToOpenPos.y]->openTile();
-			m_tileArray[m_emptyTileToOpenPos.x - 1][m_emptyTileToOpenPos.y - 1]->openTile();
-			m_tileArray[m_emptyTileToOpenPos.x][m_emptyTileToOpenPos.y - 1]->openTile();
-			m_tileArray[m_emptyTileToOpenPos.x + 1][m_emptyTileToOpenPos.y - 1]->openTile();
-			m_tileArray[m_emptyTileToOpenPos.x + 1][m_emptyTileToOpenPos.y]->openTile();
+			tileToOpen = m_tileArray[m_tileToOpenPos.x - 1][m_tileToOpenPos.y];
+			if (!tileToOpen->getIsOpen())
+			{
+				tileToOpen->openTile();
+			}
+			tileToOpen = m_tileArray[m_tileToOpenPos.x - 1][m_tileToOpenPos.y - 1];
+			if (!tileToOpen->getIsOpen())
+			{
+				tileToOpen->openTile();
+			}
+			tileToOpen = m_tileArray[m_tileToOpenPos.x][m_tileToOpenPos.y - 1];
+			if (!tileToOpen->getIsOpen())
+			{
+				tileToOpen->openTile();
+			}
+			tileToOpen = m_tileArray[m_tileToOpenPos.x + 1][m_tileToOpenPos.y - 1];
+			if (!tileToOpen->getIsOpen())
+			{
+				tileToOpen->openTile();
+			}
+			tileToOpen = m_tileArray[m_tileToOpenPos.x + 1][m_tileToOpenPos.y];
+			if (!tileToOpen->getIsOpen())
+			{
+				tileToOpen->openTile();
+			}
 		}
 		else // Everything inside
 		{
-			m_tileArray[m_emptyTileToOpenPos.x - 1][m_emptyTileToOpenPos.y - 1]->openTile();
-			m_tileArray[m_emptyTileToOpenPos.x - 1][m_emptyTileToOpenPos.y]->openTile();
-			m_tileArray[m_emptyTileToOpenPos.x - 1][m_emptyTileToOpenPos.y + 1]->openTile();
-			m_tileArray[m_emptyTileToOpenPos.x][m_emptyTileToOpenPos.y + 1]->openTile();
-			m_tileArray[m_emptyTileToOpenPos.x + 1][m_emptyTileToOpenPos.y + 1]->openTile();
-			m_tileArray[m_emptyTileToOpenPos.x + 1][m_emptyTileToOpenPos.y]->openTile();
-			m_tileArray[m_emptyTileToOpenPos.x + 1][m_emptyTileToOpenPos.y - 1]->openTile();
-			m_tileArray[m_emptyTileToOpenPos.x][m_emptyTileToOpenPos.y - 1]->openTile();
+			tileToOpen = m_tileArray[m_tileToOpenPos.x - 1][m_tileToOpenPos.y - 1];
+			if (!tileToOpen->getIsOpen())
+			{
+				tileToOpen->openTile();
+			}
+			tileToOpen = m_tileArray[m_tileToOpenPos.x - 1][m_tileToOpenPos.y];
+			if (!tileToOpen->getIsOpen())
+			{
+				tileToOpen->openTile();
+			}
+			tileToOpen = m_tileArray[m_tileToOpenPos.x - 1][m_tileToOpenPos.y + 1];
+			if (!tileToOpen->getIsOpen())
+			{
+				tileToOpen->openTile();
+			}
+			tileToOpen = m_tileArray[m_tileToOpenPos.x][m_tileToOpenPos.y + 1];
+			if (!tileToOpen->getIsOpen())
+			{
+				tileToOpen->openTile();
+			}
+			tileToOpen = m_tileArray[m_tileToOpenPos.x + 1][m_tileToOpenPos.y + 1];
+			if (!tileToOpen->getIsOpen())
+			{
+				tileToOpen->openTile();
+			}
+			tileToOpen = m_tileArray[m_tileToOpenPos.x + 1][m_tileToOpenPos.y];
+			if (!tileToOpen->getIsOpen())
+			{
+				tileToOpen->openTile();
+			}
+			tileToOpen = m_tileArray[m_tileToOpenPos.x + 1][m_tileToOpenPos.y - 1];
+			if (!tileToOpen->getIsOpen())
+			{
+				tileToOpen->openTile();
+			}
+			tileToOpen = m_tileArray[m_tileToOpenPos.x][m_tileToOpenPos.y - 1];
+			if (!tileToOpen->getIsOpen())
+			{
+				tileToOpen->openTile();
+			}
 		}
 	}
-	m_tileArray[m_emptyTileToOpenPos.x][m_emptyTileToOpenPos.y]->setHasOpenedAround(true);
+	m_tileArray[m_tileToOpenPos.x][m_tileToOpenPos.y]->setHasOpenedAround(true);
 }
