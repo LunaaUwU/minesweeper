@@ -23,6 +23,10 @@ public:
 
     void fillNumbers();
 
+    void checkEmptyTiles();
+
+    void openEmptyTiles(sf::Vector2i emptyTileToOpenPos);
+
     std::vector<std::vector<Tile*>> getTileArray() { return m_tileArray; }
 
 
@@ -39,6 +43,7 @@ private:
     int m_bombsLeft = 0;
 
     bool m_isFirstTile = true;
+    bool m_hasNoEmptyTiles = true;
 
     bool m_canClick = true;
     bool m_canClickHorizontal = true;
@@ -46,5 +51,7 @@ private:
 
     int m_selectedTileX = 0;
     int m_selectedTileY = 0;
+
+    sf::Vector2i m_emptyTileToOpenPos;
 
 };

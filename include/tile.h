@@ -31,6 +31,10 @@ public:
 
     int getValue() const { return m_value; }
 
+    bool getHasOpenedAround() { return m_hasOpenedAround; }
+
+    void setHasOpenedAround(bool hasOpenedAround) { m_hasOpenedAround = hasOpenedAround; }
+
     void setValue(int value) { m_value = value; }
 
 private:
@@ -40,6 +44,8 @@ private:
     int m_value = 0; // 0, 1, 2, 3, 4, 5, 6, 7, 8 are numbers, -1 is bomb, 9 is unknown and 10 is flag
 
     bool m_active = false;
+
+    bool m_hasOpenedAround = false;
 
     bool m_isSelected = false;
 
