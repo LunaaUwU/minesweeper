@@ -19,7 +19,7 @@ void Tileset::update(sf::Int32 deltaMS)
 		if (m_isFirstTile)
 		{
 			fillBombs();
-			// TODO set tile values
+			fillNumbers();
 			m_isFirstTile = false;
 		}
 		m_canClick = false;
@@ -206,14 +206,211 @@ void Tileset::fillBombs()
 	}
 }
 
-bool Tileset::checkAdjacentInts(int firstInt, int secondInt)
+void Tileset::fillNumbers()
 {
-	if (firstInt == secondInt - 1 || firstInt == secondInt + 1)
+	for (int i = 0; i < m_tileArray.size(); i++)
 	{
-		return true;
-	}
-	else
-	{
-		return false;
+		for (int j = 0; j < m_tileArray[i].size(); j++)
+		{
+			if (m_tileArray[i][j]->getValue() != -1)
+			{
+				if (i == 0) // Up row
+				{
+					if (j == 0) // Left column
+					{
+						if (m_tileArray[i][j+1]->getValue() == -1)
+						{
+							m_tileArray[i][j]->setValue(m_tileArray[i][j]->getValue() + 1);
+						}
+						if (m_tileArray[i+1][j+1]->getValue() == -1)
+						{
+							m_tileArray[i][j]->setValue(m_tileArray[i][j]->getValue() + 1);
+						}
+						if (m_tileArray[i+1][j]->getValue() == -1)
+						{
+							m_tileArray[i][j]->setValue(m_tileArray[i][j]->getValue() + 1);
+						}
+					}
+					else if (j == m_columns - 1) // Right column
+					{
+						if (m_tileArray[i][j-1]->getValue() == -1)
+						{
+							m_tileArray[i][j]->setValue(m_tileArray[i][j]->getValue() + 1);
+						}
+						if (m_tileArray[i+1][j-1]->getValue() == -1)
+						{
+							m_tileArray[i][j]->setValue(m_tileArray[i][j]->getValue() + 1);
+						}
+						if (m_tileArray[i+1][j]->getValue() == -1)
+						{
+							m_tileArray[i][j]->setValue(m_tileArray[i][j]->getValue() + 1);
+						}
+					}
+					else
+					{
+						if (m_tileArray[i][j-1]->getValue() == -1)
+						{
+							m_tileArray[i][j]->setValue(m_tileArray[i][j]->getValue() + 1);
+						}
+						if (m_tileArray[i+1][j-1]->getValue() == -1)
+						{
+							m_tileArray[i][j]->setValue(m_tileArray[i][j]->getValue() + 1);
+						}
+						if (m_tileArray[i+1][j]->getValue() == -1)
+						{
+							m_tileArray[i][j]->setValue(m_tileArray[i][j]->getValue() + 1);
+						}
+						if (m_tileArray[i+1][j+1]->getValue() == -1)
+						{
+							m_tileArray[i][j]->setValue(m_tileArray[i][j]->getValue() + 1);
+						}
+						if (m_tileArray[i][j+1]->getValue() == -1)
+						{
+							m_tileArray[i][j]->setValue(m_tileArray[i][j]->getValue() + 1);
+						}
+					}
+				}
+				else if (i == m_rows - 1) // Down row
+				{
+					if (j == 0) // Left column
+					{
+						if (m_tileArray[i-1][j]->getValue() == -1)
+						{
+							m_tileArray[i][j]->setValue(m_tileArray[i][j]->getValue() + 1);
+						}
+						if (m_tileArray[i-1][j+1]->getValue() == -1)
+						{
+							m_tileArray[i][j]->setValue(m_tileArray[i][j]->getValue() + 1);
+						}
+						if (m_tileArray[i][j+1]->getValue() == -1)
+						{
+							m_tileArray[i][j]->setValue(m_tileArray[i][j]->getValue() + 1);
+						}
+					}
+					else if (j == m_columns - 1) // Right columns
+					{
+						if (m_tileArray[i][j-1]->getValue() == -1)
+						{
+							m_tileArray[i][j]->setValue(m_tileArray[i][j]->getValue() + 1);
+						}
+						if (m_tileArray[i-1][j-1]->getValue() == -1)
+						{
+							m_tileArray[i][j]->setValue(m_tileArray[i][j]->getValue() + 1);
+						}
+						if (m_tileArray[i-1][j]->getValue() == -1)
+						{
+							m_tileArray[i][j]->setValue(m_tileArray[i][j]->getValue() + 1);
+						}
+					}
+					else
+					{
+						if (m_tileArray[i][j-1]->getValue() == -1)
+						{
+							m_tileArray[i][j]->setValue(m_tileArray[i][j]->getValue() + 1);
+						}
+						if (m_tileArray[i-1][j-1]->getValue() == -1)
+						{
+							m_tileArray[i][j]->setValue(m_tileArray[i][j]->getValue() + 1);
+						}
+						if (m_tileArray[i-1][j]->getValue() == -1)
+						{
+							m_tileArray[i][j]->setValue(m_tileArray[i][j]->getValue() + 1);
+						}
+						if (m_tileArray[i-1][j+1]->getValue() == -1)
+						{
+							m_tileArray[i][j]->setValue(m_tileArray[i][j]->getValue() + 1);
+						}
+						if (m_tileArray[i][j+1]->getValue() == -1)
+						{
+							m_tileArray[i][j]->setValue(m_tileArray[i][j]->getValue() + 1);
+						}
+					}
+				}
+				else
+				{
+					if (j == 0) // Left column, no corners
+					{
+						if (m_tileArray[i-1][j]->getValue() == -1)
+						{
+							m_tileArray[i][j]->setValue(m_tileArray[i][j]->getValue() + 1);
+						}
+						if (m_tileArray[i-1][j+1]->getValue() == -1)
+						{
+							m_tileArray[i][j]->setValue(m_tileArray[i][j]->getValue() + 1);
+						}
+						if (m_tileArray[i][j+1]->getValue() == -1)
+						{
+							m_tileArray[i][j]->setValue(m_tileArray[i][j]->getValue() + 1);
+						}
+						if (m_tileArray[i+1][j+1]->getValue() == -1)
+						{
+							m_tileArray[i][j]->setValue(m_tileArray[i][j]->getValue() + 1);
+						}
+						if (m_tileArray[i+1][j]->getValue() == -1)
+						{
+							m_tileArray[i][j]->setValue(m_tileArray[i][j]->getValue() + 1);
+						}
+					}
+					else if (j == m_columns - 1) // Right column, no corners
+					{
+						if (m_tileArray[i-1][j]->getValue() == -1)
+						{
+							m_tileArray[i][j]->setValue(m_tileArray[i][j]->getValue() + 1);
+						}
+						if (m_tileArray[i-1][j-1]->getValue() == -1)
+						{
+							m_tileArray[i][j]->setValue(m_tileArray[i][j]->getValue() + 1);
+						}
+						if (m_tileArray[i][j-1]->getValue() == -1)
+						{
+							m_tileArray[i][j]->setValue(m_tileArray[i][j]->getValue() + 1);
+						}
+						if (m_tileArray[i+1][j-1]->getValue() == -1)
+						{
+							m_tileArray[i][j]->setValue(m_tileArray[i][j]->getValue() + 1);
+						}
+						if (m_tileArray[i+1][j]->getValue() == -1)
+						{
+							m_tileArray[i][j]->setValue(m_tileArray[i][j]->getValue() + 1);
+						}
+					}
+					else // Everything inside
+					{
+						if (m_tileArray[i-1][j-1]->getValue() == -1)
+						{
+							m_tileArray[i][j]->setValue(m_tileArray[i][j]->getValue() + 1);
+						}
+						if (m_tileArray[i-1][j]->getValue() == -1)
+						{
+							m_tileArray[i][j]->setValue(m_tileArray[i][j]->getValue() + 1);
+						}
+						if (m_tileArray[i-1][j+1]->getValue() == -1)
+						{
+							m_tileArray[i][j]->setValue(m_tileArray[i][j]->getValue() + 1);
+						}
+						if (m_tileArray[i][j+1]->getValue() == -1)
+						{
+							m_tileArray[i][j]->setValue(m_tileArray[i][j]->getValue() + 1);
+						}
+						if (m_tileArray[i+1][j+1]->getValue() == -1)
+						{
+							m_tileArray[i][j]->setValue(m_tileArray[i][j]->getValue() + 1);
+						}
+						if (m_tileArray[i+1][j]->getValue() == -1)
+						{
+							m_tileArray[i][j]->setValue(m_tileArray[i][j]->getValue() + 1);
+						}
+						if (m_tileArray[i+1][j-1]->getValue() == -1)
+						{
+							m_tileArray[i][j]->setValue(m_tileArray[i][j]->getValue() + 1);
+						}
+						if (m_tileArray[i][j-1]->getValue() == -1)
+						{
+							m_tileArray[i][j]->setValue(m_tileArray[i][j]->getValue() + 1);
+						}
+					}
+				}
+			}
+		}
 	}
 }

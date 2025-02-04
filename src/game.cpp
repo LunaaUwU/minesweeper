@@ -23,8 +23,8 @@ void Game::render(sf::RenderWindow& window)
 
 void Game::init()
 {
-    m_rows = 5;
-    m_columns = 10;
+    m_rows = 10;
+    m_columns = 15;
 
     m_numberOfBombs = 30;
 
