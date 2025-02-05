@@ -23,9 +23,11 @@ public:
 
     void fillNumbers();
 
-    void checkEmptyTiles();
+    void checkTilesAround();
 
-    void openEmptyTiles();
+    void openTilesAround();
+
+    void checkFlagsAround();
 
     std::vector<std::vector<Tile*>> getTileArray() { return m_tileArray; }
 
@@ -44,6 +46,7 @@ private:
 
     bool m_isFirstTile = true;
     bool m_hasNoEmptyTiles = true;
+    bool m_hasBeenFlagged = false;
 
     bool m_canClick = true;
     bool m_canClickHorizontal = true;
