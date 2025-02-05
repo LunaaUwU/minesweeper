@@ -5,7 +5,7 @@ class Tile
 {
 public:
 
-    void update(sf::Int32 deltaMS);
+    /*void update(sf::Int32 deltaMS);*/
 
     void render(sf::RenderWindow& window);
 
@@ -31,11 +31,11 @@ public:
 
     int getValue() const { return m_value; }
 
-    bool getHasOpenedAround() { return m_hasOpenedAround; }
+    bool getHasOpenedAround() const { return m_hasOpenedAround; }
 
-    void setHasOpenedAround(bool hasOpenedAround) { m_hasOpenedAround = hasOpenedAround; }
+    void setHasOpenedAround(const bool hasOpenedAround) { m_hasOpenedAround = hasOpenedAround; }
 
-    void setValue(int value) { m_value = value; }
+    void setValue(const int value) { m_value = value; }
 
 private:
 

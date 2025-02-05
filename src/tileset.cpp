@@ -5,13 +5,13 @@
 
 void Tileset::update(sf::Int32 deltaMS)
 {
-	for (const std::vector<Tile*> &row : m_tileArray)
+	/*for (const std::vector<Tile*> &row : m_tileArray)
 	{
 		for (Tile* tile : row)
 		{
 			tile->update(deltaMS);
 		}
-	}
+	}*/
 
 	if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) || sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) && !m_tileArray[m_selectedTileX][m_selectedTileY]->getIsFlagged() && m_canClick && !sf::Keyboard::isKeyPressed(sf::Keyboard::X))
 	{
@@ -127,7 +127,7 @@ void Tileset::update(sf::Int32 deltaMS)
 	}
 }
 
-void Tileset::render(sf::RenderWindow& window)
+void Tileset::render(sf::RenderWindow& window) const
 {
 	for (const std::vector<Tile*> &row : m_tileArray)
 	{
@@ -138,7 +138,7 @@ void Tileset::render(sf::RenderWindow& window)
 	}
 }
 
-void Tileset::init(int rows, int columns, int numberOfBombs)
+void Tileset::init(const int rows, const int columns, const int numberOfBombs)
 {
 	m_tileArray.resize(rows, std::vector<Tile*>(columns, nullptr)); // Resize the matrix to make it of size (rows, columns)
 
@@ -157,7 +157,7 @@ void Tileset::init(int rows, int columns, int numberOfBombs)
 	m_allInstantiatedTiles = rows * columns;
 }
 
-void Tileset::activate(int posX, int posY)
+void Tileset::activate(const int posX, const int posY) const
 {
 	std::cout << "Attempting to spawn a tile in pos (" << posX << "," << posY << ")...\n";
 
@@ -177,7 +177,7 @@ void Tileset::activate(int posX, int posY)
 	std::cout << "Inactive tile not found\n";
 }
 
-void Tileset::restart()
+void Tileset::restart() const
 {
 	for (const std::vector<Tile*> &row : m_tileArray)
 	{
@@ -222,7 +222,7 @@ void Tileset::fillBombs()
 	}
 }
 
-void Tileset::fillNumbers()
+void Tileset::fillNumbers() const
 {
 	for (int i = 0; i < m_tileArray.size(); i++)
 	{
@@ -450,7 +450,7 @@ void Tileset::checkTilesAround()
 	m_hasNoEmptyTiles = true;
 }
 
-void Tileset::openTilesAround()
+void Tileset::openTilesAround() const
 {
 	std::cout << "Opening tiles around...\n";
 	Tile* tileToOpen;

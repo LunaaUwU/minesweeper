@@ -1,9 +1,9 @@
 #include <tile.h>
 
-void Tile::update(sf::Int32 deltaMS)
-{
-    
-}
+//void Tile::update(sf::Int32 deltaMS)
+//{
+//    
+//}
 
 void Tile::render(sf::RenderWindow& window)
 {
@@ -46,7 +46,7 @@ void Tile::restart()
 
 }
 
-void Tile::activate(int posX, int posY)
+void Tile::activate(const int posX, const int posY)
 {
     m_tile.setPosition(posX, posY);
     m_active = true;

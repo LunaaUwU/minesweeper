@@ -9,21 +9,21 @@ public:
 
     void update(sf::Int32 deltaMS);
 
-    void render(sf::RenderWindow& window);
+    void render(sf::RenderWindow& window) const;
 
     void init(int rows, int columns, int numberOfBombs);
 
-    void activate(int posX, int posY);
+    void activate(int posX, int posY) const;
 
-    void restart();
+    void restart() const;
 
     void fillBombs();
 
-    void fillNumbers();
+    void fillNumbers() const;
 
     void checkTilesAround();
 
-    void openTilesAround();
+    void openTilesAround() const;
 
     void checkFlagsAround();
 
