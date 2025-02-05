@@ -896,7 +896,7 @@ void Tileset::checkFlagsAround()
 		}
 	}
 	std::cout << flagsAround << " flags found\n";
-	if (flagsAround == m_tileArray[m_selectedTileX][m_selectedTileY]->getValue())
+	if (flagsAround >= m_tileArray[m_selectedTileX][m_selectedTileY]->getValue())
 	{
 		m_hasBeenFlagged = true;
 		m_tileToOpenPos.x = m_selectedTileX;
