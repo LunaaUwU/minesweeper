@@ -13,8 +13,6 @@ public:
 
     void init(int rows, int columns, int numberOfBombs);
 
-    void instantiate();
-
     void activate(int posX, int posY);
 
     void restart();

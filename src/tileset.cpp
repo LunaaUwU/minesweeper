@@ -157,11 +157,6 @@ void Tileset::init(int rows, int columns, int numberOfBombs)
 	m_allInstantiatedTiles = rows * columns;
 }
 
-void Tileset::instantiate()
-{
-	
-}
-
 void Tileset::activate(int posX, int posY)
 {
 	std::cout << "Attempting to spawn a tile in pos (" << posX << "," << posY << ")...\n";
