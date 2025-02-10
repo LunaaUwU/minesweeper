@@ -20,23 +20,23 @@ void Tile::render(sf::RenderWindow& window)
 void Tile::init()
 {
     m_tile.setSize(sf::Vector2f(32.f, 32.f));
-    m_tileUnkwnownTexture.loadFromFile("../sprites/Tiles/TileUnknown.png");
+    m_tileUnkwnownTexture.loadFromFile("../sprites/tiles/TileUnknown.png");
     m_tile.setTexture(&m_tileUnkwnownTexture);
 
-    m_tile0Texture.loadFromFile("../sprites/Tiles/Tile0.png");
-    m_tile1Texture.loadFromFile("../sprites/Tiles/Tile1.png");
-    m_tile2Texture.loadFromFile("../sprites/Tiles/Tile2.png");
-    m_tile3Texture.loadFromFile("../sprites/Tiles/Tile3.png");
-    m_tile4Texture.loadFromFile("../sprites/Tiles/Tile4.png");
-    m_tile5Texture.loadFromFile("../sprites/Tiles/Tile5.png");
-    m_tile6Texture.loadFromFile("../sprites/Tiles/Tile6.png");
-    m_tile7Texture.loadFromFile("../sprites/Tiles/Tile7.png");
-    m_tile8Texture.loadFromFile("../sprites/Tiles/Tile8.png");
-    m_tileFlagTexture.loadFromFile("../sprites/Tiles/TileFlag.png");
-    m_tileMineTexture.loadFromFile("../sprites/Tiles/TileMine.png");
+    m_tile0Texture.loadFromFile("../sprites/tiles/Tile0.png");
+    m_tile1Texture.loadFromFile("../sprites/tiles/Tile1.png");
+    m_tile2Texture.loadFromFile("../sprites/tiles/Tile2.png");
+    m_tile3Texture.loadFromFile("../sprites/tiles/Tile3.png");
+    m_tile4Texture.loadFromFile("../sprites/tiles/Tile4.png");
+    m_tile5Texture.loadFromFile("../sprites/tiles/Tile5.png");
+    m_tile6Texture.loadFromFile("../sprites/tiles/Tile6.png");
+    m_tile7Texture.loadFromFile("../sprites/tiles/Tile7.png");
+    m_tile8Texture.loadFromFile("../sprites/tiles/Tile8.png");
+    m_tileFlagTexture.loadFromFile("../sprites/tiles/TileFlag.png");
+    m_tileMineTexture.loadFromFile("../sprites/tiles/TileMine.png");
 
     m_select.setSize(sf::Vector2f(32.f, 32.f));
-    m_selectTexture.loadFromFile("../sprites/Tiles/Select.png");
+    m_selectTexture.loadFromFile("../sprites/tiles/Select.png");
     m_select.setTexture(&m_selectTexture);
 
 }
