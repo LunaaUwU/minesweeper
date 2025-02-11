@@ -1,5 +1,6 @@
 #include <iostream>
-#include <tileset.h>
+#include "tileset.h"
+#include "game.h"
 
 #include <random>
 
@@ -13,7 +14,7 @@ void Tileset::update(sf::Int32 deltaMS)
 		}
 	}*/
 
-	if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) || sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) && !m_tileArray[m_selectedTileX][m_selectedTileY]->getIsFlagged() && m_canClick && !sf::Keyboard::isKeyPressed(sf::Keyboard::X))
+	if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) || sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) && !m_tileArray[m_selectedTileX][m_selectedTileY]->getIsFlagged() && Game::canClick && !sf::Keyboard::isKeyPressed(sf::Keyboard::X))
 	{
 		if (!m_tileArray[m_selectedTileX][m_selectedTileY]->getIsOpen())
 		{
@@ -44,16 +45,16 @@ void Tileset::update(sf::Int32 deltaMS)
 			}
 			checkTilesAround();
 		}
-		m_canClick = false;
+		Game::canClick = false;
 	}
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::X) && !m_tileArray[m_selectedTileX][m_selectedTileY]->getIsOpen() && m_canClick && !sf::Keyboard::isKeyPressed(sf::Keyboard::Z) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::X) && !m_tileArray[m_selectedTileX][m_selectedTileY]->getIsOpen() && Game::canClick && !sf::Keyboard::isKeyPressed(sf::Keyboard::Z) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 	{
 		m_tileArray[m_selectedTileX][m_selectedTileY]->flagTile();
-		m_canClick = false;
+		Game::canClick = false;
 	}
 	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::X) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Z) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
 	{
-		m_canClick = true;
+		Game::canClick = true;
 	}
 
 	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::X) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Z) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))

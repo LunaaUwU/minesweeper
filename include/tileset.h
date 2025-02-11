@@ -1,7 +1,9 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 
-#include <Tile.h>
+#include "tile.h"
+
+class Game;
 
 class Tileset
 {
@@ -29,7 +31,6 @@ public:
 
     std::vector<std::vector<Tile*>> getTileArray() { return m_tileArray; }
 
-
 private:
 
     std::vector<std::vector<Tile*>> m_tileArray;
@@ -46,7 +47,7 @@ private:
     bool m_hasNoEmptyTiles = true;
     bool m_hasBeenFlagged = false;
 
-    bool m_canClick = true;
+    
     bool m_canClickHorizontal = true;
     bool m_canClickVertical = true;
 
