@@ -40,6 +40,11 @@ void Game::update(const sf::Int32 deltaMS)
     {
         canClick = false;
     }
+
+    if (gameOver)
+    {
+        restart();
+    }
 }
 
 void Game::render(sf::RenderWindow& window)
@@ -124,5 +129,9 @@ void Game::instantiate()
 
 void Game::restart()
 {
+    m_isMainMenuActive = true;
+    m_mainMenuSelection = true;
+    gameOver = false;
     m_tileset->restart();
+    instantiate();
 }

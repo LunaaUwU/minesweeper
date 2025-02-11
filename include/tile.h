@@ -1,6 +1,8 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 
+class Game;
+
 class Tile
 {
 public:
@@ -10,8 +12,6 @@ public:
     void render(sf::RenderWindow& window);
 
     void init();
-
-    void restart();
 
     void activate(int posX, int posY);
 

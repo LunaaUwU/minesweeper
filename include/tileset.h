@@ -17,7 +17,7 @@ public:
 
     void activate(int posX, int posY) const;
 
-    void restart() const;
+    void restart();
 
     void fillBombs();
 

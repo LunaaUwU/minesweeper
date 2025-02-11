@@ -1,4 +1,6 @@
-#include <tile.h>
+#include "tile.h"
+
+#include "game.h"
 
 //void Tile::update(sf::Int32 deltaMS)
 //{
@@ -38,11 +40,6 @@ void Tile::init()
     m_select.setSize(sf::Vector2f(32.f, 32.f));
     m_selectTexture.loadFromFile("../sprites/tiles/Select.png");
     m_select.setTexture(&m_selectTexture);
-
-}
-
-void Tile::restart()
-{
 
 }
 
@@ -124,6 +121,10 @@ void Tile::openTile()
 {
     this->changeTile(m_value);
     m_isOpened = true;
+    if (m_value == -1)
+    {
+        Game::gameOver = true;
+    }
 }
 
 void Tile::flagTile()

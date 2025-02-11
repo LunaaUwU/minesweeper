@@ -178,15 +178,22 @@ void Tileset::activate(const int posX, const int posY) const
 	std::cout << "Inactive tile not found\n";
 }
 
-void Tileset::restart() const
+void Tileset::restart()
 {
 	for (const std::vector<Tile*> &row : m_tileArray)
 	{
 		for (Tile* tile : row)
 		{
-			tile->restart();
+			delete tile;
 		}
 	}
+
+	m_tileArray.clear();
+
+	m_isFirstTile = true;
+
+	m_selectedTileX = 0;
+	m_selectedTileY = 0;
 }
 
 

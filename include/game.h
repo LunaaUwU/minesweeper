@@ -20,6 +20,8 @@ public:
 
     inline static bool closeGame = false;
 
+    inline static bool gameOver = false;
+
     inline static bool canClick = true;
 
 private:
