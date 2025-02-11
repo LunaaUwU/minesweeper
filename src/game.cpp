@@ -116,7 +116,8 @@ void Game::instantiate()
 
     m_firstSpawnPosX = 960 - (m_columns * 16);
 
-    m_firstSpawnPosY = 540 - (m_rows * 16);
+    //                 540
+    m_firstSpawnPosY = 636 - (m_rows * 16);
 
     m_spawnPosX = m_firstSpawnPosX;
     m_spawnPosY = m_firstSpawnPosY;
@@ -138,6 +139,10 @@ void Game::instantiate()
     }
 
     m_tileset->getTileArray()[0][0]->select();
+
+    // Bomb counter
+
+    m_tileset->spawnBombCounter(m_firstSpawnPosX, m_firstSpawnPosY - 96);
 }
 
 void Game::restart()

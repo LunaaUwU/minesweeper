@@ -49,7 +49,16 @@ void Tileset::update(sf::Int32 deltaMS)
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::X) && !m_tileArray[m_selectedTileX][m_selectedTileY]->getIsOpen() && Game::canClick && !sf::Keyboard::isKeyPressed(sf::Keyboard::Z) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 	{
+		if (m_tileArray[m_selectedTileX][m_selectedTileY]->getIsFlagged())
+			m_numberOfBombs++;
+		else
+			m_numberOfBombs--;
+		if (m_numberOfBombs < 0)
+			m_numberOfBombs = 0;
 		m_tileArray[m_selectedTileX][m_selectedTileY]->flagTile();
+
+		updateBombCounter();
+		
 		Game::canClick = false;
 	}
 	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::X) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Z) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
@@ -137,6 +146,9 @@ void Tileset::render(sf::RenderWindow& window) const
 			tile->render(window);
 		}
 	}
+
+	m_bombCounterTile1->render(window);
+	m_bombCounterTile2->render(window);
 }
 
 void Tileset::init(const int rows, const int columns, const int numberOfBombs)
@@ -915,3 +927,31 @@ void Tileset::checkFlagsAround()
 		m_hasBeenFlagged = false;
 	}
 }
+
+void Tileset::spawnBombCounter(int posX, int posY)
+{
+	m_bombCounterTile1->init();
+	m_bombCounterTile2->init();
+
+	m_bombCounterTile1->setPosition(posX, posY);
+	m_bombCounterTile2->setPosition(posX + 32, posY);
+
+	m_bombCounterTile1->setValue(m_numberOfBombs / 10);
+	m_bombCounterTile1->openTile();
+
+	m_bombCounterTile2->setValue(m_numberOfBombs - (m_numberOfBombs / 10 * 10));
+	m_bombCounterTile2->openTile();
+
+	m_bombCounterTile1->setActive(true);
+	m_bombCounterTile2->setActive(true);
+}
+
+void Tileset::updateBombCounter()
+{
+	m_bombCounterTile1->setValue(m_numberOfBombs / 10);
+	m_bombCounterTile1->changeTile(m_bombCounterTile1->getValue());
+
+	m_bombCounterTile2->setValue(m_numberOfBombs - (m_numberOfBombs / 10 * 10));
+	m_bombCounterTile2->changeTile(m_bombCounterTile2->getValue());
+}
+

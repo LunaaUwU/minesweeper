@@ -33,9 +33,13 @@ public:
 
     bool getHasOpenedAround() const { return m_hasOpenedAround; }
 
+    void setActive(const bool active) { m_active = active; }
+
     void setHasOpenedAround(const bool hasOpenedAround) { m_hasOpenedAround = hasOpenedAround; }
 
     void setValue(const int value) { m_value = value; }
+
+    void setPosition(int posX, int posY) { m_tile.setPosition(posX, posY); }
 
 private:
 

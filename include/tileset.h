@@ -29,6 +29,10 @@ public:
 
     void checkFlagsAround();
 
+    void spawnBombCounter(int posX, int posY);
+
+    void updateBombCounter();
+
     std::vector<std::vector<Tile*>> getTileArray() { return m_tileArray; }
 
 private:
@@ -55,5 +59,8 @@ private:
     int m_selectedTileY = 0;
 
     sf::Vector2i m_tileToOpenPos;
+
+    Tile* m_bombCounterTile1 = new Tile();
+    Tile* m_bombCounterTile2 = new Tile();
 
 };
