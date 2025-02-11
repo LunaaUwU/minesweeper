@@ -10,7 +10,7 @@ public:
 
     void update(sf::Int32 deltaMS);
 
-    void render(sf::RenderWindow& window);
+    void render(sf::RenderWindow& window) const;
 
     void init();
 
@@ -50,5 +50,7 @@ private:
     sf::Texture m_mainMenuPlayTexture;
     sf::Sprite m_mainMenuQuitSprite;
     sf::Texture m_mainMenuQuitTexture;
+
+    bool m_canQuit = true;
 
 };

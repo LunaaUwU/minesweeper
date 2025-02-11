@@ -26,10 +26,28 @@ void Game::update(const sf::Int32 deltaMS)
                 closeGame = true;
             }
         }
+        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) && m_canQuit)
+        {
+            closeGame = true;
+        }
+        else if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+        {
+            m_canQuit = true;
+        }
     }
     else
     {
         m_tileset->update(deltaMS);
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+        {
+            m_canQuit = false;
+            restart();
+        }
+        else if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+        {
+            m_canQuit = true;
+        }
     }
 
     if (!sf::Keyboard::isKeyPressed(sf::Keyboard::X) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Z) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
@@ -47,7 +65,7 @@ void Game::update(const sf::Int32 deltaMS)
     }
 }
 
-void Game::render(sf::RenderWindow& window)
+void Game::render(sf::RenderWindow& window) const
 {
     
     window.clear();
@@ -71,11 +89,6 @@ void Game::render(sf::RenderWindow& window)
     else
     {
         m_tileset->render(window);
-    }
-
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
-    {
-        window.close();
     }
 
     window.display();
