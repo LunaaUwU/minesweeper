@@ -71,9 +71,9 @@ void Tileset::update(sf::Int32 deltaMS)
 	}
 	else
 	{
-		if (m_doOnce)
+		if (m_doOnce) // Until you un-press Z or whatever you opened the last tile with
 		{
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z))
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z) || sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
 			{
 				Game::canClick = false;
 			}
