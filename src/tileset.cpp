@@ -46,6 +46,9 @@ void Tileset::update(sf::Int32 deltaMS)
 			checkTilesAround();
 		}
 		Game::canClick = false;
+
+		if (checkWin())
+			Game::gameOver = true;
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::X) && !m_tileArray[m_selectedTileX][m_selectedTileY]->getIsOpen() && Game::canClick && !sf::Keyboard::isKeyPressed(sf::Keyboard::Z) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 	{
@@ -974,5 +977,21 @@ void Tileset::updateBombCounter()
 		m_bombCounterTile2->setValue(m_numberOfBombs - (m_numberOfBombs / 10 * 10));
 		m_bombCounterTile2->changeTile(m_bombCounterTile2->getValue());
 	}
+}
+
+
+bool Tileset::checkWin() const
+{
+	for (std::vector<Tile*> row : m_tileArray)
+	{
+		for (Tile* tile : row)
+		{
+			if (!tile->getIsOpen() && tile->getValue() != -1)
+			{
+				return false;
+			}
+		}
+	}
+	return true;
 }
 

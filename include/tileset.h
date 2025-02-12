@@ -33,6 +33,8 @@ public:
 
     void updateBombCounter();
 
+    bool checkWin() const;
+
     std::vector<std::vector<Tile*>> getTileArray() { return m_tileArray; }
 
 private:
