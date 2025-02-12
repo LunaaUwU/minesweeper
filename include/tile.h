@@ -73,6 +73,7 @@ private:
     sf::Texture m_tile8Texture;
     sf::Texture m_tile9Texture;
     sf::Texture m_tileFlagTexture;
+    sf::Texture m_tileWrongFlagTexture;
     sf::Texture m_tileMineTexture;
     sf::Texture m_tileRedMineTexture;
 

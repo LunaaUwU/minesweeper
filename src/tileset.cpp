@@ -28,7 +28,7 @@ void Tileset::update(sf::Int32 deltaMS)
 					m_isFirstTile = false;
 				}
 			}
-			else if (m_tileArray[m_selectedTileX][m_selectedTileY]->getValue() != 0 && m_tileArray[m_selectedTileX][m_selectedTileY]->getIsOpen())
+			else if (m_tileArray[m_selectedTileX][m_selectedTileY]->getIsOpen())
 			{
 				checkFlagsAround();
 				if (m_hasBeenFlagged == true)
@@ -86,8 +86,10 @@ void Tileset::update(sf::Int32 deltaMS)
 						{
 							for (Tile* tile : row)
 							{
-								if (tile->getValue() == -1)
+								if (tile->getValue() == -1 && !tile->getIsOpen() && !tile->getIsFlagged())
 									tile->openTile(false);
+								else if (tile->getIsFlagged() && tile->getValue() != -1)
+									tile->changeTile(12);
 							}
 						}
 						m_bombCounterBomb->changeTile(-2);

@@ -37,6 +37,7 @@ void Tile::init()
     m_tile8Texture.loadFromFile("../sprites/tiles/Tile8.png");
     m_tile9Texture.loadFromFile("../sprites/tiles/Tile9.png");
     m_tileFlagTexture.loadFromFile("../sprites/tiles/TileFlag.png");
+    m_tileWrongFlagTexture.loadFromFile("../sprites/tiles/TileWrongFlag.png");
     m_tileMineTexture.loadFromFile("../sprites/tiles/TileMine.png");
     m_tileRedMineTexture.loadFromFile("../sprites/tiles/TileExploded.png");
 
@@ -119,6 +120,11 @@ void Tile::changeTile(int value)
         case 11:
         {
             m_tile.setTexture(&m_tileFlagTexture);
+            break;
+        }
+		case 12:
+		{
+            m_tile.setTexture(&m_tileWrongFlagTexture);
             break;
         }
 		default:
