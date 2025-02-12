@@ -259,6 +259,7 @@ void Tileset::restart()
 	m_tileArray.clear();
 
 	gameFinished = false;
+	gameWon = false;
 	m_doOnce = true;
 	m_doOnce2 = true;
 	m_isFirstTile = true;
