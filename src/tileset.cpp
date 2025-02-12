@@ -20,7 +20,7 @@ void Tileset::update(sf::Int32 deltaMS)
 		{
 			if (!m_tileArray[m_selectedTileX][m_selectedTileY]->getIsOpen())
 			{
-				m_tileArray[m_selectedTileX][m_selectedTileY]->openTile();
+				m_tileArray[m_selectedTileX][m_selectedTileY]->openTile(true);
 				if (m_isFirstTile)
 				{
 					fillBombs();
@@ -78,8 +78,23 @@ void Tileset::update(sf::Int32 deltaMS)
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z) || sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
 			{
 				Game::canClick = false;
-				if (!gameWon)
-					m_bombCounterBomb->changeTile(-2);
+				if (m_doOnce2)
+				{
+					if (!gameWon)
+					{
+						for (std::vector<Tile*> row : m_tileArray)
+						{
+							for (Tile* tile : row)
+							{
+								if (tile->getValue() == -1)
+									tile->openTile(false);
+							}
+						}
+						m_bombCounterBomb->changeTile(-2);
+					}
+					m_doOnce2 = false;
+				}
+				
 			}
 			else
 			{
@@ -243,6 +258,7 @@ void Tileset::restart()
 
 	gameFinished = false;
 	m_doOnce = true;
+	m_doOnce2 = true;
 	m_isFirstTile = true;
 
 	m_selectedTileX = 0;
@@ -523,17 +539,17 @@ void Tileset::openTilesAround() const
 			tileToOpen = m_tileArray[m_tileToOpenPos.x][m_tileToOpenPos.y + 1];
 			if (!tileToOpen->getIsOpen() && !tileToOpen->getIsFlagged())
 			{
-				tileToOpen->openTile();
+				tileToOpen->openTile(true);
 			}
 			tileToOpen = m_tileArray[m_tileToOpenPos.x + 1][m_tileToOpenPos.y + 1];
 			if (!tileToOpen->getIsOpen() && !tileToOpen->getIsFlagged())
 			{
-				tileToOpen->openTile();
+				tileToOpen->openTile(true);
 			}
 			tileToOpen = m_tileArray[m_tileToOpenPos.x + 1][m_tileToOpenPos.y];
 			if (!tileToOpen->getIsOpen() && !tileToOpen->getIsFlagged())
 			{
-				tileToOpen->openTile();
+				tileToOpen->openTile(true);
 			}
 		}
 		else if (m_tileToOpenPos.y == m_columns - 1) // Right column
@@ -541,17 +557,17 @@ void Tileset::openTilesAround() const
 			tileToOpen = m_tileArray[m_tileToOpenPos.x][m_tileToOpenPos.y - 1];
 			if (!tileToOpen->getIsOpen() && !tileToOpen->getIsFlagged())
 			{
-				tileToOpen->openTile();
+				tileToOpen->openTile(true);
 			}
 			tileToOpen = m_tileArray[m_tileToOpenPos.x + 1][m_tileToOpenPos.y - 1];
 			if (!tileToOpen->getIsOpen() && !tileToOpen->getIsFlagged())
 			{
-				tileToOpen->openTile();
+				tileToOpen->openTile(true);
 			}
 			tileToOpen = m_tileArray[m_tileToOpenPos.x + 1][m_tileToOpenPos.y];
 			if (!tileToOpen->getIsOpen() && !tileToOpen->getIsFlagged())
 			{
-				tileToOpen->openTile();
+				tileToOpen->openTile(true);
 			}
 		}
 		else
@@ -559,27 +575,27 @@ void Tileset::openTilesAround() const
 			tileToOpen = m_tileArray[m_tileToOpenPos.x][m_tileToOpenPos.y - 1];
 			if (!tileToOpen->getIsOpen() && !tileToOpen->getIsFlagged())
 			{
-				tileToOpen->openTile();
+				tileToOpen->openTile(true);
 			}
 			tileToOpen = m_tileArray[m_tileToOpenPos.x + 1][m_tileToOpenPos.y - 1];
 			if (!tileToOpen->getIsOpen() && !tileToOpen->getIsFlagged())
 			{
-				tileToOpen->openTile();
+				tileToOpen->openTile(true);
 			}
 			tileToOpen = m_tileArray[m_tileToOpenPos.x + 1][m_tileToOpenPos.y];
 			if (!tileToOpen->getIsOpen() && !tileToOpen->getIsFlagged())
 			{
-				tileToOpen->openTile();
+				tileToOpen->openTile(true);
 			}
 			tileToOpen = m_tileArray[m_tileToOpenPos.x + 1][m_tileToOpenPos.y + 1];
 			if (!tileToOpen->getIsOpen() && !tileToOpen->getIsFlagged())
 			{
-				tileToOpen->openTile();
+				tileToOpen->openTile(true);
 			}
 			tileToOpen = m_tileArray[m_tileToOpenPos.x][m_tileToOpenPos.y + 1];
 			if (!tileToOpen->getIsOpen() && !tileToOpen->getIsFlagged())
 			{
-				tileToOpen->openTile();
+				tileToOpen->openTile(true);
 			}
 		}
 	}
@@ -590,17 +606,17 @@ void Tileset::openTilesAround() const
 			tileToOpen = m_tileArray[m_tileToOpenPos.x - 1][m_tileToOpenPos.y];
 			if (!tileToOpen->getIsOpen() && !tileToOpen->getIsFlagged())
 			{
-				tileToOpen->openTile();
+				tileToOpen->openTile(true);
 			}
 			tileToOpen = m_tileArray[m_tileToOpenPos.x - 1][m_tileToOpenPos.y + 1];
 			if (!tileToOpen->getIsOpen() && !tileToOpen->getIsFlagged())
 			{
-				tileToOpen->openTile();
+				tileToOpen->openTile(true);
 			}
 			tileToOpen = m_tileArray[m_tileToOpenPos.x][m_tileToOpenPos.y + 1];
 			if (!tileToOpen->getIsOpen() && !tileToOpen->getIsFlagged())
 			{
-				tileToOpen->openTile();
+				tileToOpen->openTile(true);
 			}
 		}
 		else if (m_tileToOpenPos.y == m_columns - 1) // Right columns
@@ -608,17 +624,17 @@ void Tileset::openTilesAround() const
 			tileToOpen = m_tileArray[m_tileToOpenPos.x][m_tileToOpenPos.y - 1];
 			if (!tileToOpen->getIsOpen() && !tileToOpen->getIsFlagged())
 			{
-				tileToOpen->openTile();
+				tileToOpen->openTile(true);
 			}
 			tileToOpen = m_tileArray[m_tileToOpenPos.x - 1][m_tileToOpenPos.y - 1];
 			if (!tileToOpen->getIsOpen() && !tileToOpen->getIsFlagged())
 			{
-				tileToOpen->openTile();
+				tileToOpen->openTile(true);
 			}
 			tileToOpen = m_tileArray[m_tileToOpenPos.x - 1][m_tileToOpenPos.y];
 			if (!tileToOpen->getIsOpen() && !tileToOpen->getIsFlagged())
 			{
-				tileToOpen->openTile();
+				tileToOpen->openTile(true);
 			}
 		}
 		else
@@ -626,27 +642,27 @@ void Tileset::openTilesAround() const
 			tileToOpen = m_tileArray[m_tileToOpenPos.x][m_tileToOpenPos.y - 1];
 			if (!tileToOpen->getIsOpen() && !tileToOpen->getIsFlagged())
 			{
-				tileToOpen->openTile();
+				tileToOpen->openTile(true);
 			}
 			tileToOpen = m_tileArray[m_tileToOpenPos.x - 1][m_tileToOpenPos.y - 1];
 			if (!tileToOpen->getIsOpen() && !tileToOpen->getIsFlagged())
 			{
-				tileToOpen->openTile();
+				tileToOpen->openTile(true);
 			}
 			tileToOpen = m_tileArray[m_tileToOpenPos.x - 1][m_tileToOpenPos.y];
 			if (!tileToOpen->getIsOpen() && !tileToOpen->getIsFlagged())
 			{
-				tileToOpen->openTile();
+				tileToOpen->openTile(true);
 			}
 			tileToOpen = m_tileArray[m_tileToOpenPos.x - 1][m_tileToOpenPos.y + 1];
 			if (!tileToOpen->getIsOpen() && !tileToOpen->getIsFlagged())
 			{
-				tileToOpen->openTile();
+				tileToOpen->openTile(true);
 			}
 			tileToOpen = m_tileArray[m_tileToOpenPos.x][m_tileToOpenPos.y + 1];
 			if (!tileToOpen->getIsOpen() && !tileToOpen->getIsFlagged())
 			{
-				tileToOpen->openTile();
+				tileToOpen->openTile(true);
 			}
 		}
 	}
@@ -657,27 +673,27 @@ void Tileset::openTilesAround() const
 			tileToOpen = m_tileArray[m_tileToOpenPos.x - 1][m_tileToOpenPos.y];
 			if (!tileToOpen->getIsOpen() && !tileToOpen->getIsFlagged())
 			{
-				tileToOpen->openTile();
+				tileToOpen->openTile(true);
 			}
 			tileToOpen = m_tileArray[m_tileToOpenPos.x - 1][m_tileToOpenPos.y + 1];
 			if (!tileToOpen->getIsOpen() && !tileToOpen->getIsFlagged())
 			{
-				tileToOpen->openTile();
+				tileToOpen->openTile(true);
 			}
 			tileToOpen = m_tileArray[m_tileToOpenPos.x][m_tileToOpenPos.y + 1];
 			if (!tileToOpen->getIsOpen() && !tileToOpen->getIsFlagged())
 			{
-				tileToOpen->openTile();
+				tileToOpen->openTile(true);
 			}
 			tileToOpen = m_tileArray[m_tileToOpenPos.x + 1][m_tileToOpenPos.y + 1];
 			if (!tileToOpen->getIsOpen() && !tileToOpen->getIsFlagged())
 			{
-				tileToOpen->openTile();
+				tileToOpen->openTile(true);
 			}
 			tileToOpen = m_tileArray[m_tileToOpenPos.x + 1][m_tileToOpenPos.y];
 			if (!tileToOpen->getIsOpen() && !tileToOpen->getIsFlagged())
 			{
-				tileToOpen->openTile();
+				tileToOpen->openTile(true);
 			}
 		}
 		else if (m_tileToOpenPos.y == m_columns - 1) // Right column, no corners
@@ -685,27 +701,27 @@ void Tileset::openTilesAround() const
 			tileToOpen = m_tileArray[m_tileToOpenPos.x - 1][m_tileToOpenPos.y];
 			if (!tileToOpen->getIsOpen() && !tileToOpen->getIsFlagged())
 			{
-				tileToOpen->openTile();
+				tileToOpen->openTile(true);
 			}
 			tileToOpen = m_tileArray[m_tileToOpenPos.x - 1][m_tileToOpenPos.y - 1];
 			if (!tileToOpen->getIsOpen() && !tileToOpen->getIsFlagged())
 			{
-				tileToOpen->openTile();
+				tileToOpen->openTile(true);
 			}
 			tileToOpen = m_tileArray[m_tileToOpenPos.x][m_tileToOpenPos.y - 1];
 			if (!tileToOpen->getIsOpen() && !tileToOpen->getIsFlagged())
 			{
-				tileToOpen->openTile();
+				tileToOpen->openTile(true);
 			}
 			tileToOpen = m_tileArray[m_tileToOpenPos.x + 1][m_tileToOpenPos.y - 1];
 			if (!tileToOpen->getIsOpen() && !tileToOpen->getIsFlagged())
 			{
-				tileToOpen->openTile();
+				tileToOpen->openTile(true);
 			}
 			tileToOpen = m_tileArray[m_tileToOpenPos.x + 1][m_tileToOpenPos.y];
 			if (!tileToOpen->getIsOpen() && !tileToOpen->getIsFlagged())
 			{
-				tileToOpen->openTile();
+				tileToOpen->openTile(true);
 			}
 		}
 		else // Everything inside
@@ -713,42 +729,42 @@ void Tileset::openTilesAround() const
 			tileToOpen = m_tileArray[m_tileToOpenPos.x - 1][m_tileToOpenPos.y - 1];
 			if (!tileToOpen->getIsOpen() && !tileToOpen->getIsFlagged())
 			{
-				tileToOpen->openTile();
+				tileToOpen->openTile(true);
 			}
 			tileToOpen = m_tileArray[m_tileToOpenPos.x - 1][m_tileToOpenPos.y];
 			if (!tileToOpen->getIsOpen() && !tileToOpen->getIsFlagged())
 			{
-				tileToOpen->openTile();
+				tileToOpen->openTile(true);
 			}
 			tileToOpen = m_tileArray[m_tileToOpenPos.x - 1][m_tileToOpenPos.y + 1];
 			if (!tileToOpen->getIsOpen() && !tileToOpen->getIsFlagged())
 			{
-				tileToOpen->openTile();
+				tileToOpen->openTile(true);
 			}
 			tileToOpen = m_tileArray[m_tileToOpenPos.x][m_tileToOpenPos.y + 1];
 			if (!tileToOpen->getIsOpen() && !tileToOpen->getIsFlagged())
 			{
-				tileToOpen->openTile();
+				tileToOpen->openTile(true);
 			}
 			tileToOpen = m_tileArray[m_tileToOpenPos.x + 1][m_tileToOpenPos.y + 1];
 			if (!tileToOpen->getIsOpen() && !tileToOpen->getIsFlagged())
 			{
-				tileToOpen->openTile();
+				tileToOpen->openTile(true);
 			}
 			tileToOpen = m_tileArray[m_tileToOpenPos.x + 1][m_tileToOpenPos.y];
 			if (!tileToOpen->getIsOpen() && !tileToOpen->getIsFlagged())
 			{
-				tileToOpen->openTile();
+				tileToOpen->openTile(true);
 			}
 			tileToOpen = m_tileArray[m_tileToOpenPos.x + 1][m_tileToOpenPos.y - 1];
 			if (!tileToOpen->getIsOpen() && !tileToOpen->getIsFlagged())
 			{
-				tileToOpen->openTile();
+				tileToOpen->openTile(true);
 			}
 			tileToOpen = m_tileArray[m_tileToOpenPos.x][m_tileToOpenPos.y - 1];
 			if (!tileToOpen->getIsOpen() && !tileToOpen->getIsFlagged())
 			{
-				tileToOpen->openTile();
+				tileToOpen->openTile(true);
 			}
 		}
 	}
@@ -985,13 +1001,13 @@ void Tileset::spawnBombCounter(int posX, int posY)
 	m_bombCounterTile2->setIsOnBoard(false);
 
 	m_bombCounterBomb->setValue(-1);
-	m_bombCounterBomb->openTile();
+	m_bombCounterBomb->openTile(false);
 
 	m_bombCounterTile1->setValue(m_numberOfBombs / 10);
-	m_bombCounterTile1->openTile();
+	m_bombCounterTile1->openTile(false);
 
 	m_bombCounterTile2->setValue(m_numberOfBombs - (m_numberOfBombs / 10 * 10));
-	m_bombCounterTile2->openTile();
+	m_bombCounterTile2->openTile(false);
 
 	m_bombCounterTile1->setActive(true);
 	m_bombCounterTile2->setActive(true);

@@ -130,13 +130,18 @@ void Tile::changeTile(int value)
 	
 }
 
-void Tile::openTile()
+void Tile::openTile(bool isOpenedManually)
 {
     this->changeTile(m_value);
     m_isOpened = true;
     if (m_value == -1 && m_isOnBoard)
     {
-        this->changeTile(-2); // Change the one you click to a red one
+        if (isOpenedManually)
+        {
+            changeTile(-2); // Change the one you click to a red one
+            m_value = -2;
+        }
+			
         Tileset::gameWon = false;
         Tileset::gameFinished = true;
     }

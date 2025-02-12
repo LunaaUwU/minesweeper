@@ -18,7 +18,7 @@ public:
 
     void changeTile(int value);
 
-    void openTile();
+    void openTile(bool isOpenedManually);
 
     void flagTile();
 

@@ -74,5 +74,6 @@ private:
     Tile* m_bombCounterTile2 = new Tile();
 
     bool m_doOnce = true;
+    bool m_doOnce2 = true;
 
 };
