@@ -41,13 +41,18 @@ public:
 
     void setPosition(int posX, int posY) { m_tile.setPosition(posX, posY); }
 
+    void setIsOnBoard(const bool value) { m_isOnBoard = value; }
+
 private:
 
     bool m_isOpened = false;
     bool m_isFlagged = false;
-    int m_value = 0; // 0, 1, 2, 3, 4, 5, 6, 7, 8 are numbers, -1 is bomb, 9 is unknown and 10 is flag
+    int m_value = 0; // 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 are numbers (yes, 9 too for decoration)
+	//                 -1 is bomb, 10 is unknown and 11 is flag
 
     bool m_active = false;
+
+    bool m_isOnBoard = true; // To differentiate the tiles that are used for decoration purposes
 
     bool m_hasOpenedAround = false;
 
@@ -65,6 +70,7 @@ private:
     sf::Texture m_tile6Texture;
     sf::Texture m_tile7Texture;
     sf::Texture m_tile8Texture;
+    sf::Texture m_tile9Texture;
     sf::Texture m_tileFlagTexture;
     sf::Texture m_tileMineTexture;
 

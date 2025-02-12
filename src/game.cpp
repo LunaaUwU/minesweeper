@@ -142,7 +142,7 @@ void Game::instantiate()
 
     // Bomb counter
 
-    m_tileset->spawnBombCounter(m_firstSpawnPosX, m_firstSpawnPosY - 96);
+    m_tileset->spawnBombCounter(896, m_firstSpawnPosY - 96);
 }
 
 void Game::restart()

@@ -34,6 +34,7 @@ void Tile::init()
     m_tile6Texture.loadFromFile("../sprites/tiles/Tile6.png");
     m_tile7Texture.loadFromFile("../sprites/tiles/Tile7.png");
     m_tile8Texture.loadFromFile("../sprites/tiles/Tile8.png");
+    m_tile9Texture.loadFromFile("../sprites/tiles/Tile9.png");
     m_tileFlagTexture.loadFromFile("../sprites/tiles/TileFlag.png");
     m_tileMineTexture.loadFromFile("../sprites/tiles/TileMine.png");
 
@@ -93,17 +94,22 @@ void Tile::changeTile(int value)
             m_tile.setTexture(&m_tile8Texture);
             break;
         }
+        case 9:
+        {
+            m_tile.setTexture(&m_tile9Texture);
+            break;
+        }
         case -1:
         {
             m_tile.setTexture(&m_tileMineTexture);
             break;
         }
-        case 9:
+        case 10:
         {
             m_tile.setTexture(&m_tileUnkwnownTexture);
             break;
         }
-        case 10:
+        case 11:
         {
             m_tile.setTexture(&m_tileFlagTexture);
             break;
@@ -121,7 +127,7 @@ void Tile::openTile()
 {
     this->changeTile(m_value);
     m_isOpened = true;
-    if (m_value == -1)
+    if (m_value == -1 && m_isOnBoard)
     {
         Game::gameOver = true;
     }
@@ -131,11 +137,11 @@ void Tile::flagTile()
 {
     if (!m_isFlagged)
     {
-        this->changeTile(10);
+        this->changeTile(11);
     }
     else
     {
-        this->changeTile(9);
+        this->changeTile(10);
     }
     m_isFlagged = !m_isFlagged;
     

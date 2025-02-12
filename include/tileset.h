@@ -60,6 +60,7 @@ private:
 
     sf::Vector2i m_tileToOpenPos;
 
+    Tile* m_bombCounterBomb = new Tile();
     Tile* m_bombCounterTile1 = new Tile();
     Tile* m_bombCounterTile2 = new Tile();
 

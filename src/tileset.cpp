@@ -53,8 +53,6 @@ void Tileset::update(sf::Int32 deltaMS)
 			m_numberOfBombs++;
 		else
 			m_numberOfBombs--;
-		if (m_numberOfBombs < 0)
-			m_numberOfBombs = 0;
 		m_tileArray[m_selectedTileX][m_selectedTileY]->flagTile();
 
 		updateBombCounter();
@@ -149,6 +147,7 @@ void Tileset::render(sf::RenderWindow& window) const
 
 	m_bombCounterTile1->render(window);
 	m_bombCounterTile2->render(window);
+	m_bombCounterBomb->render(window);
 }
 
 void Tileset::init(const int rows, const int columns, const int numberOfBombs)
@@ -930,11 +929,21 @@ void Tileset::checkFlagsAround()
 
 void Tileset::spawnBombCounter(int posX, int posY)
 {
+
+	m_bombCounterBomb->init();
 	m_bombCounterTile1->init();
 	m_bombCounterTile2->init();
 
-	m_bombCounterTile1->setPosition(posX, posY);
-	m_bombCounterTile2->setPosition(posX + 32, posY);
+	m_bombCounterBomb->setPosition(posX, posY);
+	m_bombCounterTile1->setPosition(posX + 64, posY);
+	m_bombCounterTile2->setPosition(posX + 96, posY);
+
+	m_bombCounterBomb->setIsOnBoard(false);
+	m_bombCounterTile1->setIsOnBoard(false);
+	m_bombCounterTile2->setIsOnBoard(false);
+
+	m_bombCounterBomb->setValue(-1);
+	m_bombCounterBomb->openTile();
 
 	m_bombCounterTile1->setValue(m_numberOfBombs / 10);
 	m_bombCounterTile1->openTile();
@@ -944,14 +953,26 @@ void Tileset::spawnBombCounter(int posX, int posY)
 
 	m_bombCounterTile1->setActive(true);
 	m_bombCounterTile2->setActive(true);
+	m_bombCounterBomb->setActive(true);
 }
 
 void Tileset::updateBombCounter()
 {
-	m_bombCounterTile1->setValue(m_numberOfBombs / 10);
-	m_bombCounterTile1->changeTile(m_bombCounterTile1->getValue());
+	if (m_numberOfBombs <= 0)
+	{
+		m_bombCounterTile1->setValue(0);
+		m_bombCounterTile1->changeTile(0);
 
-	m_bombCounterTile2->setValue(m_numberOfBombs - (m_numberOfBombs / 10 * 10));
-	m_bombCounterTile2->changeTile(m_bombCounterTile2->getValue());
+		m_bombCounterTile2->setValue(0);
+		m_bombCounterTile2->changeTile(0);
+	}
+	else
+	{
+		m_bombCounterTile1->setValue(m_numberOfBombs / 10);
+		m_bombCounterTile1->changeTile(m_bombCounterTile1->getValue());
+
+		m_bombCounterTile2->setValue(m_numberOfBombs - (m_numberOfBombs / 10 * 10));
+		m_bombCounterTile2->changeTile(m_bombCounterTile2->getValue());
+	}
 }
 
