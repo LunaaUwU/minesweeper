@@ -38,6 +38,7 @@ void Tile::init()
     m_tile9Texture.loadFromFile("../sprites/tiles/Tile9.png");
     m_tileFlagTexture.loadFromFile("../sprites/tiles/TileFlag.png");
     m_tileMineTexture.loadFromFile("../sprites/tiles/TileMine.png");
+    m_tileRedMineTexture.loadFromFile("../sprites/tiles/TileExploded.png");
 
     m_select.setSize(sf::Vector2f(32.f, 32.f));
     m_selectTexture.loadFromFile("../sprites/tiles/Select.png");
@@ -105,6 +106,11 @@ void Tile::changeTile(int value)
             m_tile.setTexture(&m_tileMineTexture);
             break;
         }
+		case -2:
+		{
+            m_tile.setTexture(&m_tileRedMineTexture);
+            break;
+		}
         case 10:
         {
             m_tile.setTexture(&m_tileUnkwnownTexture);
@@ -130,6 +136,8 @@ void Tile::openTile()
     m_isOpened = true;
     if (m_value == -1 && m_isOnBoard)
     {
+        this->changeTile(-2); // Change the one you click to a red one
+        Tileset::gameWon = false;
         Tileset::gameFinished = true;
     }
 }

@@ -33,12 +33,14 @@ public:
 
     void updateBombCounter();
 
-    bool checkWin() const;
+    bool checkWin();
 
     std::vector<std::vector<Tile*>> getTileArray() { return m_tileArray; }
 
 
     inline static bool gameFinished = false;
+
+    inline static bool gameWon = false; // Wheter you won or lost
 
 private:
 

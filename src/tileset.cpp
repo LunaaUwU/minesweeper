@@ -50,7 +50,9 @@ void Tileset::update(sf::Int32 deltaMS)
 			Game::canClick = false;
 
 			if (checkWin())
+			{
 				gameFinished = true;
+			}
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::X) && !m_tileArray[m_selectedTileX][m_selectedTileY]->getIsOpen() && Game::canClick && !sf::Keyboard::isKeyPressed(sf::Keyboard::Z) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 		{
@@ -76,6 +78,8 @@ void Tileset::update(sf::Int32 deltaMS)
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z) || sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
 			{
 				Game::canClick = false;
+				if (!gameWon)
+					m_bombCounterBomb->changeTile(-2);
 			}
 			else
 			{
@@ -1007,7 +1011,7 @@ void Tileset::updateBombCounter()
 }
 
 
-bool Tileset::checkWin() const
+bool Tileset::checkWin()
 {
 	for (std::vector<Tile*> row : m_tileArray)
 	{
@@ -1019,6 +1023,21 @@ bool Tileset::checkWin() const
 			}
 		}
 	}
+
+	for (std::vector<Tile*> row : m_tileArray) // Flag all unflagged tiles
+	{
+		for (Tile* tile : row)
+		{
+			if (!tile->getIsOpen() && !tile->getIsFlagged())
+			{
+				tile->flagTile();
+			}
+		}
+	}
+	m_bombCounterTile1->changeTile(0);
+	m_bombCounterTile2->changeTile(0);
+	m_bombCounterBomb->changeTile(11);
+	gameWon = true;
 	return true;
 }
 
