@@ -110,7 +110,7 @@ void Game::instantiate()
     m_rows = 10;
     m_columns = 15;
 
-    m_numberOfBombs = 15;
+    m_numberOfBombs = 30;
 
     m_tileset->init(m_rows, m_columns, m_numberOfBombs);
 

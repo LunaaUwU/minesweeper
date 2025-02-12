@@ -59,8 +59,10 @@ private:
     bool m_hasBeenFlagged = false;
 
     
-    bool m_canClickHorizontal = true;
-    bool m_canClickVertical = true;
+    bool m_canClickRight = true;
+    bool m_canClickLeft = true;
+    bool m_canClickUp = true;
+    bool m_canClickDown = true;
 
     int m_selectedTileX = 0;
     int m_selectedTileY = 0;

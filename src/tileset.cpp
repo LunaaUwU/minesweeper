@@ -98,7 +98,7 @@ void Tileset::update(sf::Int32 deltaMS)
 
 	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::X) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Z) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
 	{
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && m_canClickHorizontal)
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && m_canClickRight)
 		{
 			m_tileArray[m_selectedTileX][m_selectedTileY]->select(); // De-select
 			if (m_selectedTileY == m_columns - 1)
@@ -110,9 +110,9 @@ void Tileset::update(sf::Int32 deltaMS)
 				m_selectedTileY++;
 			}
 			m_tileArray[m_selectedTileX][m_selectedTileY]->select(); // Select
-			m_canClickHorizontal = false;
+			m_canClickRight = false;
 		}
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && m_canClickHorizontal)
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && m_canClickLeft)
 		{
 			m_tileArray[m_selectedTileX][m_selectedTileY]->select(); // De-select
 			if (m_selectedTileY == 0)
@@ -124,10 +124,10 @@ void Tileset::update(sf::Int32 deltaMS)
 				m_selectedTileY--;
 			}
 			m_tileArray[m_selectedTileX][m_selectedTileY]->select(); // Select
-			m_canClickHorizontal = false;
+			m_canClickLeft = false;
 		}
 
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && m_canClickVertical)
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && m_canClickDown)
 		{
 			m_tileArray[m_selectedTileX][m_selectedTileY]->select(); // De-select
 			if (m_selectedTileX == m_rows - 1)
@@ -139,9 +139,9 @@ void Tileset::update(sf::Int32 deltaMS)
 				m_selectedTileX++;
 			}
 			m_tileArray[m_selectedTileX][m_selectedTileY]->select(); // Select
-			m_canClickVertical = false;
+			m_canClickDown = false;
 		}
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && m_canClickVertical)
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && m_canClickUp)
 		{
 			m_tileArray[m_selectedTileX][m_selectedTileY]->select(); // De-select
 			if (m_selectedTileX == 0)
@@ -153,17 +153,25 @@ void Tileset::update(sf::Int32 deltaMS)
 				m_selectedTileX--;
 			}
 			m_tileArray[m_selectedTileX][m_selectedTileY]->select(); // Select
-			m_canClickVertical = false;
+			m_canClickUp = false;
 		}
 	}
 
-	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 	{
-		m_canClickHorizontal = true;
+		m_canClickRight = true;
 	}
-	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 	{
-		m_canClickVertical = true;
+		m_canClickLeft = true;
+	}
+	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+	{
+		m_canClickUp = true;
+	}
+	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+	{
+		m_canClickDown = true;
 	}
 }
 
