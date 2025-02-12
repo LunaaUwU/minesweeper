@@ -1,6 +1,7 @@
 #include "tile.h"
 
 #include "game.h"
+#include "tileset.h"
 
 //void Tile::update(sf::Int32 deltaMS)
 //{
@@ -129,7 +130,7 @@ void Tile::openTile()
     m_isOpened = true;
     if (m_value == -1 && m_isOnBoard)
     {
-        Game::gameOver = true;
+        Tileset::gameFinished = true;
     }
 }
 

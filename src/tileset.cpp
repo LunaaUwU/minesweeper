@@ -14,58 +14,83 @@ void Tileset::update(sf::Int32 deltaMS)
 		}
 	}*/
 
-	if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) || sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) && !m_tileArray[m_selectedTileX][m_selectedTileY]->getIsFlagged() && Game::canClick && !sf::Keyboard::isKeyPressed(sf::Keyboard::X))
+	if (!gameFinished)
 	{
-		if (!m_tileArray[m_selectedTileX][m_selectedTileY]->getIsOpen())
+		if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) || sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) && !m_tileArray[m_selectedTileX][m_selectedTileY]->getIsFlagged() && Game::canClick && !sf::Keyboard::isKeyPressed(sf::Keyboard::X))
 		{
-			m_tileArray[m_selectedTileX][m_selectedTileY]->openTile();
-			if (m_isFirstTile)
+			if (!m_tileArray[m_selectedTileX][m_selectedTileY]->getIsOpen())
 			{
-				fillBombs();
-				fillNumbers();
-				m_isFirstTile = false;
+				m_tileArray[m_selectedTileX][m_selectedTileY]->openTile();
+				if (m_isFirstTile)
+				{
+					fillBombs();
+					fillNumbers();
+					m_isFirstTile = false;
+				}
 			}
-		}
-		else if (m_tileArray[m_selectedTileX][m_selectedTileY]->getValue() != 0 && m_tileArray[m_selectedTileX][m_selectedTileY]->getIsOpen())
-		{
-			checkFlagsAround();
-			if (m_hasBeenFlagged == true)
+			else if (m_tileArray[m_selectedTileX][m_selectedTileY]->getValue() != 0 && m_tileArray[m_selectedTileX][m_selectedTileY]->getIsOpen())
 			{
-				openTilesAround();
+				checkFlagsAround();
+				if (m_hasBeenFlagged == true)
+				{
+					openTilesAround();
+				}
 			}
-		}
-		
 
-		checkTilesAround();
-		while (m_hasNoEmptyTiles == false)
-		{
-			if (m_hasNoEmptyTiles == false)
-			{
-				openTilesAround();
-			}
+
 			checkTilesAround();
+			while (m_hasNoEmptyTiles == false)
+			{
+				if (m_hasNoEmptyTiles == false)
+				{
+					openTilesAround();
+				}
+				checkTilesAround();
+			}
+			Game::canClick = false;
+
+			if (checkWin())
+				gameFinished = true;
 		}
-		Game::canClick = false;
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::X) && !m_tileArray[m_selectedTileX][m_selectedTileY]->getIsOpen() && Game::canClick && !sf::Keyboard::isKeyPressed(sf::Keyboard::Z) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+		{
+			if (m_tileArray[m_selectedTileX][m_selectedTileY]->getIsFlagged())
+				m_numberOfBombs++;
+			else
+				m_numberOfBombs--;
+			m_tileArray[m_selectedTileX][m_selectedTileY]->flagTile();
 
-		if (checkWin())
-			Game::gameOver = true;
+			updateBombCounter();
+
+			Game::canClick = false;
+		}
+		if (!sf::Keyboard::isKeyPressed(sf::Keyboard::X) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Z) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
+		{
+			Game::canClick = true;
+		}
 	}
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::X) && !m_tileArray[m_selectedTileX][m_selectedTileY]->getIsOpen() && Game::canClick && !sf::Keyboard::isKeyPressed(sf::Keyboard::Z) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+	else
 	{
-		if (m_tileArray[m_selectedTileX][m_selectedTileY]->getIsFlagged())
-			m_numberOfBombs++;
+		if (m_doOnce)
+		{
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z))
+			{
+				Game::canClick = false;
+			}
+			else
+			{
+				m_doOnce = false;
+			}
+		}
 		else
-			m_numberOfBombs--;
-		m_tileArray[m_selectedTileX][m_selectedTileY]->flagTile();
-
-		updateBombCounter();
-		
-		Game::canClick = false;
+		{
+			if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) || sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) && Game::canClick)
+			{
+				Game::gameOver = true;
+			}
+		}
 	}
-	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::X) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Z) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
-	{
-		Game::canClick = true;
-	}
+	
 
 	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::X) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Z) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
 	{
@@ -204,6 +229,8 @@ void Tileset::restart()
 
 	m_tileArray.clear();
 
+	gameFinished = false;
+	m_doOnce = true;
 	m_isFirstTile = true;
 
 	m_selectedTileX = 0;
