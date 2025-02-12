@@ -29,11 +29,11 @@ public:
 
     void checkFlagsAround();
 
-    void spawnBombCounter(int posX, int posY);
+    void spawnBombCounter(int posX, int posY) const;
 
-    void updateBombCounter();
+    void updateBombCounter() const;
 
-    bool checkWin();
+    bool checkWin() const;
 
     std::vector<std::vector<Tile*>> getTileArray() { return m_tileArray; }
 

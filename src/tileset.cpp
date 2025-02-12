@@ -988,7 +988,7 @@ void Tileset::checkFlagsAround()
 	}
 }
 
-void Tileset::spawnBombCounter(int posX, int posY)
+void Tileset::spawnBombCounter(int posX, int posY) const
 {
 
 	m_bombCounterBomb->init();
@@ -1017,7 +1017,7 @@ void Tileset::spawnBombCounter(int posX, int posY)
 	m_bombCounterBomb->setActive(true);
 }
 
-void Tileset::updateBombCounter()
+void Tileset::updateBombCounter() const
 {
 	if (m_numberOfBombs <= 0)
 	{
@@ -1038,7 +1038,7 @@ void Tileset::updateBombCounter()
 }
 
 
-bool Tileset::checkWin()
+bool Tileset::checkWin() const
 {
 	for (std::vector<Tile*> row : m_tileArray)
 	{

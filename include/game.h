@@ -28,8 +28,6 @@ private:
 
     Tileset* m_tileset = new Tileset();
 
-    bool m_gameOver = false;
-
     bool m_isMainMenuActive = true;
     bool m_mainMenuSelection = true; // true == Play, false == Quit
 
