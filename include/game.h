@@ -35,7 +35,7 @@ private:
     bool m_pauseMenuSelection = true; // true = Resume, false = Quit
 
     bool m_isDifficultyMenuActive = false;
-    int m_difficultyMenuSelection = 0; // 0 = rows, 1 = cols, 2 = Start
+    int m_difficultyMenuSelection = 0; // 0 = rows, 1 = cols, 2 = Bombs, 3 = Start
 
     int m_rows = 0;
     int m_columns = 0;

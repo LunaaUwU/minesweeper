@@ -19,7 +19,7 @@ void Game::update(const sf::Int32 deltaMS)
 	        if (m_mainMenuSelection)
 	        {
                 m_isMainMenuActive = false;
-                instantiate();
+                m_isDifficultyMenuActive = true;
 	        }
             else
             {
@@ -40,18 +40,19 @@ void Game::update(const sf::Int32 deltaMS)
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && m_canMove)
         {
             m_difficultyMenuSelection++;
-            if (m_difficultyMenuSelection >= 3)
+            if (m_difficultyMenuSelection >= 4)
                 m_difficultyMenuSelection = 0;
         }
         else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && m_canMove)
         {
             m_difficultyMenuSelection--;
             if (m_difficultyMenuSelection < 0)
-                m_difficultyMenuSelection = 2;
+                m_difficultyMenuSelection = 3;
         }
 	    else if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Z) || sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) || sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) && canClick && m_difficultyMenuSelection == 2)
 	    {
             m_isDifficultyMenuActive = false;
+            instantiate();
 	    }
 
         if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
@@ -147,7 +148,7 @@ void Game::render(sf::RenderWindow& window) const
     }
     else if (m_isDifficultyMenuActive)
     {
-	    if (m_difficultyMenuSelection == 2)
+	    if (m_difficultyMenuSelection == 3)
 	    {
             window.draw(m_difficultyMenuStartSprite);
 	    }
