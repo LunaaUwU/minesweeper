@@ -31,6 +31,9 @@ private:
     bool m_isMainMenuActive = true;
     bool m_mainMenuSelection = true; // true == Play, false == Quit
 
+    bool m_isPauseMenuActive = false;
+    bool m_pauseMenuSelection = true; // true == Resume, false == Quit
+
     int m_rows = 0;
     int m_columns = 0;
 
@@ -48,6 +51,11 @@ private:
     sf::Texture m_mainMenuPlayTexture;
     sf::Sprite m_mainMenuQuitSprite;
     sf::Texture m_mainMenuQuitTexture;
+
+    sf::Sprite m_pauseMenuResumeSprite;
+    sf::Texture m_pauseMenuResumeTexture;
+    sf::Sprite m_pauseMenuQuitSprite;
+    sf::Texture m_pauseMenuQuitTexture;
 
     bool m_canQuit = true;
 

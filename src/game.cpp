@@ -35,14 +35,45 @@ void Game::update(const sf::Int32 deltaMS)
             m_canQuit = true;
         }
     }
-    else
+    else if (m_isPauseMenuActive)
     {
-        m_tileset->update(deltaMS);
-
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+        {
+            m_pauseMenuSelection = true;
+        }
+        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+        {
+            m_pauseMenuSelection = false;
+        }
+        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z) || sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
+        {
+	        if (m_pauseMenuSelection)
+	        {
+                m_isPauseMenuActive = false;
+	        }
+            else
+            {
+                m_canQuit = false;
+                restart();
+            }
+        }
+        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) && m_canQuit)
         {
             m_canQuit = false;
             restart();
+        }
+        else if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+        {
+            m_canQuit = true;
+        }
+    }
+    else
+    {
+        m_tileset->update(deltaMS);
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) && m_canQuit)
+        {
+            m_canQuit = false;
+            m_isPauseMenuActive = true;
         }
         else if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
         {
@@ -86,6 +117,17 @@ void Game::render(sf::RenderWindow& window) const
             window.draw(m_mainMenuQuitSprite);
         }
     }
+    else if (m_isPauseMenuActive)
+    {
+	    if (m_pauseMenuSelection)
+	    {
+            window.draw(m_pauseMenuResumeSprite);
+	    }
+        else
+        {
+            window.draw(m_pauseMenuQuitSprite);
+        }
+    }
     else
     {
         m_tileset->render(window);
@@ -103,6 +145,14 @@ void Game::init()
     m_mainMenuQuitTexture.loadFromFile("../sprites/menu/main_menu_quit.png");
     m_mainMenuQuitSprite.setTexture(m_mainMenuQuitTexture);
     m_mainMenuQuitSprite.setPosition(sf::Vector2f(0.f, 0.f));
+
+    m_pauseMenuResumeTexture.loadFromFile("../sprites/menu/pause_menu_resume.png");
+    m_pauseMenuResumeSprite.setTexture(m_pauseMenuResumeTexture);
+    m_pauseMenuResumeSprite.setPosition(sf::Vector2f(0.f, 0.f));
+
+    m_pauseMenuQuitTexture.loadFromFile("../sprites/menu/pause_menu_quit.png");
+    m_pauseMenuQuitSprite.setTexture(m_pauseMenuQuitTexture);
+    m_pauseMenuQuitSprite.setPosition(sf::Vector2f(0.f, 0.f));
 }
 
 void Game::instantiate()
@@ -149,6 +199,8 @@ void Game::restart()
 {
     m_isMainMenuActive = true;
     m_mainMenuSelection = true;
+    m_isPauseMenuActive = false;
+    m_pauseMenuSelection = true;
     gameOver = false;
     m_tileset->restart();
     instantiate();
