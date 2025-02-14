@@ -29,10 +29,13 @@ private:
     Tileset* m_tileset = new Tileset();
 
     bool m_isMainMenuActive = true;
-    bool m_mainMenuSelection = true; // true == Play, false == Quit
+    bool m_mainMenuSelection = true; // true = Play, false = Quit
 
     bool m_isPauseMenuActive = false;
-    bool m_pauseMenuSelection = true; // true == Resume, false == Quit
+    bool m_pauseMenuSelection = true; // true = Resume, false = Quit
+
+    bool m_isDifficultyMenuActive = false;
+    int m_difficultyMenuSelection = 0; // 0 = rows, 1 = cols, 2 = Start
 
     int m_rows = 0;
     int m_columns = 0;
@@ -57,6 +60,12 @@ private:
     sf::Sprite m_pauseMenuQuitSprite;
     sf::Texture m_pauseMenuQuitTexture;
 
+    sf::Sprite m_difficultyMenuSprite;
+    sf::Texture m_difficultyMenuTexture;
+    sf::Sprite m_difficultyMenuStartSprite;
+    sf::Texture m_difficultyMenuStartTexture;
+
     bool m_canQuit = true;
+    bool m_canMove = true;
 
 };

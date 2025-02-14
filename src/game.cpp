@@ -35,6 +35,34 @@ void Game::update(const sf::Int32 deltaMS)
             m_canQuit = true;
         }
     }
+    else if (m_isDifficultyMenuActive)
+    {
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && m_canMove)
+        {
+            m_difficultyMenuSelection++;
+            if (m_difficultyMenuSelection >= 3)
+                m_difficultyMenuSelection = 0;
+        }
+        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && m_canMove)
+        {
+            m_difficultyMenuSelection--;
+            if (m_difficultyMenuSelection < 0)
+                m_difficultyMenuSelection = 2;
+        }
+	    else if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Z) || sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) || sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) && canClick && m_difficultyMenuSelection == 2)
+	    {
+            m_isDifficultyMenuActive = false;
+	    }
+
+        if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+        {
+            m_canMove = true;
+        }
+        else
+        {
+            m_canMove = false;
+        }
+    }
     else if (m_isPauseMenuActive)
     {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::W))
@@ -117,6 +145,17 @@ void Game::render(sf::RenderWindow& window) const
             window.draw(m_mainMenuQuitSprite);
         }
     }
+    else if (m_isDifficultyMenuActive)
+    {
+	    if (m_difficultyMenuSelection == 2)
+	    {
+            window.draw(m_difficultyMenuStartSprite);
+	    }
+        else
+        {
+            window.draw(m_difficultyMenuSprite);
+        }
+    }
     else if (m_isPauseMenuActive)
     {
 	    if (m_pauseMenuSelection)
@@ -141,7 +180,6 @@ void Game::init()
     m_mainMenuPlayTexture.loadFromFile("../sprites/menu/main_menu_play.png");
     m_mainMenuPlaySprite.setTexture(m_mainMenuPlayTexture);
     m_mainMenuPlaySprite.setPosition(sf::Vector2f(0.f, 0.f));
-
     m_mainMenuQuitTexture.loadFromFile("../sprites/menu/main_menu_quit.png");
     m_mainMenuQuitSprite.setTexture(m_mainMenuQuitTexture);
     m_mainMenuQuitSprite.setPosition(sf::Vector2f(0.f, 0.f));
@@ -149,10 +187,16 @@ void Game::init()
     m_pauseMenuResumeTexture.loadFromFile("../sprites/menu/pause_menu_resume.png");
     m_pauseMenuResumeSprite.setTexture(m_pauseMenuResumeTexture);
     m_pauseMenuResumeSprite.setPosition(sf::Vector2f(0.f, 0.f));
-
     m_pauseMenuQuitTexture.loadFromFile("../sprites/menu/pause_menu_quit.png");
     m_pauseMenuQuitSprite.setTexture(m_pauseMenuQuitTexture);
     m_pauseMenuQuitSprite.setPosition(sf::Vector2f(0.f, 0.f));
+
+    m_difficultyMenuTexture.loadFromFile("../sprites/menu/difficulty_menu.png");
+    m_difficultyMenuSprite.setTexture(m_difficultyMenuTexture);
+    m_difficultyMenuSprite.setPosition(sf::Vector2f(0.f, 0.f));
+    m_difficultyMenuStartTexture.loadFromFile("../sprites/menu/difficulty_menu_start.png");
+    m_difficultyMenuStartSprite.setTexture(m_difficultyMenuStartTexture);
+    m_difficultyMenuStartSprite.setPosition(sf::Vector2f(0.f, 0.f));
 }
 
 void Game::instantiate()
@@ -201,6 +245,8 @@ void Game::restart()
     m_mainMenuSelection = true;
     m_isPauseMenuActive = false;
     m_pauseMenuSelection = true;
+    m_isDifficultyMenuActive = false;
+    m_difficultyMenuSelection = 0;
     gameOver = false;
     m_tileset->restart();
     instantiate();
