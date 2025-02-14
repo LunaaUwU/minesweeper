@@ -49,7 +49,7 @@ void Game::update(const sf::Int32 deltaMS)
             if (m_difficultyMenuSelection < 0)
                 m_difficultyMenuSelection = 3;
         }
-	    else if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Z) || sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) || sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) && canClick && m_difficultyMenuSelection == 2)
+	    else if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Z) || sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) || sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) && canClick && m_difficultyMenuSelection == 3)
 	    {
             m_isDifficultyMenuActive = false;
             instantiate();
