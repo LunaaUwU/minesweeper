@@ -37,13 +37,13 @@ void Game::update(const sf::Int32 deltaMS)
     }
     else if (m_isDifficultyMenuActive)
     {
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && m_canMove)
+        if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::S)) && m_canMove)
         {
             m_difficultyMenuSelection++;
             if (m_difficultyMenuSelection >= 4)
                 m_difficultyMenuSelection = 0;
         }
-        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && m_canMove)
+        else if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::W)) && m_canMove)
         {
             m_difficultyMenuSelection--;
             if (m_difficultyMenuSelection < 0)
@@ -55,7 +55,7 @@ void Game::update(const sf::Int32 deltaMS)
             instantiate();
 	    }
 
-        if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+        if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && !sf::Keyboard::isKeyPressed(sf::Keyboard::S) && !sf::Keyboard::isKeyPressed(sf::Keyboard::W) && !sf::Keyboard::isKeyPressed(sf::Keyboard::A) && !sf::Keyboard::isKeyPressed(sf::Keyboard::D))
         {
             m_canMove = true;
         }
