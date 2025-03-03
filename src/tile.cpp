@@ -40,6 +40,9 @@ void Tile::init()
     m_tileWrongFlagTexture.loadFromFile("../sprites/tiles/TileWrongFlag.png");
     m_tileMineTexture.loadFromFile("../sprites/tiles/TileMine.png");
     m_tileRedMineTexture.loadFromFile("../sprites/tiles/TileExploded.png");
+    m_tileColumnTexture.loadFromFile("../sprites/tiles/TileColumn.png");
+    m_tileRowTexture.loadFromFile("../sprites/tiles/TileRow.png");
+
 
     m_select.setSize(sf::Vector2f(32.f, 32.f));
     m_selectTexture.loadFromFile("../sprites/tiles/Select.png");
@@ -125,6 +128,16 @@ void Tile::changeTile(int value)
 		case 12:
 		{
             m_tile.setTexture(&m_tileWrongFlagTexture);
+            break;
+        }
+        case 13:
+        {
+            m_tile.setTexture(&m_tileColumnTexture);
+            break;
+        }
+        case 14:
+        {
+            m_tile.setTexture(&m_tileRowTexture);
             break;
         }
 		default:

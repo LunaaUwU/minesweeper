@@ -65,7 +65,8 @@ private:
     sf::Sprite m_difficultyMenuStartSprite;
     sf::Texture m_difficultyMenuStartTexture;
 
-
+    Tile* m_difficultyColumn = new Tile();
+    Tile* m_difficultyRow = new Tile();
     Tile* m_difficultyBomb = new Tile();
 
     bool m_canQuit = true;

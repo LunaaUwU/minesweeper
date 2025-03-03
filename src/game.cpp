@@ -43,9 +43,19 @@ void Game::update(const sf::Int32 deltaMS)
             if (m_difficultyMenuSelection >= 4)
                 m_difficultyMenuSelection = 0;
 
+            if (m_difficultyColumn->getIsSelected())
+                m_difficultyColumn->select();
+            else if(m_difficultyMenuSelection == 0)
+                m_difficultyColumn->select();
+
+            if (m_difficultyRow->getIsSelected())
+                m_difficultyRow->select();
+            else if (m_difficultyMenuSelection == 1)
+                m_difficultyRow->select();
+
             if (m_difficultyBomb->getIsSelected())
                 m_difficultyBomb->select();
-            else if(m_difficultyMenuSelection == 2)
+            else if (m_difficultyMenuSelection == 2)
                 m_difficultyBomb->select();
         }
         else if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::W)) && m_canMove)
@@ -53,6 +63,16 @@ void Game::update(const sf::Int32 deltaMS)
             m_difficultyMenuSelection--;
             if (m_difficultyMenuSelection < 0)
                 m_difficultyMenuSelection = 3;
+
+            if (m_difficultyColumn->getIsSelected())
+                m_difficultyColumn->select();
+            else if (m_difficultyMenuSelection == 0)
+                m_difficultyColumn->select();
+
+            if (m_difficultyRow->getIsSelected())
+                m_difficultyRow->select();
+            else if (m_difficultyMenuSelection == 1)
+                m_difficultyRow->select();
 
             if (m_difficultyBomb->getIsSelected())
                 m_difficultyBomb->select();
@@ -80,8 +100,14 @@ void Game::update(const sf::Int32 deltaMS)
             m_isDifficultyMenuActive = false;
             m_isMainMenuActive = true;
             m_difficultyMenuSelection = 0;
+
+            if (!m_difficultyColumn->getIsSelected())
+                m_difficultyColumn->select();
+            if (m_difficultyRow->getIsSelected())
+                m_difficultyRow->select();
             if (m_difficultyBomb->getIsSelected())
                 m_difficultyBomb->select();
+
         }
         else if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
         {
@@ -180,6 +206,8 @@ void Game::render(sf::RenderWindow& window) const
         {
             window.draw(m_difficultyMenuSprite);
         }
+        m_difficultyColumn->render(window);
+        m_difficultyRow->render(window);
         m_difficultyBomb->render(window);
     }
     else if (m_isPauseMenuActive)
@@ -224,12 +252,31 @@ void Game::init()
     m_difficultyMenuStartSprite.setTexture(m_difficultyMenuStartTexture);
     m_difficultyMenuStartSprite.setPosition(sf::Vector2f(0.f, 0.f));
 
+    m_difficultyColumn->init();
+    m_difficultyRow->init();
     m_difficultyBomb->init();
-    m_difficultyBomb->setPosition(896, 632);
+
+    m_difficultyColumn->setPosition(896, 458);
+    m_difficultyRow->setPosition(896, 522);
+    m_difficultyBomb->setPosition(896, 586);
+
+    m_difficultyColumn->setIsOnBoard(false);
+    m_difficultyRow->setIsOnBoard(false);
     m_difficultyBomb->setIsOnBoard(false);
+
+    m_difficultyColumn->setValue(13);
+    m_difficultyRow->setValue(14);
     m_difficultyBomb->setValue(-1);
+
+    m_difficultyColumn->openTile(false);
+    m_difficultyRow->openTile(false);
     m_difficultyBomb->openTile(false);
+
+    m_difficultyColumn->setActive(true);
+    m_difficultyRow->setActive(true);
     m_difficultyBomb->setActive(true);
+
+    m_difficultyColumn->select();
 }
 
 void Game::instantiate()
@@ -283,4 +330,6 @@ void Game::restart()
     gameOver = false;
     m_tileset->restart();
     instantiate();
+    if (!m_difficultyColumn->getIsSelected())
+        m_difficultyColumn->select();
 }
