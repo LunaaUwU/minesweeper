@@ -34,6 +34,8 @@ public:
 
     bool getHasOpenedAround() const { return m_hasOpenedAround; }
 
+    bool getIsSelected() const { return m_isSelected; }
+
     void setActive(const bool active) { m_active = active; }
 
     void setHasOpenedAround(const bool hasOpenedAround) { m_hasOpenedAround = hasOpenedAround; }

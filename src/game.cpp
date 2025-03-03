@@ -42,12 +42,22 @@ void Game::update(const sf::Int32 deltaMS)
             m_difficultyMenuSelection++;
             if (m_difficultyMenuSelection >= 4)
                 m_difficultyMenuSelection = 0;
+
+            if (m_difficultyBomb->getIsSelected())
+                m_difficultyBomb->select();
+            else if(m_difficultyMenuSelection == 2)
+                m_difficultyBomb->select();
         }
         else if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::W)) && m_canMove)
         {
             m_difficultyMenuSelection--;
             if (m_difficultyMenuSelection < 0)
                 m_difficultyMenuSelection = 3;
+
+            if (m_difficultyBomb->getIsSelected())
+                m_difficultyBomb->select();
+            else if (m_difficultyMenuSelection == 2)
+                m_difficultyBomb->select();
         }
 	    else if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Z) || sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) || sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) && canClick && m_difficultyMenuSelection == 3)
 	    {
@@ -62,6 +72,20 @@ void Game::update(const sf::Int32 deltaMS)
         else
         {
             m_canMove = false;
+        }
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) && m_canQuit)
+        {
+            m_canQuit = false;
+            m_isDifficultyMenuActive = false;
+            m_isMainMenuActive = true;
+            m_difficultyMenuSelection = 0;
+            if (m_difficultyBomb->getIsSelected())
+                m_difficultyBomb->select();
+        }
+        else if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+        {
+            m_canQuit = true;
         }
     }
     else if (m_isPauseMenuActive)
@@ -156,6 +180,7 @@ void Game::render(sf::RenderWindow& window) const
         {
             window.draw(m_difficultyMenuSprite);
         }
+        m_difficultyBomb->render(window);
     }
     else if (m_isPauseMenuActive)
     {
@@ -198,6 +223,13 @@ void Game::init()
     m_difficultyMenuStartTexture.loadFromFile("../sprites/menu/difficulty_menu_start.png");
     m_difficultyMenuStartSprite.setTexture(m_difficultyMenuStartTexture);
     m_difficultyMenuStartSprite.setPosition(sf::Vector2f(0.f, 0.f));
+
+    m_difficultyBomb->init();
+    m_difficultyBomb->setPosition(896, 632);
+    m_difficultyBomb->setIsOnBoard(false);
+    m_difficultyBomb->setValue(-1);
+    m_difficultyBomb->openTile(false);
+    m_difficultyBomb->setActive(true);
 }
 
 void Game::instantiate()
