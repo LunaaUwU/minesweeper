@@ -26,6 +26,8 @@ public:
 
 private:
 
+    void updateDifficultyCounters();
+
     Tileset* m_tileset = new Tileset();
 
     bool m_isMainMenuActive = true;
@@ -37,10 +39,11 @@ private:
     bool m_isDifficultyMenuActive = false;
     int m_difficultyMenuSelection = 0; // 0 = rows, 1 = cols, 2 = Bombs, 3 = Start
 
-    int m_rows = 0;
-    int m_columns = 0;
+    int m_rows = 10;
+    int m_columns = 15;
 
-    int m_numberOfBombs = 0;
+
+    int m_numberOfBombs = 30;
 
     int m_firstSpawnPosX = 0;
     int m_firstSpawnPosY = 0;
@@ -68,6 +71,15 @@ private:
     Tile* m_difficultyColumn = new Tile();
     Tile* m_difficultyRow = new Tile();
     Tile* m_difficultyBomb = new Tile();
+
+    Tile* m_difficultyColumnNum1 = new Tile();
+    Tile* m_difficultyColumnNum2 = new Tile();
+
+    Tile* m_difficultyRowNum1 = new Tile();
+    Tile* m_difficultyRowNum2 = new Tile();
+
+    Tile* m_difficultyBombNum1 = new Tile();
+    Tile* m_difficultyBombNum2 = new Tile();
 
     bool m_canQuit = true;
     bool m_canMove = true;

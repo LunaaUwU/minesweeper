@@ -43,15 +43,15 @@ void Game::update(const sf::Int32 deltaMS)
             if (m_difficultyMenuSelection >= 4)
                 m_difficultyMenuSelection = 0;
 
-            if (m_difficultyColumn->getIsSelected())
-                m_difficultyColumn->select();
-            else if(m_difficultyMenuSelection == 0)
-                m_difficultyColumn->select();
-
             if (m_difficultyRow->getIsSelected())
                 m_difficultyRow->select();
-            else if (m_difficultyMenuSelection == 1)
+            else if (m_difficultyMenuSelection == 0)
                 m_difficultyRow->select();
+
+            if (m_difficultyColumn->getIsSelected())
+                m_difficultyColumn->select();
+            else if(m_difficultyMenuSelection == 1)
+                m_difficultyColumn->select();
 
             if (m_difficultyBomb->getIsSelected())
                 m_difficultyBomb->select();
@@ -64,20 +64,76 @@ void Game::update(const sf::Int32 deltaMS)
             if (m_difficultyMenuSelection < 0)
                 m_difficultyMenuSelection = 3;
 
-            if (m_difficultyColumn->getIsSelected())
-                m_difficultyColumn->select();
-            else if (m_difficultyMenuSelection == 0)
-                m_difficultyColumn->select();
-
             if (m_difficultyRow->getIsSelected())
                 m_difficultyRow->select();
-            else if (m_difficultyMenuSelection == 1)
+            else if (m_difficultyMenuSelection == 0)
                 m_difficultyRow->select();
+
+            if (m_difficultyColumn->getIsSelected())
+                m_difficultyColumn->select();
+            else if (m_difficultyMenuSelection == 1)
+                m_difficultyColumn->select();
 
             if (m_difficultyBomb->getIsSelected())
                 m_difficultyBomb->select();
             else if (m_difficultyMenuSelection == 2)
                 m_difficultyBomb->select();
+        }
+        else if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::D)) && m_canMove)
+        {
+            if (m_difficultyMenuSelection == 0)
+            {
+                m_rows++;
+                if (m_rows >= 20)
+                {
+                    m_rows = 20;
+                }
+            }
+            else if (m_difficultyMenuSelection == 1)
+            {
+                m_columns++;
+                if (m_columns >= 25)
+                {
+                    m_columns = 25;
+                }
+            }
+            else if (m_difficultyMenuSelection == 2)
+            {
+                m_numberOfBombs++;
+                if (m_numberOfBombs >= 99)
+                {
+                    m_numberOfBombs = 99;
+                }
+            }
+            updateDifficultyCounters();
+        }
+        else if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::A)) && m_canMove)
+        {
+            if (m_difficultyMenuSelection == 0)
+            {
+                m_rows--;
+                if (m_rows <= 5)
+                {
+                    m_rows = 5;
+                }
+            }
+            else if (m_difficultyMenuSelection == 1)
+            {
+                m_columns--;
+                if (m_columns <= 5)
+                {
+                    m_columns = 5;
+                }
+            }
+            else if (m_difficultyMenuSelection == 2)
+            {
+                m_numberOfBombs--;
+                if (m_numberOfBombs <= 5)
+                {
+                    m_numberOfBombs = 5;
+                }
+            }
+            updateDifficultyCounters();
         }
 	    else if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Z) || sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) || sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) && canClick && m_difficultyMenuSelection == 3)
 	    {
@@ -206,9 +262,15 @@ void Game::render(sf::RenderWindow& window) const
         {
             window.draw(m_difficultyMenuSprite);
         }
-        m_difficultyColumn->render(window);
         m_difficultyRow->render(window);
+        m_difficultyRowNum1->render(window);
+        m_difficultyRowNum2->render(window);
+        m_difficultyColumn->render(window);
+        m_difficultyColumnNum1->render(window);
+        m_difficultyColumnNum2->render(window);
         m_difficultyBomb->render(window);
+        m_difficultyBombNum1->render(window);
+        m_difficultyBombNum2->render(window);
     }
     else if (m_isPauseMenuActive)
     {
@@ -252,40 +314,75 @@ void Game::init()
     m_difficultyMenuStartSprite.setTexture(m_difficultyMenuStartTexture);
     m_difficultyMenuStartSprite.setPosition(sf::Vector2f(0.f, 0.f));
 
-    m_difficultyColumn->init();
     m_difficultyRow->init();
+    m_difficultyRowNum1->init();
+    m_difficultyRowNum2->init();
+    m_difficultyColumn->init();
+    m_difficultyColumnNum1->init();
+    m_difficultyColumnNum2->init();
     m_difficultyBomb->init();
+    m_difficultyBombNum1->init();
+    m_difficultyBombNum2->init();
 
-    m_difficultyColumn->setPosition(896, 458);
-    m_difficultyRow->setPosition(896, 522);
+    m_difficultyRow->setPosition(896, 458);
+    m_difficultyRowNum1->setPosition(960, 458);
+    m_difficultyRowNum2->setPosition(992, 458);
+    m_difficultyColumn->setPosition(896, 522);
+    m_difficultyColumnNum1->setPosition(960, 522);
+    m_difficultyColumnNum2->setPosition(992, 522);
     m_difficultyBomb->setPosition(896, 586);
+    m_difficultyBombNum1->setPosition(960, 586);
+    m_difficultyBombNum2->setPosition(992, 586);
 
-    m_difficultyColumn->setIsOnBoard(false);
     m_difficultyRow->setIsOnBoard(false);
+    m_difficultyRowNum1->setIsOnBoard(false);
+    m_difficultyRowNum2->setIsOnBoard(false);
+    m_difficultyColumn->setIsOnBoard(false);
+    m_difficultyColumnNum1->setIsOnBoard(false);
+    m_difficultyColumnNum2->setIsOnBoard(false);
     m_difficultyBomb->setIsOnBoard(false);
+    m_difficultyBombNum1->setIsOnBoard(false);
+    m_difficultyBombNum2->setIsOnBoard(false);
 
-    m_difficultyColumn->setValue(13);
     m_difficultyRow->setValue(14);
+    m_difficultyRowNum1->setValue(1);
+    m_difficultyRowNum2->setValue(0);
+    m_difficultyColumn->setValue(13);
+    m_difficultyColumnNum1->setValue(1);
+    m_difficultyColumnNum2->setValue(5);
     m_difficultyBomb->setValue(-1);
+    m_difficultyBombNum1->setValue(3);
+    m_difficultyBombNum2->setValue(0);
 
-    m_difficultyColumn->openTile(false);
     m_difficultyRow->openTile(false);
+    m_difficultyRowNum1->openTile(false);
+    m_difficultyRowNum2->openTile(false);
+    m_difficultyColumn->openTile(false);
+    m_difficultyColumnNum1->openTile(false);
+    m_difficultyColumnNum2->openTile(false);
     m_difficultyBomb->openTile(false);
+    m_difficultyBombNum1->openTile(false);
+    m_difficultyBombNum2->openTile(false);
 
-    m_difficultyColumn->setActive(true);
     m_difficultyRow->setActive(true);
+    m_difficultyRowNum1->setActive(true);
+    m_difficultyRowNum2->setActive(true);
+    m_difficultyColumn->setActive(true);
+    m_difficultyColumnNum1->setActive(true);
+    m_difficultyColumnNum2->setActive(true);
     m_difficultyBomb->setActive(true);
+    m_difficultyBombNum1->setActive(true);
+    m_difficultyBombNum2->setActive(true);
 
-    m_difficultyColumn->select();
+    m_difficultyRow->select();
 }
 
 void Game::instantiate()
 {
-    m_rows = 10;
-    m_columns = 15;
-
-    m_numberOfBombs = 30;
-
+    if (m_numberOfBombs >= m_rows * m_columns)
+    {
+        m_numberOfBombs = (m_rows * m_columns) - 9;
+    }
     m_tileset->init(m_rows, m_columns, m_numberOfBombs);
 
     m_firstSpawnPosX = 960 - (m_columns * 16);
@@ -321,6 +418,10 @@ void Game::instantiate()
 
 void Game::restart()
 {
+    m_rows = 10;
+    m_columns = 15;
+    m_numberOfBombs = 30;
+    updateDifficultyCounters();
     m_isMainMenuActive = true;
     m_mainMenuSelection = true;
     m_isPauseMenuActive = false;
@@ -329,7 +430,28 @@ void Game::restart()
     m_difficultyMenuSelection = 0;
     gameOver = false;
     m_tileset->restart();
-    instantiate();
-    if (!m_difficultyColumn->getIsSelected())
+    if (!m_difficultyRow->getIsSelected())
+        m_difficultyRow->select();
+    else if(m_difficultyColumn->getIsSelected())
         m_difficultyColumn->select();
+    else if (m_difficultyBomb->getIsSelected())
+        m_difficultyBomb->select();
+}
+
+void Game::updateDifficultyCounters()
+{
+    m_difficultyRowNum1->setValue(m_rows / 10);
+    m_difficultyRowNum1->changeTile(m_difficultyRowNum1->getValue());
+    m_difficultyRowNum2->setValue(m_rows - (m_rows / 10 * 10));
+    m_difficultyRowNum2->changeTile(m_difficultyRowNum2->getValue());
+
+    m_difficultyColumnNum1->setValue(m_columns / 10);
+    m_difficultyColumnNum1->changeTile(m_difficultyColumnNum1->getValue());
+    m_difficultyColumnNum2->setValue(m_columns - (m_columns / 10 * 10));
+    m_difficultyColumnNum2->changeTile(m_difficultyColumnNum2->getValue());
+
+    m_difficultyBombNum1->setValue(m_numberOfBombs / 10);
+    m_difficultyBombNum1->changeTile(m_difficultyBombNum1->getValue());
+    m_difficultyBombNum2->setValue(m_numberOfBombs - (m_numberOfBombs / 10 * 10));
+    m_difficultyBombNum2->changeTile(m_difficultyBombNum2->getValue());
 }

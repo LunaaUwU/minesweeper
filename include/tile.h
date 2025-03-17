@@ -51,7 +51,7 @@ private:
     bool m_isOpened = false;
     bool m_isFlagged = false;
     int m_value = 0; // 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 are numbers (yes, 9 too for decoration)
-	//                 -1 is bomb, 10 is unknown, 11 is flag and 12 is transparent flag. 13 and 14 are column and row decorations
+	//                 -1 is bomb, 10 is unknown, 11 is flag and 12 is transparent flag. 13 and 14 are row and column decorations
 
     bool m_active = false;
 
