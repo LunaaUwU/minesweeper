@@ -35,6 +35,7 @@ include_directories(${PROJECT_NAME} PRIVATE include)
 add_executable(${PROJECT_NAME} ${PROJECT_FILES})
 
 target_link_libraries(minesweeper PRIVATE sfml-graphics)
+target_link_libraries(minesweeper PRIVATE sfml-audio)
 target_compile_features(minesweeper PRIVATE cxx_std_17)
 
 if(WIN32)

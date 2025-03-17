@@ -1,5 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
+
 
 #include "tileset.h"
 
@@ -67,6 +69,8 @@ private:
     sf::Texture m_difficultyMenuTexture;
     sf::Sprite m_difficultyMenuStartSprite;
     sf::Texture m_difficultyMenuStartTexture;
+
+    sf::Music m_menuMusic;
 
     Tile* m_difficultyColumn = new Tile();
     Tile* m_difficultyRow = new Tile();

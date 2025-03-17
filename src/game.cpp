@@ -14,7 +14,7 @@ void Game::update(const sf::Int32 deltaMS)
         {
             m_mainMenuSelection = false;
         }
-        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) || sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Keyboard::isKeyPressed(sf::Keyboard::Z))
+        else if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) || sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) && canClick)
         {
 	        if (m_mainMenuSelection)
 	        {
@@ -138,6 +138,7 @@ void Game::update(const sf::Int32 deltaMS)
 	    else if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Z) || sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) || sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) && canClick && m_difficultyMenuSelection == 3)
 	    {
             m_isDifficultyMenuActive = false;
+            m_menuMusic.stop();
             instantiate();
 	    }
 
@@ -314,6 +315,11 @@ void Game::init()
     m_difficultyMenuStartSprite.setTexture(m_difficultyMenuStartTexture);
     m_difficultyMenuStartSprite.setPosition(sf::Vector2f(0.f, 0.f));
 
+    m_menuMusic.openFromFile("../audio/music/menu_music.mp3");
+    m_menuMusic.play();
+    m_menuMusic.setLoop(true);
+    m_menuMusic.setVolume(20.f);
+
     m_difficultyRow->init();
     m_difficultyRowNum1->init();
     m_difficultyRowNum2->init();
@@ -436,6 +442,7 @@ void Game::restart()
         m_difficultyColumn->select();
     else if (m_difficultyBomb->getIsSelected())
         m_difficultyBomb->select();
+    m_menuMusic.play();
 }
 
 void Game::updateDifficultyCounters()
