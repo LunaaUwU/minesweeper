@@ -139,6 +139,8 @@ void Game::update(const sf::Int32 deltaMS)
 	    {
             m_isDifficultyMenuActive = false;
             m_menuMusic.stop();
+            m_sogMusic.stop();
+            m_isSogging = false;
             instantiate();
 	    }
 
@@ -186,6 +188,10 @@ void Game::update(const sf::Int32 deltaMS)
 	        if (m_pauseMenuSelection)
 	        {
                 m_isPauseMenuActive = false;
+                if (m_isSogging)
+                    m_sogMusic.play();
+                else
+                    m_gameMusic.play();
 	        }
             else
             {
@@ -202,6 +208,7 @@ void Game::update(const sf::Int32 deltaMS)
         {
             m_canQuit = true;
         }
+        m_canSog = false;
     }
     else
     {
@@ -210,6 +217,9 @@ void Game::update(const sf::Int32 deltaMS)
         {
             m_canQuit = false;
             m_isPauseMenuActive = true;
+            m_gameMusic.pause();
+            if (m_isSogging)
+                m_sogMusic.pause();
         }
         else if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
         {
@@ -229,6 +239,19 @@ void Game::update(const sf::Int32 deltaMS)
     if (gameOver)
     {
         restart();
+    }
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && sf::Keyboard::isKeyPressed(sf::Keyboard::O) && sf::Keyboard::isKeyPressed(sf::Keyboard::G) && m_canSog && !m_isSogging)
+    {
+        m_isSogging = true;
+        m_menuMusic.stop();
+        m_gameMusic.stop();
+        m_sogMusic.play();
+    }
+
+    if (!sf::Keyboard::isKeyPressed(sf::Keyboard::S) && !sf::Keyboard::isKeyPressed(sf::Keyboard::O) && !sf::Keyboard::isKeyPressed(sf::Keyboard::G))
+    {
+        m_canSog = true;
     }
 }
 
@@ -315,10 +338,14 @@ void Game::init()
     m_difficultyMenuStartSprite.setTexture(m_difficultyMenuStartTexture);
     m_difficultyMenuStartSprite.setPosition(sf::Vector2f(0.f, 0.f));
 
-    m_menuMusic.openFromFile("../audio/music/menu_music.mp3");
+    m_menuMusic.openFromFile("../audio/music/menu/menu_" + std::to_string(randomInt(1, m_menuSongNum)) + ".mp3");
     m_menuMusic.play();
     m_menuMusic.setLoop(true);
     m_menuMusic.setVolume(20.f);
+
+    m_sogMusic.openFromFile("../audio/music/soggy.mp3");
+    m_sogMusic.setLoop(true);
+    m_sogMusic.setVolume(35.f);
 
     m_difficultyRow->init();
     m_difficultyRowNum1->init();
@@ -385,6 +412,10 @@ void Game::init()
 
 void Game::instantiate()
 {
+    m_gameMusic.openFromFile("../audio/music/game/game_" + std::to_string(randomInt(1, m_gameSongNum)) + ".mp3");
+    m_gameMusic.setLoop(true);
+    m_gameMusic.setVolume(20.f);
+    m_gameMusic.play();
     if (m_numberOfBombs >= m_rows * m_columns)
     {
         m_numberOfBombs = (m_rows * m_columns) - 9;
@@ -424,15 +455,13 @@ void Game::instantiate()
 
 void Game::restart()
 {
-    m_rows = 10;
-    m_columns = 15;
-    m_numberOfBombs = 30;
     updateDifficultyCounters();
     m_isMainMenuActive = true;
     m_mainMenuSelection = true;
     m_isPauseMenuActive = false;
     m_pauseMenuSelection = true;
     m_isDifficultyMenuActive = false;
+    m_isSogging = false;
     m_difficultyMenuSelection = 0;
     gameOver = false;
     m_tileset->restart();
@@ -442,7 +471,10 @@ void Game::restart()
         m_difficultyColumn->select();
     else if (m_difficultyBomb->getIsSelected())
         m_difficultyBomb->select();
+    m_gameMusic.stop();
+    m_menuMusic.openFromFile("../audio/music/menu/menu_" + std::to_string(randomInt(1, m_menuSongNum)) + ".mp3");
     m_menuMusic.play();
+    m_sogMusic.stop();
 }
 
 void Game::updateDifficultyCounters()
@@ -461,4 +493,11 @@ void Game::updateDifficultyCounters()
     m_difficultyBombNum1->changeTile(m_difficultyBombNum1->getValue());
     m_difficultyBombNum2->setValue(m_numberOfBombs - (m_numberOfBombs / 10 * 10));
     m_difficultyBombNum2->changeTile(m_difficultyBombNum2->getValue());
+}
+
+int Game::randomInt(int min, int max)
+{
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<int> dist(min, max);
+    return dist(gen);
 }

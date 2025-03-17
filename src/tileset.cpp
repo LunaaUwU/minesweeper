@@ -105,7 +105,7 @@ void Tileset::update(sf::Int32 deltaMS)
 		}
 		else
 		{
-			if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) || sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) && Game::canClick)
+			if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) || sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Keyboard::isKeyPressed(sf::Keyboard::Z) || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) && Game::canClick)
 			{
 				Game::gameOver = true;
 			}

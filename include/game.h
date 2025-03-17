@@ -2,7 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 
-
+#include <random>
 #include "tileset.h"
 
 
@@ -30,6 +30,8 @@ private:
 
     void updateDifficultyCounters();
 
+    int randomInt(int min, int max);
+
     Tileset* m_tileset = new Tileset();
 
     bool m_isMainMenuActive = true;
@@ -44,7 +46,6 @@ private:
     int m_rows = 10;
     int m_columns = 15;
 
-
     int m_numberOfBombs = 30;
 
     int m_firstSpawnPosX = 0;
@@ -54,6 +55,9 @@ private:
     int m_spawnPosY = 0;
 
     int m_columnNumber = 0;
+
+    int m_menuSongNum = 6;
+    int m_gameSongNum = 10;
 
     sf::Sprite m_mainMenuPlaySprite;
     sf::Texture m_mainMenuPlayTexture;
@@ -71,6 +75,8 @@ private:
     sf::Texture m_difficultyMenuStartTexture;
 
     sf::Music m_menuMusic;
+    sf::Music m_gameMusic;
+    sf::Music m_sogMusic;
 
     Tile* m_difficultyColumn = new Tile();
     Tile* m_difficultyRow = new Tile();
@@ -87,5 +93,9 @@ private:
 
     bool m_canQuit = true;
     bool m_canMove = true;
+    bool m_canSog = true;
+    bool m_isSogging = false;
+
+    std::random_device rd;
 
 };
