@@ -23,8 +23,11 @@ int main()
         }
         elapsed = deltaClock.restart();
 
-        game->update(elapsed.asMilliseconds());
-        game->render(window);
+        if (window.hasFocus())
+        {
+            game->update(elapsed.asMilliseconds());
+            game->render(window);
+        }
     }
 
     return 0;
