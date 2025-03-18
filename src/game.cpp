@@ -246,21 +246,23 @@ void Game::update(const sf::Int32 deltaMS)
         m_canSog = false;
         m_isSogging = true;
         m_menuMusic.stop();
-        m_gameMusic.stop();
+        m_gameMusic.stop();;
         m_sogMusic.play();
 
-        m_randomSogSize = randomInt(1, 5);
-        m_sogSizeX = 96.f * m_randomSogSize;
-        m_sogSizeY = 128.f * m_randomSogSize;
-        m_sogSprite.setOrigin(sf::Vector2f(m_sogSizeX / 2, m_sogSizeY / 2));
-        m_sogSprite.setSize(sf::Vector2f(m_sogSizeX, m_sogSizeY));
-        m_sogSprite.setRotation(randomInt(0, 359));
-        m_sogSprite.setPosition(sf::Vector2f(randomInt(m_sogSizeX, 1920 - m_sogSizeX), randomInt(m_sogSizeY, 1080 - m_sogSizeY)));
+        Soggy* soggy = new Soggy;
+
+        m_sogArray.push_back(soggy);
+        soggy->init();
     }
 
     if (!sf::Keyboard::isKeyPressed(sf::Keyboard::S) && !sf::Keyboard::isKeyPressed(sf::Keyboard::O) && !sf::Keyboard::isKeyPressed(sf::Keyboard::G))
     {
         m_canSog = true;
+    }
+
+    for (Soggy* soggy : m_sogArray)
+    {
+        soggy->update(deltaMS);
     }
 }
 
@@ -322,7 +324,12 @@ void Game::render(sf::RenderWindow& window) const
     }
 
     if (m_isSogging)
-        window.draw(m_sogSprite);
+    {
+        for (Soggy* soggy : m_sogArray)
+        {
+            soggy->render(window);
+        }
+    }
 
     window.display();
 }
@@ -349,9 +356,6 @@ void Game::init()
     m_difficultyMenuStartTexture.loadFromFile("../sprites/menu/difficulty_menu_start.png");
     m_difficultyMenuStartSprite.setTexture(m_difficultyMenuStartTexture);
     m_difficultyMenuStartSprite.setPosition(sf::Vector2f(0.f, 0.f));
-
-    m_sogTexture.loadFromFile("../sprites/soggycat.png");
-    m_sogSprite.setTexture(&m_sogTexture);
 
     m_menuMusic.openFromFile("../audio/music/menu/menu_" + std::to_string(randomInt(1, m_menuSongNum)) + ".mp3");
     m_menuMusic.play();
@@ -431,6 +435,14 @@ void Game::instantiate()
     m_gameMusic.setLoop(true);
     m_gameMusic.setVolume(20.f);
     m_gameMusic.play();
+
+    for (Soggy* soggy : m_sogArray)
+    {
+        delete soggy;
+    }
+
+    m_sogArray.clear();
+
     if (m_numberOfBombs >= m_rows * m_columns)
     {
         m_numberOfBombs = (m_rows * m_columns) - 9;
@@ -490,6 +502,13 @@ void Game::restart()
     m_menuMusic.openFromFile("../audio/music/menu/menu_" + std::to_string(randomInt(1, m_menuSongNum)) + ".mp3");
     m_menuMusic.play();
     m_sogMusic.stop();
+
+    for (Soggy* soggy : m_sogArray)
+    {
+        delete soggy;
+    }
+
+    m_sogArray.clear();
 }
 
 void Game::updateDifficultyCounters()

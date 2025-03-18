@@ -16,6 +16,7 @@ set(PROJECT_HEADERS
     include/game.h
     include/tile.h
     include/tileset.h
+    include/soggy.h
 )
 
 set(PROJECT_SOURCES 
@@ -23,6 +24,7 @@ set(PROJECT_SOURCES
     src/game.cpp
     src/tile.cpp
     src/tileset.cpp
+    src/soggy.cpp
 )
 
 set(PROJECT_FILES 

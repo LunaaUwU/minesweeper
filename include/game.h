@@ -4,6 +4,7 @@
 
 #include <random>
 #include "tileset.h"
+#include "soggy.h"
 
 
 class Game
@@ -74,12 +75,6 @@ private:
     sf::Sprite m_difficultyMenuStartSprite;
     sf::Texture m_difficultyMenuStartTexture;
 
-    sf::RectangleShape m_sogSprite;
-    sf::Texture m_sogTexture;
-    int m_sogSizeX = 0;
-    int m_sogSizeY = 0;
-    int m_randomSogSize = 0;
-
     sf::Music m_menuMusic;
     sf::Music m_gameMusic;
     sf::Music m_sogMusic;
@@ -101,6 +96,8 @@ private:
     bool m_canMove = true;
     bool m_canSog = true;
     bool m_isSogging = false;
+
+    std::vector<Soggy*> m_sogArray;
 
     std::random_device rd;
 
