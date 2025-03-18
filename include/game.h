@@ -27,11 +27,15 @@ public:
 
     inline static bool canClick = true;
 
+    inline static bool shouldSpawnSog = false();
+
 private:
 
     void updateDifficultyCounters();
 
     int randomInt(int min, int max);
+
+    void spawnSog();
 
     Tileset* m_tileset = new Tileset();
 
@@ -75,6 +79,8 @@ private:
     sf::Sprite m_difficultyMenuStartSprite;
     sf::Texture m_difficultyMenuStartTexture;
 
+    sf::Texture m_sogTexture;
+
     sf::Music m_menuMusic;
     sf::Music m_gameMusic;
     sf::Music m_sogMusic;
@@ -92,12 +98,32 @@ private:
     Tile* m_difficultyBombNum1 = new Tile();
     Tile* m_difficultyBombNum2 = new Tile();
 
+    sf::Texture m_tileUnkwnownTexture;
+    sf::Texture m_tile0Texture;
+    sf::Texture m_tile1Texture;
+    sf::Texture m_tile2Texture;
+    sf::Texture m_tile3Texture;
+    sf::Texture m_tile4Texture;
+    sf::Texture m_tile5Texture;
+    sf::Texture m_tile6Texture;
+    sf::Texture m_tile7Texture;
+    sf::Texture m_tile8Texture;
+    sf::Texture m_tile9Texture;
+    sf::Texture m_tileFlagTexture;
+    sf::Texture m_tileWrongFlagTexture;
+    sf::Texture m_tileMineTexture;
+    sf::Texture m_tileRedMineTexture;
+    sf::Texture m_tileColumnTexture;
+    sf::Texture m_tileRowTexture;
+    sf::Texture m_selectTexture;
+
+    std::vector<Soggy*> m_sogArray;
+
     bool m_canQuit = true;
     bool m_canMove = true;
     bool m_canSog = true;
     bool m_isSogging = false;
-
-    std::vector<Soggy*> m_sogArray;
+    int m_sogRandomTime = 0;
 
     std::random_device rd;
 

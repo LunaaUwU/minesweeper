@@ -246,13 +246,9 @@ void Game::update(const sf::Int32 deltaMS)
         m_canSog = false;
         m_isSogging = true;
         m_menuMusic.stop();
-        m_gameMusic.stop();;
-        m_sogMusic.play();
+        m_gameMusic.stop();
 
-        Soggy* soggy = new Soggy;
-
-        m_sogArray.push_back(soggy);
-        soggy->init();
+        spawnSog();
     }
 
     if (!sf::Keyboard::isKeyPressed(sf::Keyboard::S) && !sf::Keyboard::isKeyPressed(sf::Keyboard::O) && !sf::Keyboard::isKeyPressed(sf::Keyboard::G))
@@ -260,9 +256,18 @@ void Game::update(const sf::Int32 deltaMS)
         m_canSog = true;
     }
 
-    for (Soggy* soggy : m_sogArray)
+    if (!m_isPauseMenuActive && m_isSogging)
     {
-        soggy->update(deltaMS);
+        for (Soggy* soggy : m_sogArray)
+        {
+            soggy->update(deltaMS);
+        }
+    }
+
+    if (shouldSpawnSog)
+    {
+        spawnSog();
+        shouldSpawnSog = false;
     }
 }
 
@@ -357,6 +362,8 @@ void Game::init()
     m_difficultyMenuStartSprite.setTexture(m_difficultyMenuStartTexture);
     m_difficultyMenuStartSprite.setPosition(sf::Vector2f(0.f, 0.f));
 
+    m_sogTexture.loadFromFile("../sprites/soggycat.png");
+
     m_menuMusic.openFromFile("../audio/music/menu/menu_" + std::to_string(randomInt(1, m_menuSongNum)) + ".mp3");
     m_menuMusic.play();
     m_menuMusic.setLoop(true);
@@ -366,15 +373,44 @@ void Game::init()
     m_sogMusic.setLoop(true);
     m_sogMusic.setVolume(35.f);
 
-    m_difficultyRow->init();
-    m_difficultyRowNum1->init();
-    m_difficultyRowNum2->init();
-    m_difficultyColumn->init();
-    m_difficultyColumnNum1->init();
-    m_difficultyColumnNum2->init();
-    m_difficultyBomb->init();
-    m_difficultyBombNum1->init();
-    m_difficultyBombNum2->init();
+    // TILES
+    m_tileUnkwnownTexture.loadFromFile("../sprites/tiles/TileUnknown.png");
+    m_tile0Texture.loadFromFile("../sprites/tiles/Tile0.png");
+    m_tile1Texture.loadFromFile("../sprites/tiles/Tile1.png");
+    m_tile2Texture.loadFromFile("../sprites/tiles/Tile2.png");
+    m_tile3Texture.loadFromFile("../sprites/tiles/Tile3.png");
+    m_tile4Texture.loadFromFile("../sprites/tiles/Tile4.png");
+    m_tile5Texture.loadFromFile("../sprites/tiles/Tile5.png");
+    m_tile6Texture.loadFromFile("../sprites/tiles/Tile6.png");
+    m_tile7Texture.loadFromFile("../sprites/tiles/Tile7.png");
+    m_tile8Texture.loadFromFile("../sprites/tiles/Tile8.png");
+    m_tile9Texture.loadFromFile("../sprites/tiles/Tile9.png");
+    m_tileFlagTexture.loadFromFile("../sprites/tiles/TileFlag.png");
+    m_tileWrongFlagTexture.loadFromFile("../sprites/tiles/TileWrongFlag.png");
+    m_tileMineTexture.loadFromFile("../sprites/tiles/TileMine.png");
+    m_tileRedMineTexture.loadFromFile("../sprites/tiles/TileExploded.png");
+    m_tileColumnTexture.loadFromFile("../sprites/tiles/TileColumn.png");
+    m_tileRowTexture.loadFromFile("../sprites/tiles/TileRow.png");
+    m_selectTexture.loadFromFile("../sprites/tiles/Select.png");
+
+    m_difficultyRow->init(m_tileUnkwnownTexture, m_tile0Texture, m_tile1Texture, m_tile2Texture, m_tile3Texture, m_tile4Texture, m_tile5Texture, m_tile6Texture, m_tile7Texture, m_tile8Texture,
+        m_tile9Texture, m_tileFlagTexture, m_tileWrongFlagTexture, m_tileMineTexture, m_tileRedMineTexture, m_tileColumnTexture, m_tileRowTexture, m_selectTexture);
+    m_difficultyRowNum1->init(m_tileUnkwnownTexture, m_tile0Texture, m_tile1Texture, m_tile2Texture, m_tile3Texture, m_tile4Texture, m_tile5Texture, m_tile6Texture, m_tile7Texture, m_tile8Texture,
+        m_tile9Texture, m_tileFlagTexture, m_tileWrongFlagTexture, m_tileMineTexture, m_tileRedMineTexture, m_tileColumnTexture, m_tileRowTexture, m_selectTexture);
+    m_difficultyRowNum2->init(m_tileUnkwnownTexture, m_tile0Texture, m_tile1Texture, m_tile2Texture, m_tile3Texture, m_tile4Texture, m_tile5Texture, m_tile6Texture, m_tile7Texture, m_tile8Texture,
+        m_tile9Texture, m_tileFlagTexture, m_tileWrongFlagTexture, m_tileMineTexture, m_tileRedMineTexture, m_tileColumnTexture, m_tileRowTexture, m_selectTexture);
+    m_difficultyColumn->init(m_tileUnkwnownTexture, m_tile0Texture, m_tile1Texture, m_tile2Texture, m_tile3Texture, m_tile4Texture, m_tile5Texture, m_tile6Texture, m_tile7Texture, m_tile8Texture,
+        m_tile9Texture, m_tileFlagTexture, m_tileWrongFlagTexture, m_tileMineTexture, m_tileRedMineTexture, m_tileColumnTexture, m_tileRowTexture, m_selectTexture);
+    m_difficultyColumnNum1->init(m_tileUnkwnownTexture, m_tile0Texture, m_tile1Texture, m_tile2Texture, m_tile3Texture, m_tile4Texture, m_tile5Texture, m_tile6Texture, m_tile7Texture, m_tile8Texture,
+        m_tile9Texture, m_tileFlagTexture, m_tileWrongFlagTexture, m_tileMineTexture, m_tileRedMineTexture, m_tileColumnTexture, m_tileRowTexture, m_selectTexture);
+    m_difficultyColumnNum2->init(m_tileUnkwnownTexture, m_tile0Texture, m_tile1Texture, m_tile2Texture, m_tile3Texture, m_tile4Texture, m_tile5Texture, m_tile6Texture, m_tile7Texture, m_tile8Texture,
+        m_tile9Texture, m_tileFlagTexture, m_tileWrongFlagTexture, m_tileMineTexture, m_tileRedMineTexture, m_tileColumnTexture, m_tileRowTexture, m_selectTexture);
+    m_difficultyBomb->init(m_tileUnkwnownTexture, m_tile0Texture, m_tile1Texture, m_tile2Texture, m_tile3Texture, m_tile4Texture, m_tile5Texture, m_tile6Texture, m_tile7Texture, m_tile8Texture,
+        m_tile9Texture, m_tileFlagTexture, m_tileWrongFlagTexture, m_tileMineTexture, m_tileRedMineTexture, m_tileColumnTexture, m_tileRowTexture, m_selectTexture);
+    m_difficultyBombNum1->init(m_tileUnkwnownTexture, m_tile0Texture, m_tile1Texture, m_tile2Texture, m_tile3Texture, m_tile4Texture, m_tile5Texture, m_tile6Texture, m_tile7Texture, m_tile8Texture,
+        m_tile9Texture, m_tileFlagTexture, m_tileWrongFlagTexture, m_tileMineTexture, m_tileRedMineTexture, m_tileColumnTexture, m_tileRowTexture, m_selectTexture);
+    m_difficultyBombNum2->init(m_tileUnkwnownTexture, m_tile0Texture, m_tile1Texture, m_tile2Texture, m_tile3Texture, m_tile4Texture, m_tile5Texture, m_tile6Texture, m_tile7Texture, m_tile8Texture,
+        m_tile9Texture, m_tileFlagTexture, m_tileWrongFlagTexture, m_tileMineTexture, m_tileRedMineTexture, m_tileColumnTexture, m_tileRowTexture, m_selectTexture);
 
     m_difficultyRow->setPosition(896, 458);
     m_difficultyRowNum1->setPosition(960, 458);
@@ -447,7 +483,8 @@ void Game::instantiate()
     {
         m_numberOfBombs = (m_rows * m_columns) - 9;
     }
-    m_tileset->init(m_rows, m_columns, m_numberOfBombs);
+    m_tileset->init(m_rows, m_columns, m_numberOfBombs, m_tileUnkwnownTexture, m_tile0Texture, m_tile1Texture, m_tile2Texture, m_tile3Texture, m_tile4Texture, m_tile5Texture, m_tile6Texture, m_tile7Texture, m_tile8Texture,
+        m_tile9Texture, m_tileFlagTexture, m_tileWrongFlagTexture, m_tileMineTexture, m_tileRedMineTexture, m_tileColumnTexture, m_tileRowTexture, m_selectTexture);
 
     m_firstSpawnPosX = 960 - (m_columns * 16);
 
@@ -509,6 +546,14 @@ void Game::restart()
     }
 
     m_sogArray.clear();
+}
+
+void Game::spawnSog()
+{
+    m_sogMusic.play();
+    Soggy* soggy = new Soggy;
+    m_sogArray.push_back(soggy);
+    soggy->init(m_sogTexture);
 }
 
 void Game::updateDifficultyCounters()

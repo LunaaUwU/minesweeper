@@ -207,8 +207,30 @@ void Tileset::render(sf::RenderWindow& window) const
 	m_bombCounterBomb->render(window);
 }
 
-void Tileset::init(const int rows, const int columns, const int numberOfBombs)
+void Tileset::init(const int rows, const int columns, const int numberOfBombs, sf::Texture& tileUnkwnownTexture, sf::Texture& tile0Texture, sf::Texture& tile1Texture, sf::Texture& tile2Texture, sf::Texture& tile3Texture, sf::Texture& tile4Texture,
+	sf::Texture& tile5Texture, sf::Texture& tile6Texture, sf::Texture& tile7Texture, sf::Texture& tile8Texture, sf::Texture& tile9Texture, sf::Texture& tileFlagTexture, sf::Texture& tileWrongFlagTexture,
+	sf::Texture& tileMineTexture, sf::Texture& tileRedMineTexture, sf::Texture& tileColumnTexture, sf::Texture& tileRowTexture, sf::Texture& selectTexture)
 {
+
+	m_tileUnkwnownTexture = tileUnkwnownTexture;
+	m_tile0Texture = tile0Texture;
+	m_tile1Texture = tile1Texture;
+	m_tile2Texture = tile2Texture;
+	m_tile3Texture = tile3Texture;
+	m_tile4Texture = tile4Texture;
+	m_tile5Texture = tile5Texture;
+	m_tile6Texture = tile6Texture;
+	m_tile7Texture = tile7Texture;
+	m_tile8Texture = tile8Texture;
+	m_tile9Texture = tile9Texture;
+	m_tileFlagTexture = tileFlagTexture;
+	m_tileWrongFlagTexture = tileWrongFlagTexture;
+	m_tileMineTexture = tileMineTexture;
+	m_tileRedMineTexture = tileRedMineTexture;
+	m_tileColumnTexture = tileColumnTexture;
+	m_tileRowTexture = tileRowTexture;
+	m_selectTexture = selectTexture;
+
 	m_tileArray.resize(rows, std::vector<Tile*>(columns, nullptr)); // Resize the matrix to make it of size (rows, columns)
 
 	m_rows = rows;
@@ -219,7 +241,8 @@ void Tileset::init(const int rows, const int columns, const int numberOfBombs)
 	for (int i = 0; i < rows; ++i) {
 		for (int j = 0; j < columns; ++j) {
 			m_tileArray[i][j] = new Tile(); // Create a tile for each position
-			m_tileArray[i][j]->init();
+			m_tileArray[i][j]->init(tileUnkwnownTexture, tile0Texture, tile1Texture, tile2Texture, tile3Texture, tile4Texture, tile5Texture, tile6Texture, tile7Texture, tile8Texture,
+				tile9Texture, tileFlagTexture, tileWrongFlagTexture, tileMineTexture, tileRedMineTexture, tileColumnTexture, tileRowTexture, selectTexture);
 		}
 	}
 
@@ -988,12 +1011,15 @@ void Tileset::checkFlagsAround()
 	}
 }
 
-void Tileset::spawnBombCounter(int posX, int posY) const
+void Tileset::spawnBombCounter(int posX, int posY)
 {
 
-	m_bombCounterBomb->init();
-	m_bombCounterTile1->init();
-	m_bombCounterTile2->init();
+	m_bombCounterBomb->init(m_tileUnkwnownTexture, m_tile0Texture, m_tile1Texture, m_tile2Texture, m_tile3Texture, m_tile4Texture, m_tile5Texture, m_tile6Texture, m_tile7Texture, m_tile8Texture,
+		m_tile9Texture, m_tileFlagTexture, m_tileWrongFlagTexture, m_tileMineTexture, m_tileRedMineTexture, m_tileColumnTexture, m_tileRowTexture, m_selectTexture);
+	m_bombCounterTile1->init(m_tileUnkwnownTexture, m_tile0Texture, m_tile1Texture, m_tile2Texture, m_tile3Texture, m_tile4Texture, m_tile5Texture, m_tile6Texture, m_tile7Texture, m_tile8Texture,
+		m_tile9Texture, m_tileFlagTexture, m_tileWrongFlagTexture, m_tileMineTexture, m_tileRedMineTexture, m_tileColumnTexture, m_tileRowTexture, m_selectTexture);
+	m_bombCounterTile2->init(m_tileUnkwnownTexture, m_tile0Texture, m_tile1Texture, m_tile2Texture, m_tile3Texture, m_tile4Texture, m_tile5Texture, m_tile6Texture, m_tile7Texture, m_tile8Texture,
+		m_tile9Texture, m_tileFlagTexture, m_tileWrongFlagTexture, m_tileMineTexture, m_tileRedMineTexture, m_tileColumnTexture, m_tileRowTexture, m_selectTexture);
 
 	m_bombCounterBomb->setPosition(posX, posY);
 	m_bombCounterTile1->setPosition(posX + 64, posY);

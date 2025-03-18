@@ -12,7 +12,9 @@ public:
 
     void render(sf::RenderWindow& window);
 
-    void init();
+    void init(sf::Texture& tileUnkwnownTexture, sf::Texture& tile0Texture, sf::Texture& tile1Texture, sf::Texture& tile2Texture, sf::Texture& tile3Texture, sf::Texture& tile4Texture,
+        sf::Texture& tile5Texture, sf::Texture& tile6Texture, sf::Texture& tile7Texture, sf::Texture& tile8Texture, sf::Texture& tile9Texture, sf::Texture& tileFlagTexture, sf::Texture& tileWrongFlagTexture,
+        sf::Texture& tileMineTexture, sf::Texture& tileRedMineTexture, sf::Texture& tileColumnTexture, sf::Texture& tileRowTexture, sf::Texture& selectTexture);
 
     void activate(int posX, int posY);
 
@@ -84,6 +86,5 @@ private:
     sf::RectangleShape m_select;
 
     sf::Texture m_selectTexture;
-
 
 };

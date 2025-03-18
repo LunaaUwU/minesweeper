@@ -3,6 +3,8 @@
 
 #include <random>
 
+class Game;
+
 class Soggy
 {
 public:
@@ -10,7 +12,7 @@ public:
 
 	void render(sf::RenderWindow& window);
 
-	void init();
+	void init(sf::Texture& m_sogTexture);
 
 private:
 
@@ -18,8 +20,9 @@ private:
 
 	int randomInt(int min, int max);
 
+	float randomFloat(float min, float max);
+
 	sf::RectangleShape m_sogSprite;
-	sf::Texture m_sogTexture;
 
 	int m_randomSogSize = 0;
 	int m_sogSizeX = 0;
@@ -34,4 +37,7 @@ private:
 	int m_sogSpeedY = 1.f;
 
 	std::random_device rd;
+
+	sf::Clock m_mitosisTimer;
+	float m_mitosisRandom = 0.f;
 };

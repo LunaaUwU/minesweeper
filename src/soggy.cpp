@@ -1,5 +1,7 @@
 #include "soggy.h"
 
+#include "game.h"
+
 void Soggy::update(sf::Int32 deltaMS)
 {
     m_sogSprite.setRotation(m_sogSprite.getRotation() + m_sogRotationSpeed * m_sogRotationSpeedFactor);
@@ -25,6 +27,14 @@ void Soggy::update(sf::Int32 deltaMS)
         m_sogSpeedY += 0.05f;
         m_sogRotationSpeed += 0.1;
     }
+
+    if (m_mitosisTimer.getElapsedTime().asSeconds() >= m_mitosisRandom)
+    {
+        Game::shouldSpawnSog = true;
+        m_mitosisTimer.restart();
+        m_mitosisRandom = randomFloat(10, 30);
+    }
+
 }
 
 void Soggy::render(sf::RenderWindow& window)
@@ -32,11 +42,10 @@ void Soggy::render(sf::RenderWindow& window)
 	window.draw(m_sogSprite);
 }
 
-void Soggy::init()
+void Soggy::init(sf::Texture& m_sogTexture)
 {
-	m_sogTexture.loadFromFile("../sprites/soggycat.png");
 	m_sogSprite.setTexture(&m_sogTexture);
-
+    m_mitosisRandom = randomFloat(10, 30);
     spawn();
 }
 
@@ -74,5 +83,18 @@ int Soggy::randomInt(int min, int max)
     }
     std::mt19937 gen(rd());
     std::uniform_int_distribution<int> dist(min, max);
+    return dist(gen);
+}
+
+float Soggy::randomFloat(float min, float max)
+{
+    if (min > max)
+    {
+        float old = min;
+        min = max;
+        max = old;
+    }
+    std::mt19937 gen(rd());
+    std::uniform_real_distribution<float> dist(min, max);
     return dist(gen);
 }
