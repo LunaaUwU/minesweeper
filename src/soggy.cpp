@@ -6,23 +6,23 @@ void Soggy::update(sf::Int32 deltaMS)
 {
     if (m_isActive)
     {
-        m_sogSprite.setRotation(m_sogSprite.getRotation() + m_sogRotationSpeed * m_sogRotationSpeedFactor);
+        m_sogSprite.setRotation(m_sogSprite.getRotation() + m_sogRotationSpeed * m_sogRotationSpeedFactor * deltaMS);
 
         if (m_sogSprite.getRotation() >= 360)
             m_sogSprite.setRotation(0);
         else if (m_sogSprite.getRotation() <= 0)
             m_sogSprite.setRotation(0);
 
-        m_sogSprite.setPosition(m_sogSprite.getPosition().x + m_sogSpeedX * m_sogSpeedXFactor, m_sogSprite.getPosition().y + m_sogSpeedY * m_sogSpeedYFactor);
+        m_sogSprite.setPosition(m_sogSprite.getPosition().x + m_sogSpeedX * m_sogSpeedXFactor * deltaMS, m_sogSprite.getPosition().y + m_sogSpeedY * m_sogSpeedYFactor * deltaMS);
 
         if ((m_sogSprite.getPosition().x >= 1920 && m_sogSpeedXFactor > 0) || (m_sogSprite.getPosition().x <= 0 && m_sogSpeedXFactor < 0))
         {
             m_sogSpeedXFactor *= -1;
             m_sogSpeedX += 0.05f;
             m_sogSpeedY += 0.05f;
-            m_sogRotationSpeed += 0.1;
+            m_sogRotationSpeed += 0.01f;
 
-            if (randomInt(0, 15) == 0)
+            if (randomInt(0, 10) == 0)
             {
                 if (m_sogSize > 1)
                     mitose();
@@ -37,9 +37,9 @@ void Soggy::update(sf::Int32 deltaMS)
             m_sogSpeedYFactor *= -1;
             m_sogSpeedX += 0.05f;
             m_sogSpeedY += 0.05f;
-            m_sogRotationSpeed += 0.1;
+            m_sogRotationSpeed += 0.01f;
 
-            if (randomInt(0, 15) == 0)
+            if (randomInt(0, 10) == 0)
             {
                 if (m_sogSize > 1)
                     mitose();
@@ -80,6 +80,8 @@ void Soggy::spawn(int sogSize, int posX, int posY, float rot,
     {
         m_sogSpeedX = 6 - m_sogSize;
         m_sogSpeedY = 6 - m_sogSize;
+        m_sogSpeedX /= 4;
+        m_sogSpeedY /= 4;
     }
     else
     {
@@ -88,7 +90,10 @@ void Soggy::spawn(int sogSize, int posX, int posY, float rot,
 
     }
     if (rotSpeed == 0)
+    {
         m_sogRotationSpeed = 6 - m_sogSize;
+        m_sogRotationSpeed /= 8;
+    }
     else
         m_sogRotationSpeed = rotSpeed;
 

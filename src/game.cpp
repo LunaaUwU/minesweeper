@@ -249,7 +249,7 @@ void Game::update(const sf::Int32 deltaMS)
         m_gameMusic.stop();
 
         //       sz pX pY rot rf sxf syf
-        spawnSog(5, 0, 0, -1, 0, 0, 0, 0, 0, 0); // random sog
+        spawnSog(0, 0, 0, -1, 0, 0, 0, 0, 0, 0); // random sog
     }
 
     if (!sf::Keyboard::isKeyPressed(sf::Keyboard::G))
@@ -271,6 +271,23 @@ void Game::update(const sf::Int32 deltaMS)
         spawnSog(nextSogSize, nextSogPos.x, nextSogPos.y, nextSogRot,
             nextSogRotFact, nextSogSpeedFact.x, nextSogSpeedFact.y, nextSogSpeed.x, nextSogSpeed.y, nextSogRotSpeed);
         shouldSpawnSog = false;
+    }
+
+    if (testClock.getElapsedTime().asMilliseconds() >= 300)
+    {
+        testColumn++;
+        if (testColumn > 5)
+        {
+            testColumn = 0;
+            testRow++;
+            if (testRow > 2)
+            {
+                testRow = 0;
+            }
+        }
+
+        test.setTextureRect(sf::IntRect(testColumn * testWidth, testRow * testHeight, testWidth, testHeight));
+        testClock.restart();
     }
 }
 
@@ -338,6 +355,8 @@ void Game::render(sf::RenderWindow& window) const
             soggy->render(window);
         }
     }
+
+    window.draw(test);
 
     window.display();
 }
@@ -466,6 +485,11 @@ void Game::init()
     m_difficultyBombNum2->setActive(true);
 
     m_difficultyRow->select();
+
+    testTexture.loadFromFile("../sprites/explosion.png");
+    test.setTexture(testTexture);
+    test.setTextureRect(sf::IntRect(1, 1, testWidth, testWidth));
+    test.setPosition(400, 400);
 }
 
 void Game::instantiate()
