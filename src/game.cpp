@@ -249,7 +249,7 @@ void Game::update(const sf::Int32 deltaMS)
         m_gameMusic.stop();
 
         //       sz pX pY rot rf sxf syf
-        spawnSog(5, 0, 0, -1, 0, 0, 0); // random sog
+        spawnSog(5, 0, 0, -1, 0, 0, 0, 0, 0, 0); // random sog
     }
 
     if (!sf::Keyboard::isKeyPressed(sf::Keyboard::G))
@@ -269,7 +269,7 @@ void Game::update(const sf::Int32 deltaMS)
     {
         // customm sog (mitosed)
         spawnSog(nextSogSize, nextSogPos.x, nextSogPos.y, nextSogRot,
-            nextSogRotFact, nextSogSpeedFact.x, nextSogSpeedFact.y); 
+            nextSogRotFact, nextSogSpeedFact.x, nextSogSpeedFact.y, nextSogSpeed.x, nextSogSpeed.y, nextSogRotSpeed);
         shouldSpawnSog = false;
     }
 }
@@ -552,12 +552,12 @@ void Game::restart()
 }
 
 void Game::spawnSog(int sogSize, int posX, int posY, float rot,
-    float rotFact, float speedXFact, float speedYFact)
+    float rotFact, float speedXFact, float speedYFact, float speedX, float speedY, float rotSpeed)
 {
     m_sogMusic.play();
     Soggy* soggy = new Soggy;
     m_sogArray.push_back(soggy);
-    soggy->init(m_sogTexture, sogSize, posX, posY, rot, rotFact, speedXFact, speedYFact);
+    soggy->init(m_sogTexture, sogSize, posX, posY, rot, rotFact, speedXFact, speedYFact, speedX, speedY, rotSpeed);
 }
 
 void Game::updateDifficultyCounters()

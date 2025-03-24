@@ -13,12 +13,14 @@ public:
 	void render(sf::RenderWindow& window);
 
 	void init(sf::Texture& m_sogTexture, int sogSize, int posX, int posY, float rot,
-		float rotFact, float speedXFact, float speedYFact);
+		float rotFact, float speedXFact, float speedYFact, float speedX, float speedY, float rotSpeed);
+
+	int getSize() { return m_sogSize; }
 
 private:
 
 	void spawn(int sogSize, int posX, int posY, float rot,
-		float rotFact, float speedXFact, float speedYFact);
+		float rotFact, float speedXFact, float speedYFact, float speedX, float speedY, float rotSpeed);
 
 	int randomInt(int min, int max);
 
@@ -26,7 +28,11 @@ private:
 
 	void changeSize(int size);
 
+	void mitose();
+
 	sf::RectangleShape m_sogSprite;
+
+	bool m_isActive = true;
 
 	int m_sogSize = 0;
 	int m_sogSizeX = 0;
@@ -41,7 +47,4 @@ private:
 	float m_sogSpeedY = 1.f;
 
 	std::random_device rd;
-
-	sf::Clock m_mitosisTimer;
-	float m_mitosisRandom = 0.f;
 };

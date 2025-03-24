@@ -41,6 +41,10 @@ public:
 
     inline static sf::Vector2f nextSogSpeedFact = { 0, 0 };
 
+    inline static sf::Vector2f nextSogSpeed = { 0, 0 };
+
+    inline static float nextSogRotSpeed = 0;
+
 private:
 
     void updateDifficultyCounters();
@@ -48,7 +52,7 @@ private:
     int randomInt(int min, int max);
 
     void spawnSog(int sogSize, int posX, int posY, float rot,
-        float rotFact, float speedXFact, float speedYFact);
+        float rotFact, float speedXFact, float speedYFact, float speedX, float speedY, float rotSpeed);
 
     Tileset* m_tileset = new Tileset();
 

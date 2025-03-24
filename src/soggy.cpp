@@ -4,63 +4,69 @@
 
 void Soggy::update(sf::Int32 deltaMS)
 {
-    m_sogSprite.setRotation(m_sogSprite.getRotation() + m_sogRotationSpeed * m_sogRotationSpeedFactor);
-
-    if (m_sogSprite.getRotation() >= 360)
-        m_sogSprite.setRotation(0);
-    else if (m_sogSprite.getRotation() <= 0)
-        m_sogSprite.setRotation(0);
-
-    m_sogSprite.setPosition(m_sogSprite.getPosition().x + m_sogSpeedX * m_sogSpeedXFactor, m_sogSprite.getPosition().y + m_sogSpeedY * m_sogSpeedYFactor);
-
-    if ((m_sogSprite.getPosition().x >= 1920 && m_sogSpeedXFactor > 0) || (m_sogSprite.getPosition().x <= 0 && m_sogSpeedXFactor < 0))
+    if (m_isActive)
     {
-        m_sogSpeedXFactor *= -1;
-        m_sogSpeedX += 0.05f;
-        m_sogSpeedY += 0.05f;
-        m_sogRotationSpeed += 0.1;
-    }
-    if ((m_sogSprite.getPosition().y >= 1080 && m_sogSpeedYFactor > 0) || (m_sogSprite.getPosition().y <= 0 && m_sogSpeedYFactor < 0))
-    {
-        m_sogSpeedYFactor *= -1;
-        m_sogSpeedX += 0.05f;
-        m_sogSpeedY += 0.05f;
-        m_sogRotationSpeed += 0.1;
-    }
+        m_sogSprite.setRotation(m_sogSprite.getRotation() + m_sogRotationSpeed * m_sogRotationSpeedFactor);
 
-    if (m_mitosisTimer.getElapsedTime().asSeconds() >= m_mitosisRandom)
-    {
-        if (m_sogSize > 1)
+        if (m_sogSprite.getRotation() >= 360)
+            m_sogSprite.setRotation(0);
+        else if (m_sogSprite.getRotation() <= 0)
+            m_sogSprite.setRotation(0);
+
+        m_sogSprite.setPosition(m_sogSprite.getPosition().x + m_sogSpeedX * m_sogSpeedXFactor, m_sogSprite.getPosition().y + m_sogSpeedY * m_sogSpeedYFactor);
+
+        if ((m_sogSprite.getPosition().x >= 1920 && m_sogSpeedXFactor > 0) || (m_sogSprite.getPosition().x <= 0 && m_sogSpeedXFactor < 0))
         {
-            Game::shouldSpawnSog = true;
-            Game::nextSogSize = m_sogSize - 1;
-            Game::nextSogPos = m_sogSprite.getPosition();
-            Game::nextSogRot = m_sogSprite.getRotation();
-            Game::nextSogRotFact = (m_sogRotationSpeedFactor * -1);
-            Game::nextSogSpeedFact = sf::Vector2f((m_sogSpeedXFactor * -1), (m_sogSpeedYFactor * -1));
-            m_mitosisTimer.restart();
-            m_mitosisRandom = randomFloat(1, 3);
-            changeSize(m_sogSize - 1);
+            m_sogSpeedXFactor *= -1;
+            m_sogSpeedX += 0.05f;
+            m_sogSpeedY += 0.05f;
+            m_sogRotationSpeed += 0.1;
+
+            if (randomInt(0, 15) == 0)
+            {
+                if (m_sogSize > 1)
+                    mitose();
+                else
+                {
+                    m_isActive = false;
+                }
+            }
+        }
+        if ((m_sogSprite.getPosition().y >= 1080 && m_sogSpeedYFactor > 0) || (m_sogSprite.getPosition().y <= 0 && m_sogSpeedYFactor < 0))
+        {
+            m_sogSpeedYFactor *= -1;
+            m_sogSpeedX += 0.05f;
+            m_sogSpeedY += 0.05f;
+            m_sogRotationSpeed += 0.1;
+
+            if (randomInt(0, 15) == 0)
+            {
+                if (m_sogSize > 1)
+                    mitose();
+                else
+                {
+                    m_isActive = false;
+                }
+            }
         }
     }
-
 }
 
 void Soggy::render(sf::RenderWindow& window)
 {
-	window.draw(m_sogSprite);
+    if(m_isActive)
+	    window.draw(m_sogSprite);
 }
 
 void Soggy::init(sf::Texture& m_sogTexture, int sogSize, int posX, int posY, float rot,
-    float rotFact, float speedXFact, float speedYFact)
+    float rotFact, float speedXFact, float speedYFact, float speedX, float speedY, float rotSpeed)
 {
 	m_sogSprite.setTexture(&m_sogTexture);
-    m_mitosisRandom = randomFloat(1, 3);
-    spawn(sogSize, posX, posY, rot, rotFact, speedXFact, speedYFact);
+    spawn(sogSize, posX, posY, rot, rotFact, speedXFact, speedYFact, speedX, speedY, rotSpeed);
 }
 
 void Soggy::spawn(int sogSize, int posX, int posY, float rot,
-    float rotFact, float speedXFact, float speedYFact)
+    float rotFact, float speedXFact, float speedYFact, float speedX, float speedY, float rotSpeed)
 {
     if (sogSize == 0)
         m_sogSize = randomInt(1, 5);
@@ -70,10 +76,21 @@ void Soggy::spawn(int sogSize, int posX, int posY, float rot,
     m_sogSizeX = 96.f * m_sogSize;
     m_sogSizeY = 128.f * m_sogSize;
 
-    m_sogSpeedX = 6 - m_sogSize;
-    m_sogSpeedY = 6 - m_sogSize;
+    if (speedX == 0 && speedY == 0)
+    {
+        m_sogSpeedX = 6 - m_sogSize;
+        m_sogSpeedY = 6 - m_sogSize;
+    }
+    else
+    {
+        m_sogSpeedX = speedX;
+        m_sogSpeedY = speedY;
 
-    m_sogRotationSpeed = 6 - m_sogSize;
+    }
+    if (rotSpeed == 0)
+        m_sogRotationSpeed = 6 - m_sogSize;
+    else
+        m_sogRotationSpeed = rotSpeed;
 
     if (speedXFact == 0 && speedYFact == 0)
     {
@@ -146,5 +163,16 @@ void Soggy::changeSize(int size)
     m_sogSizeY = 128.f * m_sogSize;
     m_sogSprite.setOrigin(sf::Vector2f(m_sogSizeX / 2, m_sogSizeY / 2));
     m_sogSprite.setSize(sf::Vector2f(m_sogSizeX, m_sogSizeY));
+}
+
+void Soggy::mitose()
+{
+    Game::shouldSpawnSog = true;
+    Game::nextSogSize = m_sogSize - 1;
+    Game::nextSogPos = m_sogSprite.getPosition();
+    Game::nextSogRot = m_sogSprite.getRotation();
+    Game::nextSogRotFact = (m_sogRotationSpeedFactor * -1);
+    Game::nextSogSpeedFact = sf::Vector2f((m_sogSpeedXFactor * -1), (m_sogSpeedYFactor * -1));
+    changeSize(m_sogSize - 1);
 }
 
