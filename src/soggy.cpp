@@ -30,9 +30,18 @@ void Soggy::update(sf::Int32 deltaMS)
 
     if (m_mitosisTimer.getElapsedTime().asSeconds() >= m_mitosisRandom)
     {
-        Game::shouldSpawnSog = true;
-        m_mitosisTimer.restart();
-        m_mitosisRandom = randomFloat(10, 30);
+        if (m_sogSize > 1)
+        {
+            Game::shouldSpawnSog = true;
+            Game::nextSogSize = m_sogSize - 1;
+            Game::nextSogPos = m_sogSprite.getPosition();
+            Game::nextSogRot = m_sogSprite.getRotation();
+            Game::nextSogRotFact = (m_sogRotationSpeedFactor * -1);
+            Game::nextSogSpeedFact = sf::Vector2f((m_sogSpeedXFactor * -1), (m_sogSpeedYFactor * -1));
+            m_mitosisTimer.restart();
+            m_mitosisRandom = randomFloat(1, 3);
+            changeSize(m_sogSize - 1);
+        }
     }
 
 }
@@ -42,35 +51,66 @@ void Soggy::render(sf::RenderWindow& window)
 	window.draw(m_sogSprite);
 }
 
-void Soggy::init(sf::Texture& m_sogTexture)
+void Soggy::init(sf::Texture& m_sogTexture, int sogSize, int posX, int posY, float rot,
+    float rotFact, float speedXFact, float speedYFact)
 {
 	m_sogSprite.setTexture(&m_sogTexture);
-    m_mitosisRandom = randomFloat(10, 30);
-    spawn();
+    m_mitosisRandom = randomFloat(1, 3);
+    spawn(sogSize, posX, posY, rot, rotFact, speedXFact, speedYFact);
 }
 
-void Soggy::spawn()
+void Soggy::spawn(int sogSize, int posX, int posY, float rot,
+    float rotFact, float speedXFact, float speedYFact)
 {
-    m_randomSogSize = randomInt(1, 5);
-    m_sogSizeX = 96.f * m_randomSogSize;
-    m_sogSizeY = 128.f * m_randomSogSize;
-    m_sogRotationSpeedFactor = 6 - m_randomSogSize;
-    m_sogSpeedXFactor = 6 - m_randomSogSize;
-    m_sogSpeedYFactor = m_sogSpeedXFactor;
+    if (sogSize == 0)
+        m_sogSize = randomInt(1, 5);
+    else
+        m_sogSize = sogSize;
 
-    if (randomInt(0, 1) == 0)
-        m_sogSpeedXFactor *= -1;
-    if (randomInt(0, 1) == 0)
-        m_sogSpeedYFactor *= -1;
+    m_sogSizeX = 96.f * m_sogSize;
+    m_sogSizeY = 128.f * m_sogSize;
 
+    m_sogSpeedX = 6 - m_sogSize;
+    m_sogSpeedY = 6 - m_sogSize;
+
+    m_sogRotationSpeed = 6 - m_sogSize;
+
+    if (speedXFact == 0 && speedYFact == 0)
+    {
+        m_sogSpeedXFactor = 1;
+        m_sogSpeedYFactor = 1;
+        if (randomInt(0, 1) == 0)
+            m_sogSpeedXFactor *= -1;
+        if (randomInt(0, 1) == 0)
+            m_sogSpeedYFactor *= -1;
+    }
+    else
+    {
+        m_sogSpeedXFactor = speedXFact;
+        m_sogSpeedYFactor = speedYFact;
+    }
 
     m_sogSprite.setOrigin(sf::Vector2f(m_sogSizeX / 2, m_sogSizeY / 2));
     m_sogSprite.setSize(sf::Vector2f(m_sogSizeX, m_sogSizeY));
-    m_sogSprite.setRotation(randomInt(0, 359));
-    m_sogSprite.setPosition(sf::Vector2f(randomInt(0, 1920), randomInt(0, 1080)));
 
-    if (randomInt(0, 1) == 0)
-        m_sogRotationSpeedFactor = -1;
+    if(posX == 0 && posY == 0)
+        m_sogSprite.setPosition(sf::Vector2f(randomInt(0, 1920), randomInt(0, 1080)));
+    else
+        m_sogSprite.setPosition(sf::Vector2f(posX, posY));
+
+    if(rot == -1)
+        m_sogSprite.setRotation(randomInt(0, 359));
+    else
+        m_sogSprite.setRotation(rot);
+
+    if (rotFact == 0)
+    {
+        if (randomInt(0, 1) == 0)
+            m_sogRotationSpeedFactor = -1;
+        else
+            m_sogRotationSpeedFactor = 1;
+    }
+    
 }
 
 int Soggy::randomInt(int min, int max)
@@ -98,3 +138,13 @@ float Soggy::randomFloat(float min, float max)
     std::uniform_real_distribution<float> dist(min, max);
     return dist(gen);
 }
+
+void Soggy::changeSize(int size)
+{
+    m_sogSize = size;
+    m_sogSizeX = 96.f * m_sogSize;
+    m_sogSizeY = 128.f * m_sogSize;
+    m_sogSprite.setOrigin(sf::Vector2f(m_sogSizeX / 2, m_sogSizeY / 2));
+    m_sogSprite.setSize(sf::Vector2f(m_sogSizeX, m_sogSizeY));
+}
+

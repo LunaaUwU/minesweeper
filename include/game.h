@@ -27,7 +27,19 @@ public:
 
     inline static bool canClick = true;
 
-    inline static bool shouldSpawnSog = false();
+    // sog
+
+    inline static bool shouldSpawnSog = false;
+
+    inline static int nextSogSize = 0;
+
+    inline static sf::Vector2f nextSogPos = {0, 0};
+
+    inline static float nextSogRot = 0;
+
+    inline static float nextSogRotFact = 0;
+
+    inline static sf::Vector2f nextSogSpeedFact = { 0, 0 };
 
 private:
 
@@ -35,7 +47,8 @@ private:
 
     int randomInt(int min, int max);
 
-    void spawnSog();
+    void spawnSog(int sogSize, int posX, int posY, float rot,
+        float rotFact, float speedXFact, float speedYFact);
 
     Tileset* m_tileset = new Tileset();
 

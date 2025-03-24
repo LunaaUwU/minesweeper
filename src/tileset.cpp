@@ -78,6 +78,7 @@ void Tileset::update(sf::Int32 deltaMS)
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z) || sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
 			{
 				Game::canClick = false;
+				// checks if you won or lost
 				if (m_doOnce2)
 				{
 					if (!gameWon)
