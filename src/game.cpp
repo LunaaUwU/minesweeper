@@ -248,8 +248,8 @@ void Game::update(const sf::Int32 deltaMS)
         m_menuMusic.stop();
         m_gameMusic.stop();
 
-        //       sz pX pY rot rf sxf syf
-        spawnSog(0, 0, 0, -1, 0, 0, 0, 0, 0, 0); // random sog
+        //      sz px py rot rf sxf syf sx sy rs
+        spawnSog(3, 0, 0, -1, 0, 0, 0, 0, 0, 0); // random sog
     }
 
     if (!sf::Keyboard::isKeyPressed(sf::Keyboard::G))
@@ -271,23 +271,6 @@ void Game::update(const sf::Int32 deltaMS)
         spawnSog(nextSogSize, nextSogPos.x, nextSogPos.y, nextSogRot,
             nextSogRotFact, nextSogSpeedFact.x, nextSogSpeedFact.y, nextSogSpeed.x, nextSogSpeed.y, nextSogRotSpeed);
         shouldSpawnSog = false;
-    }
-
-    if (testClock.getElapsedTime().asMilliseconds() >= 300)
-    {
-        testColumn++;
-        if (testColumn > 5)
-        {
-            testColumn = 0;
-            testRow++;
-            if (testRow > 2)
-            {
-                testRow = 0;
-            }
-        }
-
-        test.setTextureRect(sf::IntRect(testColumn * testWidth, testRow * testHeight, testWidth, testHeight));
-        testClock.restart();
     }
 }
 
@@ -355,8 +338,6 @@ void Game::render(sf::RenderWindow& window) const
             soggy->render(window);
         }
     }
-
-    window.draw(test);
 
     window.display();
 }
@@ -486,10 +467,7 @@ void Game::init()
 
     m_difficultyRow->select();
 
-    testTexture.loadFromFile("../sprites/explosion.png");
-    test.setTexture(testTexture);
-    test.setTextureRect(sf::IntRect(1, 1, testWidth, testWidth));
-    test.setPosition(400, 400);
+    m_explosionTexture.loadFromFile("../sprites/explosion.png");
 }
 
 void Game::instantiate()
@@ -581,7 +559,7 @@ void Game::spawnSog(int sogSize, int posX, int posY, float rot,
     m_sogMusic.play();
     Soggy* soggy = new Soggy;
     m_sogArray.push_back(soggy);
-    soggy->init(m_sogTexture, sogSize, posX, posY, rot, rotFact, speedXFact, speedYFact, speedX, speedY, rotSpeed);
+    soggy->init(m_sogTexture, m_explosionTexture, sogSize, posX, posY, rot, rotFact, speedXFact, speedYFact, speedX, speedY, rotSpeed);
 }
 
 void Game::updateDifficultyCounters()

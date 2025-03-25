@@ -136,14 +136,7 @@ private:
 
     std::vector<Soggy*> m_sogArray;
 
-    sf::Sprite test;
-    sf::Texture testTexture;
-    sf::Clock testClock;
-    int testColumn = 0;
-    int testRow = 0;
-
-    int testWidth = 71;
-    int testHeight = 100;
+    sf::Texture m_explosionTexture;
 
     bool m_canQuit = true;
     bool m_canMove = true;
