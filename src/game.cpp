@@ -135,7 +135,7 @@ void Game::update(const sf::Int32 deltaMS)
             }
             updateDifficultyCounters();
         }
-	    else if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Z) || sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) || sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) && canClick && m_difficultyMenuSelection == 3)
+	    else if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Z) || sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) || sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) && canClick)
 	    {
             m_isDifficultyMenuActive = false;
             m_menuMusic.stop();
@@ -249,7 +249,7 @@ void Game::update(const sf::Int32 deltaMS)
         m_gameMusic.stop();
 
         //      sz px py rot rf sxf syf sx sy rs
-        spawnSog(3, 0, 0, -1, 0, 0, 0, 0, 0, 0); // random sog
+        spawnSog(0, 0, 0, -1, 0, 0, 0, 0, 0, 0); // random sog
     }
 
     if (!sf::Keyboard::isKeyPressed(sf::Keyboard::G))
@@ -271,6 +271,11 @@ void Game::update(const sf::Int32 deltaMS)
         spawnSog(nextSogSize, nextSogPos.x, nextSogPos.y, nextSogRot,
             nextSogRotFact, nextSogSpeedFact.x, nextSogSpeedFact.y, nextSogSpeed.x, nextSogSpeed.y, nextSogRotSpeed);
         shouldSpawnSog = false;
+    }
+    if (shouldCheckSogs)
+    {
+        shouldCheckSogs = false;
+        checkUnactiveSogs();
     }
 }
 
@@ -468,6 +473,7 @@ void Game::init()
     m_difficultyRow->select();
 
     m_explosionTexture.loadFromFile("../sprites/explosion.png");
+    m_explosionSoundBuffer.loadFromFile("../audio/sounds/explosion.ogg");
 }
 
 void Game::instantiate()
@@ -559,7 +565,25 @@ void Game::spawnSog(int sogSize, int posX, int posY, float rot,
     m_sogMusic.play();
     Soggy* soggy = new Soggy;
     m_sogArray.push_back(soggy);
-    soggy->init(m_sogTexture, m_explosionTexture, sogSize, posX, posY, rot, rotFact, speedXFact, speedYFact, speedX, speedY, rotSpeed);
+    soggy->init(m_sogTexture, m_explosionTexture, m_explosionSoundBuffer, sogSize, posX, posY, rot, rotFact, speedXFact, speedYFact, speedX, speedY, rotSpeed);
+}
+
+void Game::checkUnactiveSogs()
+{
+    std::vector<int> positions;
+    for (int i = 0; i < m_sogArray.size(); i++)
+    {
+        if (!m_sogArray[i]->getActive())
+        {
+            positions.push_back(i);
+            delete m_sogArray[i];
+        }
+    }
+
+    for (int i = 0; i < positions.size(); i++)
+    {
+        m_sogArray.erase(m_sogArray.begin() + positions[i] - i);
+    }
 }
 
 void Game::updateDifficultyCounters()

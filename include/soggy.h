@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 
 #include <random>
 
@@ -12,10 +13,12 @@ public:
 
 	void render(sf::RenderWindow& window);
 
-	void init(sf::Texture& sogTexture, sf::Texture& explosionTexture, int sogSize, int posX, int posY, float rot,
+	void init(sf::Texture& sogTexture, sf::Texture& explosionTexture, sf::SoundBuffer& explosionSoundBuffer, int sogSize, int posX, int posY, float rot,
 		float rotFact, float speedXFact, float speedYFact, float speedX, float speedY, float rotSpeed);
 
 	int getSize() { return m_sogSize; }
+
+	bool getActive() { return m_isActive; }
 
 private:
 
@@ -50,6 +53,7 @@ private:
 	float m_sogSpeedY = 1.f;
 
 	sf::RectangleShape m_explosion;
+	sf::Sound m_explosionSound;
 
 	sf::Clock m_explosionAnimTimer;
 	sf::Clock m_explosionTimer;

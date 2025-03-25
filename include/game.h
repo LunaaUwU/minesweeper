@@ -29,6 +29,8 @@ public:
 
     // sog
 
+    inline static bool shouldCheckSogs = false;
+
     inline static bool shouldSpawnSog = false;
 
     inline static int nextSogSize = 0;
@@ -48,6 +50,8 @@ public:
 private:
 
     void updateDifficultyCounters();
+
+    void checkUnactiveSogs();
 
     int randomInt(int min, int max);
 
@@ -137,6 +141,7 @@ private:
     std::vector<Soggy*> m_sogArray;
 
     sf::Texture m_explosionTexture;
+    sf::SoundBuffer m_explosionSoundBuffer;
 
     bool m_canQuit = true;
     bool m_canMove = true;

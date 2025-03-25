@@ -69,7 +69,8 @@ void Soggy::update(sf::Int32 deltaMS)
         m_explosion.setSize(sf::Vector2f(m_sogSprite.getSize().x + 50, m_sogSprite.getSize().x + 50));
         m_explosion.setOrigin(sf::Vector2f((m_sogSprite.getSize().x + 50) / 2, (m_sogSprite.getSize().x + 50) / 2));
         m_explosion.setPosition(m_sogSprite.getPosition());
-        
+
+        m_explosionSound.play();
 
         m_explosionTimer.restart();
         m_doOnce = false;
@@ -82,6 +83,7 @@ void Soggy::update(sf::Int32 deltaMS)
     else if (m_explosionTimer.getElapsedTime().asMilliseconds() >= 1500 && m_isExploding && m_lastExplosion)
     {
         m_isActive = false;
+        Game::shouldCheckSogs = true;
     }
 }
 
@@ -93,13 +95,16 @@ void Soggy::render(sf::RenderWindow& window)
         window.draw(m_explosion);
 }
 
-void Soggy::init(sf::Texture& sogTexture, sf::Texture& explosionTexture, int sogSize, int posX, int posY, float rot,
+void Soggy::init(sf::Texture& sogTexture, sf::Texture& explosionTexture, sf::SoundBuffer& explosionSoundBuffer, int sogSize, int posX, int posY, float rot,
     float rotFact, float speedXFact, float speedYFact, float speedX, float speedY, float rotSpeed)
 {
     m_sogSprite.setTexture(&sogTexture);
 
     m_explosion.setTexture(&explosionTexture);
     m_explosion.setTextureRect(sf::IntRect(1, 1, m_explosionWidth, m_explosionWidth));
+
+    m_explosionSound.setBuffer(explosionSoundBuffer);
+    m_explosionSound.setVolume(60);
 	
     spawn(sogSize, posX, posY, rot, rotFact, speedXFact, speedYFact, speedX, speedY, rotSpeed);
 }
