@@ -189,7 +189,10 @@ void Game::update(const sf::Int32 deltaMS)
 	        {
                 m_isPauseMenuActive = false;
                 if (m_isSogging)
+                {
                     m_sogMusic.play();
+                    resumeSounds();
+                }
                 else
                     m_gameMusic.play();
 	        }
@@ -219,7 +222,11 @@ void Game::update(const sf::Int32 deltaMS)
             m_isPauseMenuActive = true;
             m_gameMusic.pause();
             if (m_isSogging)
+            {
                 m_sogMusic.pause();
+                pauseSounds();
+            }
+                
         }
         else if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
         {
@@ -257,14 +264,6 @@ void Game::update(const sf::Int32 deltaMS)
         m_canSog = true;
     }
 
-    if (!m_isPauseMenuActive && m_isSogging)
-    {
-        for (Soggy* soggy : m_sogArray)
-        {
-            soggy->update(deltaMS);
-        }
-    }
-
     if (shouldSpawnSog)
     {
         // customm sog (mitosed)
@@ -276,6 +275,13 @@ void Game::update(const sf::Int32 deltaMS)
     {
         shouldCheckSogs = false;
         checkUnactiveSogs();
+    }
+    if (!m_isPauseMenuActive && m_isSogging)
+    {
+        for (Soggy* soggy : m_sogArray)
+        {
+            soggy->update(deltaMS);
+        }
     }
 }
 
@@ -557,6 +563,22 @@ void Game::restart()
     }
 
     m_sogArray.clear();
+}
+
+void Game::pauseSounds() const
+{
+    for (Soggy* soggy : m_sogArray)
+    {
+        soggy->pauseSound();
+    }
+}
+
+void Game::resumeSounds() const
+{
+    for (Soggy* soggy : m_sogArray)
+    {
+        soggy->resumeSound();
+    }
 }
 
 void Game::spawnSog(int sogSize, int posX, int posY, float rot,

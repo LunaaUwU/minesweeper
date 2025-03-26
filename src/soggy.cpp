@@ -109,6 +109,22 @@ void Soggy::init(sf::Texture& sogTexture, sf::Texture& explosionTexture, sf::Sou
     spawn(sogSize, posX, posY, rot, rotFact, speedXFact, speedYFact, speedX, speedY, rotSpeed);
 }
 
+void Soggy::pauseSound()
+{
+    if (m_explosionSound.getStatus() == sf::SoundSource::Playing)
+    {
+        m_explosionSound.pause();
+    }
+}
+
+void Soggy::resumeSound()
+{
+    if (m_explosionSound.getStatus() == sf::SoundSource::Paused)
+    {
+        m_explosionSound.play();
+    }
+}
+
 void Soggy::spawn(int sogSize, int posX, int posY, float rot,
     float rotFact, float speedXFact, float speedYFact, float speedX, float speedY, float rotSpeed)
 {

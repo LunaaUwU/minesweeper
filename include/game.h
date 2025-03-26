@@ -21,6 +21,10 @@ public:
 
     void restart();
 
+    void pauseSounds() const;
+
+    void resumeSounds() const;
+
     inline static bool closeGame = false;
 
     inline static bool gameOver = false;

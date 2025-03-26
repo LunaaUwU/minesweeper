@@ -20,6 +20,10 @@ public:
 
 	bool getActive() { return m_isActive; }
 
+	void pauseSound();
+
+	void resumeSound();
+
 private:
 
 	void spawn(int sogSize, int posX, int posY, float rot,
@@ -62,7 +66,6 @@ private:
 
 	int m_explosionWidth = 71;
 	int m_explosionHeight = 100;
-
 
 	std::random_device rd;
 };
