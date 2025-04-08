@@ -29,6 +29,8 @@ public:
 
     inline static bool gameOver = false;
 
+    inline static bool canClickZ = true;
+
     inline static bool canClick = true;
 
     // sog

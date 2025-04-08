@@ -24,6 +24,8 @@ public:
 
 	void resumeSound();
 
+	inline static bool canBeClicked = true;
+
 private:
 
 	void spawn(int sogSize, int posX, int posY, float rot,

@@ -16,7 +16,7 @@ void Tileset::update(sf::Int32 deltaMS)
 
 	if (!gameFinished)
 	{
-		if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) || sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) && !m_tileArray[m_selectedTileX][m_selectedTileY]->getIsFlagged() && Game::canClick && !sf::Keyboard::isKeyPressed(sf::Keyboard::X))
+		if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) || sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) && !m_tileArray[m_selectedTileX][m_selectedTileY]->getIsFlagged() && Game::canClickZ && !sf::Keyboard::isKeyPressed(sf::Keyboard::X))
 		{
 			if (!m_tileArray[m_selectedTileX][m_selectedTileY]->getIsOpen())
 			{
@@ -47,14 +47,14 @@ void Tileset::update(sf::Int32 deltaMS)
 				}
 				checkTilesAround();
 			}
-			Game::canClick = false;
+			Game::canClickZ = false;
 
 			if (checkWin())
 			{
 				gameFinished = true;
 			}
 		}
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::X) && !m_tileArray[m_selectedTileX][m_selectedTileY]->getIsOpen() && Game::canClick && !sf::Keyboard::isKeyPressed(sf::Keyboard::Z) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::X) && !m_tileArray[m_selectedTileX][m_selectedTileY]->getIsOpen() && Game::canClickZ && !sf::Keyboard::isKeyPressed(sf::Keyboard::Z) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 		{
 			if (m_tileArray[m_selectedTileX][m_selectedTileY]->getIsFlagged())
 				m_numberOfBombs++;
@@ -64,11 +64,11 @@ void Tileset::update(sf::Int32 deltaMS)
 
 			updateBombCounter();
 
-			Game::canClick = false;
+			Game::canClickZ = false;
 		}
 		if (!sf::Keyboard::isKeyPressed(sf::Keyboard::X) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Z) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
 		{
-			Game::canClick = true;
+			Game::canClickZ = true;
 		}
 	}
 	else
@@ -77,7 +77,7 @@ void Tileset::update(sf::Int32 deltaMS)
 		{
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z) || sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
 			{
-				Game::canClick = false;
+				Game::canClickZ = false;
 				// checks if you won or lost
 				if (m_doOnce2)
 				{
@@ -106,7 +106,7 @@ void Tileset::update(sf::Int32 deltaMS)
 		}
 		else
 		{
-			if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) || sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Keyboard::isKeyPressed(sf::Keyboard::Z) || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) && Game::canClick)
+			if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) || sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Keyboard::isKeyPressed(sf::Keyboard::Z) || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) && Game::canClickZ)
 			{
 				Game::gameOver = true;
 			}

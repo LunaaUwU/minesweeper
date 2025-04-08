@@ -14,7 +14,7 @@ void Game::update(const sf::Int32 deltaMS)
         {
             m_mainMenuSelection = false;
         }
-        else if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) || sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) && canClick)
+        else if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) || sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) && canClickZ)
         {
 	        if (m_mainMenuSelection)
 	        {
@@ -135,7 +135,7 @@ void Game::update(const sf::Int32 deltaMS)
             }
             updateDifficultyCounters();
         }
-	    else if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Z) || sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) || sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) && canClick)
+	    else if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Z) || sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) || sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) && canClickZ)
 	    {
             m_isDifficultyMenuActive = false;
             m_menuMusic.stop();
@@ -234,15 +234,6 @@ void Game::update(const sf::Int32 deltaMS)
         }
     }
 
-    if (!sf::Keyboard::isKeyPressed(sf::Keyboard::X) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Z) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
-    {
-        canClick = true;
-    }
-    else
-    {
-        canClick = false;
-    }
-
     if (gameOver)
     {
         restart();
@@ -282,6 +273,24 @@ void Game::update(const sf::Int32 deltaMS)
         {
             soggy->update(deltaMS);
         }
+    }
+
+    if (!sf::Keyboard::isKeyPressed(sf::Keyboard::X) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Z) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
+    {
+        canClickZ = true;
+    }
+    else
+    {
+        canClickZ = false;
+    }
+
+    if (!sf::Mouse::isButtonPressed(sf::Mouse::Left))
+    {
+        canClick = true;
+    }
+    else
+    {
+        canClick = false;
     }
 }
 

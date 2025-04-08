@@ -1,5 +1,5 @@
 #include "soggy.h"
-
+#include <iostream>
 #include "game.h"
 
 void Soggy::update(sf::Int32 deltaMS)
@@ -84,6 +84,22 @@ void Soggy::update(sf::Int32 deltaMS)
     {
         m_isActive = false;
         Game::shouldCheckSogs = true;
+    }
+
+    if (m_sogSprite.getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition().x, sf::Mouse::getPosition().y)) && sf::Mouse::isButtonPressed(sf::Mouse::Left) && Game::canClick && canBeClicked)
+    {
+        if (m_sogSize > 1)
+            mitose();
+        else
+            m_lastExplosion = true;
+        m_doOnce = true;
+
+        canBeClicked = false;
+    }
+
+    if (!sf::Mouse::isButtonPressed(sf::Mouse::Left))
+    {
+        canBeClicked = true;
     }
 }
 
