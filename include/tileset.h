@@ -61,17 +61,17 @@ private:
     bool m_hasBeenFlagged = false;
 
     
-    bool m_moveRight = false;
-    bool m_moveLeft = false;
     bool m_moveUp = false;
+    bool m_moveLeft = false;
     bool m_moveDown = false;
+    bool m_moveRight = false;
     bool m_isPressingDirection = false;
     bool m_isFirstMove = true;
 
-    bool m_forceMoveRight = false;
-    bool m_forceMoveLeft = false;
     bool m_forceMoveUp = false;
+    bool m_forceMoveLeft = false;
     bool m_forceMoveDown = false;
+    bool m_forceMoveRight = false;
 
     sf::Clock m_movingClock;
     int m_movingTimerMS = 0;
