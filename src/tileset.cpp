@@ -108,9 +108,8 @@ void Tileset::update(sf::Int32 deltaMS)
 
 	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::X) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Z) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
 	{
-		if ((m_moveUp && (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::W))) || m_forceMoveUp)
+		if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::W)) && m_canClickUp)
 		{
-			m_forceMoveUp = false;
 			m_tileArray[m_selectedTileX][m_selectedTileY]->select(); // De-select
 			if (m_selectedTileX == 0)
 			{
@@ -121,10 +120,10 @@ void Tileset::update(sf::Int32 deltaMS)
 				m_selectedTileX--;
 			}
 			m_tileArray[m_selectedTileX][m_selectedTileY]->select(); // Select
+			m_canClickUp = false;
 		}
-		else if ((m_moveDown && (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::S))) || m_forceMoveDown)
+		else if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::S)) && m_canClickDown)
 		{
-			m_forceMoveDown = false;
 			m_tileArray[m_selectedTileX][m_selectedTileY]->select(); // De-select
 			if (m_selectedTileX == m_rows - 1)
 			{
@@ -135,11 +134,11 @@ void Tileset::update(sf::Int32 deltaMS)
 				m_selectedTileX++;
 			}
 			m_tileArray[m_selectedTileX][m_selectedTileY]->select(); // Select
+			m_canClickDown = false;
 		}
 
-		if ((m_moveRight && (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::D))) || m_forceMoveRight)
+		if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::D)) && m_canClickRight)
 		{
-			m_forceMoveRight = false;
 			m_tileArray[m_selectedTileX][m_selectedTileY]->select(); // De-select
 			if (m_selectedTileY == m_columns - 1)
 			{
@@ -150,10 +149,10 @@ void Tileset::update(sf::Int32 deltaMS)
 				m_selectedTileY++;
 			}
 			m_tileArray[m_selectedTileX][m_selectedTileY]->select(); // Select
+			m_canClickRight = false;
 		}
-		else if ((m_moveLeft && (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::A))) || m_forceMoveLeft)
+		else if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::A)) && m_canClickLeft)
 		{
-			m_forceMoveLeft = false;
 			m_tileArray[m_selectedTileX][m_selectedTileY]->select(); // De-select
 			if (m_selectedTileY == 0)
 			{
@@ -164,99 +163,25 @@ void Tileset::update(sf::Int32 deltaMS)
 				m_selectedTileY--;
 			}
 			m_tileArray[m_selectedTileX][m_selectedTileY]->select(); // Select
+			m_canClickLeft = false;
 		}
 	}
 
-	//Smooth movement
-	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && !sf::Keyboard::isKeyPressed(sf::Keyboard::W) &&
-		!sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && !sf::Keyboard::isKeyPressed(sf::Keyboard::A) &&
-		!sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && !sf::Keyboard::isKeyPressed(sf::Keyboard::S) &&
-		!sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && !sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && !sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 	{
-		m_movingClock.restart();
-		m_movingTimerMS = 500;
-		m_isFirstMove = true;
+		m_canClickRight = true;
+	}
+	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && !sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+	{
+		m_canClickLeft = true;
+	}
+	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && !sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+	{
+		m_canClickDown = true;
 	}
 	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && !sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-		m_moveUp = false;
-	else if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && !sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-		m_moveLeft = false;
-	else if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && !sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-		m_moveDown = false;
-	else if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && !sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-		m_moveRight = false;
-
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 	{
-		if (m_isFirstMove)
-		{
-			m_isFirstMove = false;
-			m_forceMoveUp = true;
-		}
-		if (m_movingClock.getElapsedTime().asMilliseconds() >= m_movingTimerMS)
-		{
-			m_movingTimerMS = 50;
-			m_movingClock.restart();
-			m_moveUp = true;
-		}
-		else
-		{
-			m_moveUp = false;
-		}
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-	{
-		if (m_isFirstMove)
-		{
-			m_isFirstMove = false;
-			m_forceMoveLeft = true;
-		}
-		if (m_movingClock.getElapsedTime().asMilliseconds() >= m_movingTimerMS)
-		{
-			m_movingTimerMS = 50;
-			m_movingClock.restart();
-			m_moveLeft = true;
-		}
-		else
-		{
-			m_moveLeft = false;
-		}
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-	{
-		if (m_isFirstMove)
-		{
-			m_isFirstMove = false;
-			m_forceMoveDown = true;
-		}
-		if (m_movingClock.getElapsedTime().asMilliseconds() >= m_movingTimerMS)
-		{
-			m_movingTimerMS = 50;
-			m_movingClock.restart();
-			m_moveDown = true;
-		}
-		else
-		{
-			m_moveDown = false;
-		}
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-	{
-		if (m_isFirstMove)
-		{
-			m_isFirstMove = false;
-			m_forceMoveRight = true;
-		}
-		if (m_movingClock.getElapsedTime().asMilliseconds() >= m_movingTimerMS)
-		{
-			m_movingTimerMS = 50;
-			m_movingClock.restart();
-			m_moveRight = true;
-		}
-		else
-		{
-			m_moveRight = false;
-		}
+		m_canClickUp = true;
 	}
 }
 
