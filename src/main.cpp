@@ -3,7 +3,8 @@
 
 int main()
 {
-    auto window = sf::RenderWindow{ { 1920u, 1080u }, "Minesweeper"};
+    sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
+    sf::RenderWindow window = sf::RenderWindow{ { desktop.width, desktop.height }, "Minesweeper"};
     window.setFramerateLimit(144);
     sf::Clock deltaClock;
     sf::Time elapsed;
