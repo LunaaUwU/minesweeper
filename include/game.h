@@ -89,7 +89,7 @@ private:
     int m_columnNumber = 0;
 
     int m_menuSongNum = 6;
-    int m_gameSongNum = 10;
+    int m_gameSongNum = 9;
 
     sf::Sprite m_mainMenuPlaySprite;
     sf::Texture m_mainMenuPlayTexture;
