@@ -364,57 +364,57 @@ void Game::render(sf::RenderWindow& window) const
 
 void Game::init()
 {
-    m_mainMenuPlayTexture.loadFromFile("../sprites/menu/main_menu_play.png");
+    m_mainMenuPlayTexture.loadFromFile("assets/sprites/menu/main_menu_play.png");
     m_mainMenuPlaySprite.setTexture(m_mainMenuPlayTexture);
     m_mainMenuPlaySprite.setPosition(sf::Vector2f(0.f, 0.f));
-    m_mainMenuQuitTexture.loadFromFile("../sprites/menu/main_menu_quit.png");
+    m_mainMenuQuitTexture.loadFromFile("assets/sprites/menu/main_menu_quit.png");
     m_mainMenuQuitSprite.setTexture(m_mainMenuQuitTexture);
     m_mainMenuQuitSprite.setPosition(sf::Vector2f(0.f, 0.f));
 
-    m_pauseMenuResumeTexture.loadFromFile("../sprites/menu/pause_menu_resume.png");
+    m_pauseMenuResumeTexture.loadFromFile("assets/sprites/menu/pause_menu_resume.png");
     m_pauseMenuResumeSprite.setTexture(m_pauseMenuResumeTexture);
     m_pauseMenuResumeSprite.setPosition(sf::Vector2f(0.f, 0.f));
-    m_pauseMenuQuitTexture.loadFromFile("../sprites/menu/pause_menu_quit.png");
+    m_pauseMenuQuitTexture.loadFromFile("assets/sprites/menu/pause_menu_quit.png");
     m_pauseMenuQuitSprite.setTexture(m_pauseMenuQuitTexture);
     m_pauseMenuQuitSprite.setPosition(sf::Vector2f(0.f, 0.f));
 
-    m_difficultyMenuTexture.loadFromFile("../sprites/menu/difficulty_menu.png");
+    m_difficultyMenuTexture.loadFromFile("assets/sprites/menu/difficulty_menu.png");
     m_difficultyMenuSprite.setTexture(m_difficultyMenuTexture);
     m_difficultyMenuSprite.setPosition(sf::Vector2f(0.f, 0.f));
-    m_difficultyMenuStartTexture.loadFromFile("../sprites/menu/difficulty_menu_start.png");
+    m_difficultyMenuStartTexture.loadFromFile("assets/sprites/menu/difficulty_menu_start.png");
     m_difficultyMenuStartSprite.setTexture(m_difficultyMenuStartTexture);
     m_difficultyMenuStartSprite.setPosition(sf::Vector2f(0.f, 0.f));
 
-    m_sogTexture.loadFromFile("../sprites/soggycat.png");
+    m_sogTexture.loadFromFile("assets/sprites/soggycat.png");
 
-    m_menuMusic.openFromFile("../audio/music/menu/menu_" + std::to_string(randomInt(1, m_menuSongNum)) + ".mp3");
+    m_menuMusic.openFromFile("assets/audio/music/menu/menu_" + std::to_string(randomInt(1, m_menuSongNum)) + ".mp3");
     m_menuMusic.play();
     m_menuMusic.setLoop(true);
     m_menuMusic.setVolume(20.f);
 
-    m_sogMusic.openFromFile("../audio/music/soggy.mp3");
+    m_sogMusic.openFromFile("assets/audio/music/soggy.mp3");
     m_sogMusic.setLoop(true);
     m_sogMusic.setVolume(35.f);
 
     // TILES
-    m_tileUnkwnownTexture.loadFromFile("../sprites/tiles/TileUnknown.png");
-    m_tile0Texture.loadFromFile("../sprites/tiles/Tile0.png");
-    m_tile1Texture.loadFromFile("../sprites/tiles/Tile1.png");
-    m_tile2Texture.loadFromFile("../sprites/tiles/Tile2.png");
-    m_tile3Texture.loadFromFile("../sprites/tiles/Tile3.png");
-    m_tile4Texture.loadFromFile("../sprites/tiles/Tile4.png");
-    m_tile5Texture.loadFromFile("../sprites/tiles/Tile5.png");
-    m_tile6Texture.loadFromFile("../sprites/tiles/Tile6.png");
-    m_tile7Texture.loadFromFile("../sprites/tiles/Tile7.png");
-    m_tile8Texture.loadFromFile("../sprites/tiles/Tile8.png");
-    m_tile9Texture.loadFromFile("../sprites/tiles/Tile9.png");
-    m_tileFlagTexture.loadFromFile("../sprites/tiles/TileFlag.png");
-    m_tileWrongFlagTexture.loadFromFile("../sprites/tiles/TileWrongFlag.png");
-    m_tileMineTexture.loadFromFile("../sprites/tiles/TileMine.png");
-    m_tileRedMineTexture.loadFromFile("../sprites/tiles/TileExploded.png");
-    m_tileColumnTexture.loadFromFile("../sprites/tiles/TileColumn.png");
-    m_tileRowTexture.loadFromFile("../sprites/tiles/TileRow.png");
-    m_selectTexture.loadFromFile("../sprites/tiles/Select.png");
+    m_tileUnkwnownTexture.loadFromFile("assets/sprites/tiles/TileUnknown.png");
+    m_tile0Texture.loadFromFile("assets/sprites/tiles/Tile0.png");
+    m_tile1Texture.loadFromFile("assets/sprites/tiles/Tile1.png");
+    m_tile2Texture.loadFromFile("assets/sprites/tiles/Tile2.png");
+    m_tile3Texture.loadFromFile("assets/sprites/tiles/Tile3.png");
+    m_tile4Texture.loadFromFile("assets/sprites/tiles/Tile4.png");
+    m_tile5Texture.loadFromFile("assets/sprites/tiles/Tile5.png");
+    m_tile6Texture.loadFromFile("assets/sprites/tiles/Tile6.png");
+    m_tile7Texture.loadFromFile("assets/sprites/tiles/Tile7.png");
+    m_tile8Texture.loadFromFile("assets/sprites/tiles/Tile8.png");
+    m_tile9Texture.loadFromFile("assets/sprites/tiles/Tile9.png");
+    m_tileFlagTexture.loadFromFile("assets/sprites/tiles/TileFlag.png");
+    m_tileWrongFlagTexture.loadFromFile("assets/sprites/tiles/TileWrongFlag.png");
+    m_tileMineTexture.loadFromFile("assets/sprites/tiles/TileMine.png");
+    m_tileRedMineTexture.loadFromFile("assets/sprites/tiles/TileExploded.png");
+    m_tileColumnTexture.loadFromFile("assets/sprites/tiles/TileColumn.png");
+    m_tileRowTexture.loadFromFile("assets/sprites/tiles/TileRow.png");
+    m_selectTexture.loadFromFile("assets/sprites/tiles/Select.png");
 
     m_difficultyRow->init(m_tileUnkwnownTexture, m_tile0Texture, m_tile1Texture, m_tile2Texture, m_tile3Texture, m_tile4Texture, m_tile5Texture, m_tile6Texture, m_tile7Texture, m_tile8Texture,
         m_tile9Texture, m_tileFlagTexture, m_tileWrongFlagTexture, m_tileMineTexture, m_tileRedMineTexture, m_tileColumnTexture, m_tileRowTexture, m_selectTexture);
@@ -487,13 +487,13 @@ void Game::init()
 
     m_difficultyRow->select();
 
-    m_explosionTexture.loadFromFile("../sprites/explosion.png");
-    m_explosionSoundBuffer.loadFromFile("../audio/sounds/explosion.ogg");
+    m_explosionTexture.loadFromFile("assets/sprites/explosion.png");
+    m_explosionSoundBuffer.loadFromFile("assets/audio/sounds/explosion.ogg");
 }
 
 void Game::instantiate()
 {
-    m_gameMusic.openFromFile("../audio/music/game/game_" + std::to_string(randomInt(1, m_gameSongNum)) + ".mp3");
+    m_gameMusic.openFromFile("assets/audio/music/game/game_" + std::to_string(randomInt(1, m_gameSongNum)) + ".mp3");
     m_gameMusic.setLoop(true);
     m_gameMusic.setVolume(20.f);
     m_gameMusic.play();
@@ -562,7 +562,7 @@ void Game::restart()
     else if (m_difficultyBomb->getIsSelected())
         m_difficultyBomb->select();
     m_gameMusic.stop();
-    m_menuMusic.openFromFile("../audio/music/menu/menu_" + std::to_string(randomInt(1, m_menuSongNum)) + ".mp3");
+    m_menuMusic.openFromFile("assets/audio/music/menu/menu_" + std::to_string(randomInt(1, m_menuSongNum)) + ".mp3");
     m_menuMusic.play();
     m_sogMusic.stop();
 

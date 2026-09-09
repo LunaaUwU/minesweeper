@@ -36,6 +36,13 @@ include_directories(${PROJECT_NAME} PRIVATE include)
 
 add_executable(${PROJECT_NAME} ${PROJECT_FILES})
 
+add_custom_command(
+    TARGET ${PROJECT_NAME} POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${CMAKE_CURRENT_SOURCE_DIR}/assets
+        $<TARGET_FILE_DIR:${PROJECT_NAME}>/assets
+)
+
 target_link_libraries(minesweeper PRIVATE sfml-graphics)
 target_link_libraries(minesweeper PRIVATE sfml-audio)
 target_compile_features(minesweeper PRIVATE cxx_std_17)
@@ -51,3 +58,5 @@ endif()
 install(TARGETS minesweeper)
 
 set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT ${PROJECT_NAME})
+
+set_property(TARGET ${PROJECT_NAME} PROPERTY VS_DEBUGGER_WORKING_DIRECTORY "$<TARGET_FILE_DIR:${PROJECT_NAME}>")
